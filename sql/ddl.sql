@@ -112,15 +112,15 @@ COMMENT = '지번주소 테이블';
 DROP TABLE IF EXISTS `mydb`.`additional_info` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`additional_info` (
-  `manage_number` VARCHAR(25) NOT NULL,
-  `hangjungdong_code` VARCHAR(10) NULL,
-  `hangjungdong_name` VARCHAR(20) NULL,
-  `zipcode` VARCHAR(5) NULL,
-  `zipcode_serial_number` VARCHAR(3) NULL,
-  `bulk_delivery_building_name` VARCHAR(40) NULL,
-  `master_building_name` VARCHAR(40) NULL,
-  `sigungu_building_name` VARCHAR(40) NULL,
-  `is_apt` VARCHAR(1) NULL,
+  `manage_number` VARCHAR(25) NOT NULL COMMENT '관리번호',
+  `hangjungdong_code` VARCHAR(10) NULL COMMENT '행정동코드',
+  `hangjungdong_name` VARCHAR(20) NULL COMMENT '행정동명',
+  `zipcode` VARCHAR(5) NULL COMMENT '우편번호',
+  `zipcode_serial_number` VARCHAR(3) NULL COMMENT '우편번호 일련번호',
+  `bulk_delivery_building_name` VARCHAR(40) NULL COMMENT '다량배달처명',
+  `master_building_name` VARCHAR(40) NULL COMMENT '건축물대장 건물명',
+  `sigungu_building_name` VARCHAR(40) NULL COMMENT '시군구 건물명',
+  `is_apt` VARCHAR(1) NULL COMMENT '공동주택여부',
   PRIMARY KEY (`manage_number`),
   UNIQUE INDEX `manage_number_UNIQUE` (`manage_number` ASC) VISIBLE,
   CONSTRAINT `fk_additional_info_roadname_address1`
