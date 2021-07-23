@@ -1,3 +1,9 @@
 data/
 
 ext_sources/
+
+node_modules/
+
+resources/
+
+logs/
