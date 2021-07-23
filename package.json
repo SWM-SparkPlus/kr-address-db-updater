@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "download:daily": "ts-node src/dailyDownload.ts",
+    "download:total": "ts-node src/totalDownload.ts",
     "prisma:init": "npx prisma introspect && npx prisma generate"
   },
   "repository": {
