@@ -6,13 +6,20 @@ import extract from 'extract-zip'
 import iconv from 'iconv-lite'
 import { logger } from './lib/logger'
 
+console.warn(
+  `TotalDatabaseDownloadWarning] !!! This job contains cpu intensive workload such as string encode/decode and high network usage !!!`
+)
+
 // 전월 구하기
 const date = new Date()
 const previousMonth = dayjs(date.setMonth(date.getMonth() - 1)).format('YYYYMM')
 
 // 요청주소. 최신 주소 DB
 const url = encodeURI(
-  `https://www.juso.go.kr/dn.do?reqType=ALLMTCHG&regYmd=${previousMonth.slice(0, 4)}&ctprvnCd=00&gubun=MTCH&stdde=${previousMonth}&fileName=${previousMonth}_주소DB_전체분.zip&realFileName=${previousMonth}ALLMTCHG00.zip&indutyCd=999&purpsCd=999&indutyRm=수집종료&purpsRm=수집종료`
+  `https://www.juso.go.kr/dn.do?reqType=ALLMTCHG&regYmd=${previousMonth.slice(
+    0,
+    4
+  )}&ctprvnCd=00&gubun=MTCH&stdde=${previousMonth}&fileName=${previousMonth}_주소DB_전체분.zip&realFileName=${previousMonth}ALLMTCHG00.zip&indutyCd=999&purpsCd=999&indutyRm=수집종료&purpsRm=수집종료`
 )
 
 const rootDir = path.resolve(__dirname + '/..')
@@ -22,9 +29,9 @@ const resourcePath = `${rootDir}/resources`
 if (fs.existsSync(resourcePath)) {
   try {
     fs.rmSync(resourcePath, { recursive: true, force: true })
-    logger.info(`[DailyUpdatePreparation] Resource directory deletion completed.`)
+    logger.info(`[TotalDatabaseDownloadPreparation] Resource directory deletion completed.`)
   } catch (err) {
-    logger.error(`[DailyUpdatePreparation] ${err}`)
+    logger.error(`[TotalDatabaseDownloadPreparation] ${err}`)
     process.exit(1)
   }
 }
@@ -32,9 +39,9 @@ if (fs.existsSync(resourcePath)) {
 // 디렉토리 생성
 try {
   fs.mkdirSync(resourcePath)
-  logger.info(`[DailyUpdatePreparation] Make directory successfully.`)
+  logger.info(`[TotalDatabaseDownloadPreparation] Make directory successfully.`)
 } catch (err) {
-  logger.error(`[DailyUpdatePreparation] ${err}`)
+  logger.error(`[TotalDatabaseDownloadPreparation] ${err}`)
   process.exit(1)
 }
 
@@ -71,21 +78,22 @@ https.get(url, res => {
     const eucKrFiles = fs.readdirSync(resourcePath)
 
     eucKrFiles.forEach(fileName => {
+      if (path.extname(`${resourcePath}/${fileName}`) !== '.txt') {
+        return
+      }
       const euckrContent = fs.readFileSync(`${resourcePath}/${fileName}`)
       // euc-kr 로 decode
       const utf8EncodedContent = iconv.decode(euckrContent, 'euc-kr')
       // utf8로 async overwrite
       fs.writeFile(`${resourcePath}/${fileName}`, utf8EncodedContent, err => {
         if (err) {
-          logger.error(`[UTF8FileOverwriteError] ${err.message} ${err.stack}`)
+          logger.error(`[UTF8ConversionError] ${err.message} ${err.stack}`)
           process.exit(1)
         }
       })
-      logger.info(`[UTF8FileOverWrite] Successfully convert ${fileName} encoding EUC-KR to UTF8.`)
+      logger.info(`[UTF8FileConversion] Successfully convert ${fileName} encoding EUC-KR to UTF8.`)
     })
 
-    logger.info(
-      `[DailyDownloadCompletion] Daily roadname file download, extract, conversion completed.`
-    )
+    logger.info(`[TotalDatabaseDownloadCompletion] Job finished!`)
   })
 })

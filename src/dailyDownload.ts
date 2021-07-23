@@ -11,7 +11,9 @@ const date = new Date()
 const yesterday = dayjs(date.setDate(date.getDate() - 1)).format('YYYYMMDD')
 
 // 요청 주소(어제자 일일 변경분)
-const url = encodeURI(`https://www.juso.go.kr/dn.do?reqType=DC&stdde=${yesterday}&indutyCd=999&purpsCd=999&indutyRm=수집종료&purpsRm=수집종료`)
+const url = encodeURI(
+  `https://www.juso.go.kr/dn.do?reqType=DC&stdde=${yesterday}&indutyCd=999&purpsCd=999&indutyRm=수집종료&purpsRm=수집종료`
+)
 
 const rootDir = path.resolve(__dirname + '/..')
 const resourcePath = `${rootDir}/resources`
@@ -75,16 +77,13 @@ https.get(url, res => {
       // utf8로 async overwrite
       fs.writeFile(`${resourcePath}/${fileName}`, utf8EncodedContent, err => {
         if (err) {
-          logger.error(`[UTF8FileOverwriteError] ${err.message} ${err.stack}`)
+          logger.error(`[UTF8ConversionError] ${err.message} ${err.stack}`)
           process.exit(1)
         }
       })
-      logger.info(`[UTF8FileOverWrite] Successfully convert ${fileName} encoding EUC-KR to UTF8.`)
+      logger.info(`[UTF8ConversionCompletion] Successfully convert ${fileName} encoding EUC-KR to UTF8.`)
     })
-    
-    logger.info(
-      `[DailyDownloadCompletion] Daily roadname file download, extract, conversion completed.`
-    )
+
+    logger.info(`[DailyDownloadCompletion] Job finished!`)
   })
 })
-
