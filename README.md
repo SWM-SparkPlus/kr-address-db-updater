@@ -2,6 +2,46 @@
 
 이 저장소는 소프트웨어 마에스트로 제 12기 팀 Spark+의 도로명주소 DB를 구축하기 위한 DDL과 최신의 도로명 주소 DB를 유지하기 위한 업데이트를 담당하는 node.js 서버를 구현합니다.
 
+## 빠른 시작
+
+```s
+# MySQL서버가 localhost:3306에 서비스중이라고 가정합니다.
+
+###
+# 1. 레포지토리 클론
+###
+
+$ git clone https://git.swmgit.org/swm-12/12_swm12/db-updater.git
+$ cd db-updater
+# 환경변수 설정
+$ echo "DATABASE_URL=mysql://localhost:3306/mydb" > .env
+
+###
+# 2. 프로젝트 의존성 설치
+###
+
+# 2.1 npm
+$ npm install 
+
+# 2.2 yarn
+$ yarn
+
+###
+# 3. Prisma client 생성
+###
+
+# 3.1 npm
+$ npm run prisma:init
+
+# 3.2 yarn
+$ yarn prisma:init
+
+###
+# 4. 일일 데이터 다운로드
+###
+$ yarn download:daily
+```
+
 ## 아키텍처
 
 <!-- !서버와 데이터베이스 모식도 넣을 것! -->

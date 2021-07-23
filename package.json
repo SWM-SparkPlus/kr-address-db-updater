@@ -4,8 +4,8 @@
   "description": "이 저장소는 소프트웨어 마에스트로 제 12기 팀 Spark+의 도로명주소 DB를 구축하기 위한 DDL과 최신의 도로명 주소 DB를 유지하기 위한 업데이트를 담당하는 node.js 서버를 구현합니다.",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/app.ts",
-    "dev": "nodemon src/app.ts"
+    "download:daily": "ts-node src/dailyDownload.ts",
+    "prisma:init": "npx prisma introspect && npx prisma generate"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
+    "@prisma/client": "^2.27.0",
     "dayjs": "^1.10.6",
     "detect-character-encoding": "^0.8.0",
     "dotenv": "^10.0.0",

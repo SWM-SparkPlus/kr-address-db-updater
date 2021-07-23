@@ -7,7 +7,8 @@ import iconv from 'iconv-lite'
 import { logger } from './lib/logger'
 
 // 어제 날짜 구하기
-const yesterday = dayjs(new Date().setDate(new Date().getDate() - 2)).format('YYYYMMDD')
+const date = new Date()
+const yesterday = dayjs(date.setDate(date.getDate() - 1)).format('YYYYMMDD')
 
 // 요청 주소(어제자 일일 변경분)
 const url = encodeURI(`https://www.juso.go.kr/dn.do?reqType=DC&stdde=${yesterday}&indutyCd=999&purpsCd=999&indutyRm=수집종료&purpsRm=수집종료`)
