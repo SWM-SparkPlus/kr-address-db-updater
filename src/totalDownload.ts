@@ -63,6 +63,7 @@ https.get(url, res => {
     } catch (err) {
       // zip 파일이 아니거나, 온전하지 못하거나, 날짜에 맞는 파일을 다운받지 못했을 경우 에러 발생
       logger.error(`[ZipExtractError] ${err}`)
+      fs.rmSync(resourcePath, { force: true, recursive: true })
       process.exit(1)
     }
 
