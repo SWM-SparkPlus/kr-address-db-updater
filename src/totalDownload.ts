@@ -59,8 +59,11 @@ https.get(url, res => {
 
   // 스트림 입력 종료시에 압축 해제
   writeStream.on('finish', async () => {
+    logger.info(`[FileDownloadCompletion] Total file download completion`)
+
     try {
       await extract(zipPath, { dir: targetPath })
+      // await decompress(zipPath, targetPath)
     } catch (err) {
       // zip 파일이 아니거나, 온전하지 못하거나, 날짜에 맞는 파일을 다운받지 못했을 경우 에러 발생
       logger.error(`[ZipExtractError] ${err}`)
@@ -81,10 +84,10 @@ https.get(url, res => {
 
     eucKrFiles.forEach(fileName => {
       if (path.extname(`${targetPath}/${fileName}`) !== '.txt') {
+        logger.info(`[FileException] Filename ${fileName} is not a database file. `)
         return
       }
       const euckrContent = fs.readFileSync(`${targetPath}/${fileName}`)
-      console.log(detectCharacterEncoding(fs.readFileSync(`${targetPath}/${fileName}`)))
       // euc-kr 로 decode
       const utf8EncodedContent = iconv.decode(euckrContent, 'euc-kr')
       // utf8로 async overwrite

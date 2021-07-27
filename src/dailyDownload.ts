@@ -31,7 +31,7 @@ if (fs.existsSync(targetPath)) {
 
 // 디렉토리 생성
 try {
-  fs.mkdirSync(targetPath, { recursive: true })
+  fs.mkdirSync(targetPath)
   logger.info(`[DailyUpdatePreparation] Make directory successfully.`)
 } catch (err) {
   logger.error(`[DailyUpdatePreparation] ${err}`)
