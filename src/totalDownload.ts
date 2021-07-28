@@ -2,10 +2,9 @@ import dayjs from 'dayjs'
 import https from 'https'
 import fs from 'fs'
 import path from 'path'
-import extract from 'extract-zip'
 import iconv from 'iconv-lite'
+import Zip from 'adm-zip'
 import { logger } from './lib/logger'
-import detectCharacterEncoding from 'detect-character-encoding'
 
 console.warn(
   `[TotalDatabaseDownloadWarning] !!! This job contains cpu intensive workload such as string encode/decode and high network usage !!!`
@@ -62,43 +61,22 @@ https.get(url, res => {
     logger.info(`[FileDownloadCompletion] Total file download completion`)
 
     try {
-      await extract(zipPath, { dir: targetPath })
-      // await decompress(zipPath, targetPath)
+      new Zip(zipPath).getEntries().forEach(entry => {
+        entry.getDataAsync((data, err) => {
+          if (err) throw err
+          // 인코딩
+          const filename = iconv.decode(entry.rawEntryName, 'euc-kr')
+          fs.writeFile(`${targetPath}/${filename}`, iconv.decode(data, 'euc-kr'), err => {
+            if (err) throw err
+          })
+        })
+      })
     } catch (err) {
       // zip 파일이 아니거나, 온전하지 못하거나, 날짜에 맞는 파일을 다운받지 못했을 경우 에러 발생
       logger.error(`[ZipExtractError] ${err}`)
       fs.rmSync(targetPath, { force: true, recursive: true })
       process.exit(1)
     }
-
-    // 압축해제 후 삭제
-    try {
-      fs.rmSync(zipPath)
-    } catch (err) {
-      logger.error(`[ZipFileRemoveError] ${err}`)
-      process.exit(1)
-    }
-
-    // 파일리스트
-    const eucKrFiles = fs.readdirSync(targetPath)
-
-    eucKrFiles.forEach(fileName => {
-      if (path.extname(`${targetPath}/${fileName}`) !== '.txt') {
-        logger.info(`[FileException] Filename ${fileName} is not a database file. `)
-        return
-      }
-      const euckrContent = fs.readFileSync(`${targetPath}/${fileName}`)
-      // euc-kr 로 decode
-      const utf8EncodedContent = iconv.decode(euckrContent, 'euc-kr')
-      // utf8로 async overwrite
-      fs.writeFile(`${targetPath}/${fileName}`, utf8EncodedContent, err => {
-        if (err) {
-          logger.error(`[UTF8ConversionError] ${err.message} ${err.stack}`)
-          process.exit(1)
-        }
-      })
-      logger.info(`[UTF8FileConversion] Successfully convert ${fileName} encoding EUC-KR to UTF8.`)
-    })
 
     logger.info(`[TotalDatabaseDownloadCompletion] Job finished!`)
   })
