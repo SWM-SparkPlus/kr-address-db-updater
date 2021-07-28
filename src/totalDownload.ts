@@ -65,10 +65,23 @@ https.get(url, res => {
         entry.getDataAsync((data, err) => {
           if (err) throw err
           // 인코딩
-          const filename = iconv.decode(entry.rawEntryName, 'euc-kr')
-          fs.writeFile(`${targetPath}/${filename}`, iconv.decode(data, 'euc-kr'), err => {
-            if (err) throw err
-          })
+          const encodedFilename = iconv.decode(entry.rawEntryName, 'euc-kr')
+          const dotSplittedFilename = encodedFilename.split('.')
+          const ext = dotSplittedFilename[dotSplittedFilename.length - 1]
+
+          // 확장자가 txt인 것만
+          if (ext === 'txt') {
+            fs.writeFile(`${targetPath}/${encodedFilename}`, iconv.decode(data, 'euc-kr'), err => {
+              if (err) throw err
+              logger.info(`[FileEncoded] ${fileName} is successfully encoded as utf-8`)
+            })
+          } else {
+            // 그 외는 기존 인코딩 유지(pdf)
+            fs.writeFile(`${targetPath}/${encodedFilename}`, data, err => {
+              if (err) throw err
+              logger.info(`[FileEncoded] ${fileName} is successfully encoded as utf-8`)
+            })
+          }
         })
       })
     } catch (err) {
