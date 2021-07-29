@@ -8,18 +8,18 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema sparkplus
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8mb4 ;
-CREATE DATABASE IF NOT EXISTS `mydb` ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `sparkplus` DEFAULT CHARACTER SET utf8mb4 ;
+CREATE DATABASE IF NOT EXISTS `sparkplus` ;
+USE `sparkplus` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`roadname_code`
+-- Table `sparkplus`.`roadname_code`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`roadname_code` ;
+DROP TABLE IF EXISTS `sparkplus`.`roadname_code` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`roadname_code` (
+CREATE TABLE IF NOT EXISTS `sparkplus`.`roadname_code` (
   `roadname_code` VARCHAR(12) NOT NULL COMMENT '도로명주소 코드. PK1',
   `roadname` VARCHAR(80) NULL COMMENT '도로명',
   `roadname_eng` VARCHAR(80) NULL COMMENT '도로명 로마자',
@@ -44,11 +44,11 @@ COMMENT = '도로명 테이블';
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`roadname_address`
+-- Table `sparkplus`.`roadname_address`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`roadname_address` ;
+DROP TABLE IF EXISTS `sparkplus`.`roadname_address` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`roadname_address` (
+CREATE TABLE IF NOT EXISTS `sparkplus`.`roadname_address` (
   `manage_number` VARCHAR(25) NOT NULL COMMENT '관리번호. PK.',
   `basement` VARCHAR(1) NULL COMMENT '지하여부. 0: 지상, 1: 지하',
   `building_primary_number` SMALLINT NULL COMMENT '건물본번',
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`roadname_address` (
   INDEX `fk_address_roadname_idx` (`roadname_code` ASC, `eupmyeondong_number` ASC) VISIBLE,
   CONSTRAINT `fk_address_roadname`
     FOREIGN KEY (`roadname_code` , `eupmyeondong_number`)
-    REFERENCES `mydb`.`roadname_code` (`roadname_code` , `eupmyeondong_number`)
+    REFERENCES `sparkplus`.`roadname_code` (`roadname_code` , `eupmyeondong_number`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -73,17 +73,17 @@ COMMENT = '도로명주소 테이블';
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`jibun_address`
+-- Table `sparkplus`.`jibun_address`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`jibun_address` ;
+DROP TABLE IF EXISTS `sparkplus`.`jibun_address` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`jibun_address` (
+CREATE TABLE IF NOT EXISTS `sparkplus`.`jibun_address` (
   `serial_number` SMALLINT NOT NULL COMMENT '일련번호. PK2.',
   `bupjungdong_code` VARCHAR(10) CHARACTER SET 'utf8mb4' NOT NULL COMMENT '법정동코드',
   `sido_name` VARCHAR(20) NOT NULL COMMENT '시도명',
   `sigungu_name` VARCHAR(20) NOT NULL COMMENT '시군구명',
   `bupjung_eupmyeondong_name` VARCHAR(20) NOT NULL COMMENT '법정읍면동명',
-  `bupjunglee_name` VARCHAR(20) NOT NULL COMMENT '법정리명',
+  `bupjungli_name` VARCHAR(20) NOT NULL COMMENT '법정리명',
   `is_mountain` VARCHAR(1) NOT NULL COMMENT '산 여부. 1일 때 산',
   `jibun_primary` SMALLINT NOT NULL COMMENT '지번본번(번지)',
   `jibun_secondary` SMALLINT NOT NULL COMMENT '지번부번(호)',
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`jibun_address` (
   UNIQUE INDEX `manage_number_UNIQUE` (`manage_number` ASC) VISIBLE,
   CONSTRAINT `fk_jibun_address1`
     FOREIGN KEY (`manage_number`)
-    REFERENCES `mydb`.`roadname_address` (`manage_number`)
+    REFERENCES `sparkplus`.`roadname_address` (`manage_number`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -103,11 +103,11 @@ COMMENT = '지번주소 테이블';
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`additional_info`
+-- Table `sparkplus`.`additional_info`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`additional_info` ;
+DROP TABLE IF EXISTS `sparkplus`.`additional_info` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`additional_info` (
+CREATE TABLE IF NOT EXISTS `sparkplus`.`additional_info` (
   `manage_number` VARCHAR(25) NOT NULL COMMENT '관리번호',
   `hangjungdong_code` VARCHAR(10) NULL COMMENT '행정동코드',
   `hangjungdong_name` VARCHAR(20) NULL COMMENT '행정동명',
@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`additional_info` (
   UNIQUE INDEX `manage_number_UNIQUE` (`manage_number` ASC) VISIBLE,
   CONSTRAINT `fk_additional_info_roadname_address1`
     FOREIGN KEY (`manage_number`)
-    REFERENCES `mydb`.`roadname_address` (`manage_number`)
+    REFERENCES `sparkplus`.`roadname_address` (`manage_number`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
