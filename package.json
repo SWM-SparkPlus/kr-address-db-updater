@@ -3,6 +3,7 @@
   "scripts": {
     "download:daily": "ts-node src/dailyDownload.ts",
     "download:total": "ts-node src/totalDownload.ts",
+    "import:roadname_code": "sh scripts/import_roadname_code.sh",
     "prisma:init": "npx prisma introspect && npx prisma generate",
     "prepare": "husky install"
   },
