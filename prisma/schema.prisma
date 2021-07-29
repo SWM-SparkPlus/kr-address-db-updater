@@ -26,7 +26,7 @@ model jibun_address {
   sido_name                 String           @db.VarChar(20)
   sigungu_name              String           @db.VarChar(20)
   bupjung_eupmyeondong_name String           @db.VarChar(20)
-  bupjunglee_name           String           @db.VarChar(20)
+  bupjungli_name            String           @db.VarChar(20)
   is_mountain               String           @db.VarChar(1)
   jibun_primary             Int              @db.SmallInt
   jibun_secondary           Int              @db.SmallInt
