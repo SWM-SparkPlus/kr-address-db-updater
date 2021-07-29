@@ -8,75 +8,64 @@ datasource db {
 }
 
 model additional_info {
-  manage_number               String           @id @db.VarChar(25)
-  hangjungdong_code           String?          @db.VarChar(10)
-  hangjungdong_name           String?          @db.VarChar(20)
-  zipcode                     String?          @db.VarChar(5)
-  zipcode_serial_number       String?          @db.VarChar(3)
-  bulk_delivery_building_name String?          @db.VarChar(40)
-  master_building_name        String?          @db.VarChar(40)
-  sigungu_building_name       String?          @db.VarChar(40)
-  is_apt                      String?          @db.VarChar(1)
-  roadname_address            roadname_address @relation(fields: [manage_number], references: [manage_number])
+  manage_number               String  @id @db.VarChar(25)
+  hangjungdong_code           String? @db.VarChar(10)
+  hangjungdong_name           String? @db.VarChar(20)
+  zipcode                     String? @db.VarChar(5)
+  zipcode_serial_number       String? @db.VarChar(3)
+  bulk_delivery_building_name String? @db.VarChar(40)
+  master_building_name        String? @db.VarChar(40)
+  sigungu_building_name       String? @db.VarChar(40)
+  is_apt                      String? @db.VarChar(1)
 }
 
 model jibun_address {
-  serial_number             Int              @db.SmallInt
-  bupjungdong_code          String           @db.VarChar(10)
-  sido_name                 String           @db.VarChar(20)
-  sigungu_name              String           @db.VarChar(20)
-  bupjung_eupmyeondong_name String           @db.VarChar(20)
-  bupjungli_name            String           @db.VarChar(20)
-  is_mountain               String           @db.VarChar(1)
-  jibun_primary             Int              @db.SmallInt
-  jibun_secondary           Int              @db.SmallInt
-  is_representation         String           @db.VarChar(1)
-  manage_number             String           @unique @db.VarChar(25)
-  roadname_address          roadname_address @relation(fields: [manage_number], references: [manage_number])
-
-  @@id([serial_number, manage_number])
-  @@index([manage_number], name: "fk_jibun_address1_idx")
+  manage_number             String  @id @db.VarChar(25)
+  serial_number             Int     @db.SmallInt
+  bupjungdong_code          String? @db.VarChar(10)
+  sido_name                 String? @db.VarChar(20)
+  sigungu_name              String? @db.VarChar(20)
+  bupjung_eupmyeondong_name String? @db.VarChar(20)
+  bupjunglee_name           String? @db.VarChar(20)
+  is_mountain               String? @db.VarChar(1)
+  jibun_primary             Int?    @db.SmallInt
+  jibun_secondary           Int?    @db.SmallInt
+  is_representation         String? @db.VarChar(1)
 }
 
 model roadname_address {
-  manage_number                                 String           @db.VarChar(25)
-  basement                                      String?          @db.VarChar(1)
-  building_primary_number                       Int?             @db.SmallInt
-  building_secondary_number                     Int?             @db.SmallInt
-  basic_area_number                             String?          @db.VarChar(5)
-  change_reason_code                            String?          @db.VarChar(2)
-  notice_date                                   String?          @db.VarChar(8)
-  previous_roadname_address                     String?          @db.VarChar(25)
-  has_detail                                    String?          @db.VarChar(1)
-  roadname_code                                 String           @db.VarChar(12)
-  eupmyeondong_number                           String           @db.VarChar(2)
-  roadname_code_roadname_addressToroadname_code roadname_code    @relation(fields: [roadname_code, eupmyeondong_number], references: [roadname_code, eupmyeondong_number])
-  additional_info                               additional_info?
-  jibun_address                                 jibun_address?
-
-  @@id([manage_number, roadname_code, eupmyeondong_number])
-  @@index([roadname_code, eupmyeondong_number], name: "fk_address_roadname_idx")
+  manage_number             String  @id @db.VarChar(25)
+  roadname_code             String  @db.VarChar(12)
+  eupmyeondong_number       String  @db.VarChar(2)
+  basement                  String? @db.VarChar(1)
+  building_primary_number   Int?    @db.SmallInt
+  building_secondary_number Int?    @db.SmallInt
+  basic_area_number         String? @db.VarChar(5)
+  change_reason_code        String? @db.VarChar(2)
+  notice_date               String? @db.VarChar(8)
+  previous_roadname_address String? @db.VarChar(25)
+  has_detail                String? @db.VarChar(1)
 }
 
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model roadname_code {
-  roadname_code       String             @unique @db.VarChar(12)
-  roadname            String?            @db.VarChar(80)
-  roadname_eng        String?            @db.VarChar(80)
-  eupmyeondong_number String             @db.VarChar(2)
-  sido_name           String?            @db.VarChar(20)
-  sido_eng            String?            @db.VarChar(40)
-  sigungu             String?            @db.VarChar(20)
-  sigungu_eng         String?            @db.VarChar(40)
-  eupmyeondong        String?            @db.VarChar(20)
-  eupmyeondong_eng    String?            @db.VarChar(40)
-  eupmyeondong_type   String?            @db.VarChar(1)
-  eupmyeondong_code   String?            @db.VarChar(3)
-  is_using            String?            @db.VarChar(1)
-  change_reason       String?            @db.VarChar(1)
-  change_history      String?            @db.VarChar(14)
-  declare_date        String?            @db.VarChar(8)
-  expire_date         String?            @db.VarChar(8)
-  roadname_address    roadname_address[]
+  roadname_code       String  @db.VarChar(12)
+  roadname            String  @db.VarChar(80)
+  roadname_eng        String? @db.VarChar(80)
+  eupmyeondong_number String  @db.VarChar(2)
+  sido_name           String? @db.VarChar(20)
+  sido_eng            String? @db.VarChar(40)
+  sigungu             String? @db.VarChar(20)
+  sigungu_eng         String? @db.VarChar(40)
+  eupmyeondong        String? @db.VarChar(20)
+  eupmyeondong_eng    String? @db.VarChar(40)
+  eupmyeondong_type   String? @db.VarChar(1)
+  eupmyeondong_code   String? @db.VarChar(3)
+  is_using            String? @db.VarChar(1)
+  change_reason       String? @db.VarChar(1)
+  change_history      String? @db.VarChar(14)
+  declare_date        String? @db.VarChar(8)
+  expire_date         String? @db.VarChar(8)
 
-  @@id([roadname_code, eupmyeondong_number])
+  @@ignore
 }
