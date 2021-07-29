@@ -73,13 +73,17 @@ https.get(url, res => {
           if (ext === 'txt') {
             fs.writeFile(`${targetPath}/${encodedFilename}`, iconv.decode(data, 'euc-kr'), err => {
               if (err) throw err
-              logger.info(`[FileEncoded] ${fileName} is successfully encoded as utf-8`)
+              logger.info(
+                `[FileEncoded] ${encodedFilename} is successfully encoded filename and content to utf-8`
+              )
             })
           } else {
             // 그 외는 기존 인코딩 유지(pdf)
             fs.writeFile(`${targetPath}/${encodedFilename}`, data, err => {
               if (err) throw err
-              logger.info(`[FileEncoded] ${fileName} is successfully encoded as utf-8`)
+              logger.info(
+                `[FileEncoded] ${encodedFilename} is not a txt file, just rename to utf-8`
+              )
             })
           }
         })
