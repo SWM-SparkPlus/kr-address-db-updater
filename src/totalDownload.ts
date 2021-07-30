@@ -23,15 +23,17 @@ const url = encodeURI(
 )
 
 const rootDir = path.resolve(__dirname + '/..')
-const targetPath = `${rootDir}/resources/total`
-const roadnameAddressFilePath = `${targetPath}/roadname_address_total.txt`
-const jibunAddressFilePath = `${targetPath}/jibun_address_total.txt`
-const additionalInfoFilePath = `${targetPath}/additional_info_total.txt`
+const targetDir = `${rootDir}/resources/total`
+const roadnameAddressFilePath = `${targetDir}/roadname_address_total.txt`
+const jibunAddressFilePath = `${targetDir}/jibun_address_total.txt`
+const additionalInfoFilePath = `${targetDir}/additional_info_total.txt`
+const roadnameCodeFilePath = `${targetDir}/roadname_code_total.txt`
+const zipPath = `${targetDir}/${previousMonth}_total.zip`
 
 // 클린 다운로드를 위해 기존 리소스 삭제
-if (fs.existsSync(targetPath)) {
+if (fs.existsSync(targetDir)) {
   try {
-    fs.rmSync(targetPath, { recursive: true, force: true })
+    fs.rmSync(targetDir, { recursive: true, force: true })
     logger.info(`[TotalDatabaseDownloadPreparation] Resource directory deletion completed.`)
   } catch (err) {
     logger.error(`[TotalDatabaseDownloadPreparation] ${err}`)
@@ -41,7 +43,7 @@ if (fs.existsSync(targetPath)) {
 
 // 디렉토리 생성 및 전체분 파일 생성
 try {
-  fs.mkdirSync(targetPath, { recursive: true })
+  fs.mkdirSync(targetDir, { recursive: true })
   fs.close(fs.openSync(roadnameAddressFilePath, 'w'), () => {})
   fs.close(fs.openSync(jibunAddressFilePath, 'w'), () => {})
   fs.close(fs.openSync(additionalInfoFilePath, 'w'), () => {})
@@ -52,8 +54,6 @@ try {
 }
 
 // 파일이름, 디렉토리명, WriteStream 생성
-const zipFileName = `${previousMonth}_total.zip`
-const zipPath = `${targetPath}/${zipFileName}`
 const downloadStream = fs.createWriteStream(zipPath)
 
 // 다운로드 액션
@@ -67,6 +67,7 @@ https.get(url, res => {
     logger.info(`[FileDownloadCompletion] Total file download completion`)
 
     try {
+      // 엔트리(압축파일 내 파일목록)를 이용하여 수행
       new Zip(zipPath).getEntries().forEach(entry => {
         entry.getDataAsync((data, err) => {
           if (err) throw err
@@ -83,10 +84,14 @@ https.get(url, res => {
               targetFilename = jibunAddressFilePath
             } else if (encodedFilename.includes('부가정보_')) {
               targetFilename = additionalInfoFilePath
+            } else if (encodedFilename.includes('전체분')) {
+              targetFilename = roadnameCodeFilePath
             } else {
+              // pdf 파일은 작업을 수행하지 않음.
               return
             }
 
+            // append mode로 aggregation
             fs.appendFile(targetFilename, iconv.decode(data, 'euc-kr'), err => {
               if (err) throw err
             })
@@ -95,8 +100,8 @@ https.get(url, res => {
       })
     } catch (err) {
       // zip 파일이 아니거나, 온전하지 못하거나, 날짜에 맞는 파일을 다운받지 못했을 경우 에러 발생
-      logger.error(`[ZipExtractError] ${zipFileName}: ${err}`)
-      fs.rmSync(targetPath, { force: true, recursive: true })
+      logger.error(`[ZipExtractError] ${err}`)
+      fs.rmSync(targetDir, { force: true, recursive: true })
       process.exit(1)
     }
 
