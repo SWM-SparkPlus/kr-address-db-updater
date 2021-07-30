@@ -12,8 +12,7 @@ console.warn(
 
 // 전월 구하기
 const date = new Date()
-// const previousMonth = dayjs(date.setMonth(date.getMonth() - 1)).format('YYYYMM')
-const previousMonth = '202106'
+const previousMonth = dayjs(date.setMonth(date.getMonth() - 1)).format('YYYYMM')
 
 // 요청주소. 최신 주소 DB
 const url = encodeURI(
