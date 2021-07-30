@@ -84,18 +84,13 @@ https.get(url, res => {
               targetFilename = jibunAddressFilePath
             } else if (encodedFilename.includes('부가정보_')) {
               targetFilename = additionalInfoFilePath
+            } else {
+              return
             }
 
             fs.appendFile(targetFilename, iconv.decode(data, 'euc-kr'), err => {
               if (err) throw err
             })
-
-            // fs.writeFile(`${targetPath}/${encodedFilename}`, iconv.decode(data, 'euc-kr'), err => {
-            //   if (err) throw err
-            //   logger.info(
-            //     `[FileEncoded] ${encodedFilename} is successfully encoded filename and content to utf-8`
-            //   )
-            // })
           }
         })
       })
