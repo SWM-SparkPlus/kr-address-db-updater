@@ -1,6 +1,8 @@
 import fs from 'fs'
-import winston from 'winston'
+import { createLogger, format, transports } from 'winston'
 import WinstonDaily from 'winston-daily-rotate-file'
+
+const { combine, printf, timestamp, label } = format
 
 // logs dir
 const logDir = `${__dirname}/../../logs`
@@ -9,14 +11,15 @@ if (!fs.existsSync(logDir)) {
   fs.mkdirSync(logDir)
 }
 
-const { combine, printf } = winston.format
-const logFormat = printf(({ level, message }) => `${level}: ${message}`)
+const logFormat = printf(
+  ({ level, message, timestamp, label }) => `${timestamp} [${label}] ${level}: ${message}`
+)
 
 /*
  * Log Level
  * error: 0, warn: 1, info: 2, http: 3, verbose: 4, debug: 5, silly: 6
  */
-const logger = winston.createLogger({
+const logger = createLogger({
   format: combine(logFormat),
   transports: [
     // info log setting
@@ -44,12 +47,8 @@ const logger = winston.createLogger({
 })
 
 logger.add(
-  new winston.transports.Console({
-    format: winston.format.combine(
-      winston.format.splat(),
-      winston.format.colorize(),
-      winston.format.simple()
-    ),
+  new transports.Console({
+    format: format.combine(format.splat(), format.colorize(), format.simple()),
   })
 )
 

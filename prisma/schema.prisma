@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model additional_info {
+model additional_info_seoul {
   manage_number               String  @id @db.VarChar(25)
   hangjungdong_code           String? @db.VarChar(10)
   hangjungdong_name           String? @db.VarChar(20)
@@ -19,7 +19,199 @@ model additional_info {
   is_apt                      String? @db.VarChar(1)
 }
 
-model jibun_address {
+model additional_info_incheon {
+  manage_number               String  @id @db.VarChar(25)
+  hangjungdong_code           String? @db.VarChar(10)
+  hangjungdong_name           String? @db.VarChar(20)
+  zipcode                     String? @db.VarChar(5)
+  zipcode_serial_number       String? @db.VarChar(3)
+  bulk_delivery_building_name String? @db.VarChar(40)
+  master_building_name        String? @db.VarChar(40)
+  sigungu_building_name       String? @db.VarChar(40)
+  is_apt                      String? @db.VarChar(1)
+}
+
+model additional_info_gyeonggi {
+  manage_number               String  @id @db.VarChar(25)
+  hangjungdong_code           String? @db.VarChar(10)
+  hangjungdong_name           String? @db.VarChar(20)
+  zipcode                     String? @db.VarChar(5)
+  zipcode_serial_number       String? @db.VarChar(3)
+  bulk_delivery_building_name String? @db.VarChar(40)
+  master_building_name        String? @db.VarChar(40)
+  sigungu_building_name       String? @db.VarChar(40)
+  is_apt                      String? @db.VarChar(1)
+}
+
+model additional_info_gangwon {
+  manage_number               String  @id @db.VarChar(25)
+  hangjungdong_code           String? @db.VarChar(10)
+  hangjungdong_name           String? @db.VarChar(20)
+  zipcode                     String? @db.VarChar(5)
+  zipcode_serial_number       String? @db.VarChar(3)
+  bulk_delivery_building_name String? @db.VarChar(40)
+  master_building_name        String? @db.VarChar(40)
+  sigungu_building_name       String? @db.VarChar(40)
+  is_apt                      String? @db.VarChar(1)
+}
+
+model additional_info_daegu {
+  manage_number               String  @id @db.VarChar(25)
+  hangjungdong_code           String? @db.VarChar(10)
+  hangjungdong_name           String? @db.VarChar(20)
+  zipcode                     String? @db.VarChar(5)
+  zipcode_serial_number       String? @db.VarChar(3)
+  bulk_delivery_building_name String? @db.VarChar(40)
+  master_building_name        String? @db.VarChar(40)
+  sigungu_building_name       String? @db.VarChar(40)
+  is_apt                      String? @db.VarChar(1)
+}
+
+model additional_info_daejeon {
+  manage_number               String  @id @db.VarChar(25)
+  hangjungdong_code           String? @db.VarChar(10)
+  hangjungdong_name           String? @db.VarChar(20)
+  zipcode                     String? @db.VarChar(5)
+  zipcode_serial_number       String? @db.VarChar(3)
+  bulk_delivery_building_name String? @db.VarChar(40)
+  master_building_name        String? @db.VarChar(40)
+  sigungu_building_name       String? @db.VarChar(40)
+  is_apt                      String? @db.VarChar(1)
+}
+
+model additional_info_busan {
+  manage_number               String  @id @db.VarChar(25)
+  hangjungdong_code           String? @db.VarChar(10)
+  hangjungdong_name           String? @db.VarChar(20)
+  zipcode                     String? @db.VarChar(5)
+  zipcode_serial_number       String? @db.VarChar(3)
+  bulk_delivery_building_name String? @db.VarChar(40)
+  master_building_name        String? @db.VarChar(40)
+  sigungu_building_name       String? @db.VarChar(40)
+  is_apt                      String? @db.VarChar(1)
+}
+
+model additional_info_ulsan {
+  manage_number               String  @id @db.VarChar(25)
+  hangjungdong_code           String? @db.VarChar(10)
+  hangjungdong_name           String? @db.VarChar(20)
+  zipcode                     String? @db.VarChar(5)
+  zipcode_serial_number       String? @db.VarChar(3)
+  bulk_delivery_building_name String? @db.VarChar(40)
+  master_building_name        String? @db.VarChar(40)
+  sigungu_building_name       String? @db.VarChar(40)
+  is_apt                      String? @db.VarChar(1)
+}
+
+model additional_info_gwangju {
+  manage_number               String  @id @db.VarChar(25)
+  hangjungdong_code           String? @db.VarChar(10)
+  hangjungdong_name           String? @db.VarChar(20)
+  zipcode                     String? @db.VarChar(5)
+  zipcode_serial_number       String? @db.VarChar(3)
+  bulk_delivery_building_name String? @db.VarChar(40)
+  master_building_name        String? @db.VarChar(40)
+  sigungu_building_name       String? @db.VarChar(40)
+  is_apt                      String? @db.VarChar(1)
+}
+
+model additional_info_sejong {
+  manage_number               String  @id @db.VarChar(25)
+  hangjungdong_code           String? @db.VarChar(10)
+  hangjungdong_name           String? @db.VarChar(20)
+  zipcode                     String? @db.VarChar(5)
+  zipcode_serial_number       String? @db.VarChar(3)
+  bulk_delivery_building_name String? @db.VarChar(40)
+  master_building_name        String? @db.VarChar(40)
+  sigungu_building_name       String? @db.VarChar(40)
+  is_apt                      String? @db.VarChar(1)
+}
+
+model additional_info_gyeongnam {
+  manage_number               String  @id @db.VarChar(25)
+  hangjungdong_code           String? @db.VarChar(10)
+  hangjungdong_name           String? @db.VarChar(20)
+  zipcode                     String? @db.VarChar(5)
+  zipcode_serial_number       String? @db.VarChar(3)
+  bulk_delivery_building_name String? @db.VarChar(40)
+  master_building_name        String? @db.VarChar(40)
+  sigungu_building_name       String? @db.VarChar(40)
+  is_apt                      String? @db.VarChar(1)
+}
+
+model additional_info_gyeongbuk {
+  manage_number               String  @id @db.VarChar(25)
+  hangjungdong_code           String? @db.VarChar(10)
+  hangjungdong_name           String? @db.VarChar(20)
+  zipcode                     String? @db.VarChar(5)
+  zipcode_serial_number       String? @db.VarChar(3)
+  bulk_delivery_building_name String? @db.VarChar(40)
+  master_building_name        String? @db.VarChar(40)
+  sigungu_building_name       String? @db.VarChar(40)
+  is_apt                      String? @db.VarChar(1)
+}
+
+model additional_info_chungnam {
+  manage_number               String  @id @db.VarChar(25)
+  hangjungdong_code           String? @db.VarChar(10)
+  hangjungdong_name           String? @db.VarChar(20)
+  zipcode                     String? @db.VarChar(5)
+  zipcode_serial_number       String? @db.VarChar(3)
+  bulk_delivery_building_name String? @db.VarChar(40)
+  master_building_name        String? @db.VarChar(40)
+  sigungu_building_name       String? @db.VarChar(40)
+  is_apt                      String? @db.VarChar(1)
+}
+
+model additional_info_chungbuk {
+  manage_number               String  @id @db.VarChar(25)
+  hangjungdong_code           String? @db.VarChar(10)
+  hangjungdong_name           String? @db.VarChar(20)
+  zipcode                     String? @db.VarChar(5)
+  zipcode_serial_number       String? @db.VarChar(3)
+  bulk_delivery_building_name String? @db.VarChar(40)
+  master_building_name        String? @db.VarChar(40)
+  sigungu_building_name       String? @db.VarChar(40)
+  is_apt                      String? @db.VarChar(1)
+}
+
+model additional_info_jeonnam {
+  manage_number               String  @id @db.VarChar(25)
+  hangjungdong_code           String? @db.VarChar(10)
+  hangjungdong_name           String? @db.VarChar(20)
+  zipcode                     String? @db.VarChar(5)
+  zipcode_serial_number       String? @db.VarChar(3)
+  bulk_delivery_building_name String? @db.VarChar(40)
+  master_building_name        String? @db.VarChar(40)
+  sigungu_building_name       String? @db.VarChar(40)
+  is_apt                      String? @db.VarChar(1)
+}
+
+model additional_info_jeonbuk {
+  manage_number               String  @id @db.VarChar(25)
+  hangjungdong_code           String? @db.VarChar(10)
+  hangjungdong_name           String? @db.VarChar(20)
+  zipcode                     String? @db.VarChar(5)
+  zipcode_serial_number       String? @db.VarChar(3)
+  bulk_delivery_building_name String? @db.VarChar(40)
+  master_building_name        String? @db.VarChar(40)
+  sigungu_building_name       String? @db.VarChar(40)
+  is_apt                      String? @db.VarChar(1)
+}
+
+model additional_info_jeju {
+  manage_number               String  @id @db.VarChar(25)
+  hangjungdong_code           String? @db.VarChar(10)
+  hangjungdong_name           String? @db.VarChar(20)
+  zipcode                     String? @db.VarChar(5)
+  zipcode_serial_number       String? @db.VarChar(3)
+  bulk_delivery_building_name String? @db.VarChar(40)
+  master_building_name        String? @db.VarChar(40)
+  sigungu_building_name       String? @db.VarChar(40)
+  is_apt                      String? @db.VarChar(1)
+}
+
+model jibun_address_seoul {
   manage_number             String  @id @db.VarChar(25)
   serial_number             Int     @db.SmallInt
   bupjungdong_code          String? @db.VarChar(10)
@@ -33,7 +225,455 @@ model jibun_address {
   is_representation         String? @db.VarChar(1)
 }
 
-model roadname_address {
+model jibun_address_incheon {
+  manage_number             String  @id @db.VarChar(25)
+  serial_number             Int     @db.SmallInt
+  bupjungdong_code          String? @db.VarChar(10)
+  sido_name                 String? @db.VarChar(20)
+  sigungu_name              String? @db.VarChar(20)
+  bupjung_eupmyeondong_name String? @db.VarChar(20)
+  bupjunglee_name           String? @db.VarChar(20)
+  is_mountain               String? @db.VarChar(1)
+  jibun_primary             Int?    @db.SmallInt
+  jibun_secondary           Int?    @db.SmallInt
+  is_representation         String? @db.VarChar(1)
+}
+
+model jibun_address_gangwon {
+  manage_number             String  @id @db.VarChar(25)
+  serial_number             Int     @db.SmallInt
+  bupjungdong_code          String? @db.VarChar(10)
+  sido_name                 String? @db.VarChar(20)
+  sigungu_name              String? @db.VarChar(20)
+  bupjung_eupmyeondong_name String? @db.VarChar(20)
+  bupjunglee_name           String? @db.VarChar(20)
+  is_mountain               String? @db.VarChar(1)
+  jibun_primary             Int?    @db.SmallInt
+  jibun_secondary           Int?    @db.SmallInt
+  is_representation         String? @db.VarChar(1)
+}
+
+model jibun_address_gyeonggi {
+  manage_number             String  @id @db.VarChar(25)
+  serial_number             Int     @db.SmallInt
+  bupjungdong_code          String? @db.VarChar(10)
+  sido_name                 String? @db.VarChar(20)
+  sigungu_name              String? @db.VarChar(20)
+  bupjung_eupmyeondong_name String? @db.VarChar(20)
+  bupjunglee_name           String? @db.VarChar(20)
+  is_mountain               String? @db.VarChar(1)
+  jibun_primary             Int?    @db.SmallInt
+  jibun_secondary           Int?    @db.SmallInt
+  is_representation         String? @db.VarChar(1)
+}
+
+model jibun_address_daegu {
+  manage_number             String  @id @db.VarChar(25)
+  serial_number             Int     @db.SmallInt
+  bupjungdong_code          String? @db.VarChar(10)
+  sido_name                 String? @db.VarChar(20)
+  sigungu_name              String? @db.VarChar(20)
+  bupjung_eupmyeondong_name String? @db.VarChar(20)
+  bupjunglee_name           String? @db.VarChar(20)
+  is_mountain               String? @db.VarChar(1)
+  jibun_primary             Int?    @db.SmallInt
+  jibun_secondary           Int?    @db.SmallInt
+  is_representation         String? @db.VarChar(1)
+}
+
+model jibun_address_daejeon {
+  manage_number             String  @id @db.VarChar(25)
+  serial_number             Int     @db.SmallInt
+  bupjungdong_code          String? @db.VarChar(10)
+  sido_name                 String? @db.VarChar(20)
+  sigungu_name              String? @db.VarChar(20)
+  bupjung_eupmyeondong_name String? @db.VarChar(20)
+  bupjunglee_name           String? @db.VarChar(20)
+  is_mountain               String? @db.VarChar(1)
+  jibun_primary             Int?    @db.SmallInt
+  jibun_secondary           Int?    @db.SmallInt
+  is_representation         String? @db.VarChar(1)
+}
+
+model jibun_address_busan {
+  manage_number             String  @id @db.VarChar(25)
+  serial_number             Int     @db.SmallInt
+  bupjungdong_code          String? @db.VarChar(10)
+  sido_name                 String? @db.VarChar(20)
+  sigungu_name              String? @db.VarChar(20)
+  bupjung_eupmyeondong_name String? @db.VarChar(20)
+  bupjunglee_name           String? @db.VarChar(20)
+  is_mountain               String? @db.VarChar(1)
+  jibun_primary             Int?    @db.SmallInt
+  jibun_secondary           Int?    @db.SmallInt
+  is_representation         String? @db.VarChar(1)
+}
+
+model jibun_address_ulsan {
+  manage_number             String  @id @db.VarChar(25)
+  serial_number             Int     @db.SmallInt
+  bupjungdong_code          String? @db.VarChar(10)
+  sido_name                 String? @db.VarChar(20)
+  sigungu_name              String? @db.VarChar(20)
+  bupjung_eupmyeondong_name String? @db.VarChar(20)
+  bupjunglee_name           String? @db.VarChar(20)
+  is_mountain               String? @db.VarChar(1)
+  jibun_primary             Int?    @db.SmallInt
+  jibun_secondary           Int?    @db.SmallInt
+  is_representation         String? @db.VarChar(1)
+}
+
+model jibun_address_gwangju {
+  manage_number             String  @id @db.VarChar(25)
+  serial_number             Int     @db.SmallInt
+  bupjungdong_code          String? @db.VarChar(10)
+  sido_name                 String? @db.VarChar(20)
+  sigungu_name              String? @db.VarChar(20)
+  bupjung_eupmyeondong_name String? @db.VarChar(20)
+  bupjunglee_name           String? @db.VarChar(20)
+  is_mountain               String? @db.VarChar(1)
+  jibun_primary             Int?    @db.SmallInt
+  jibun_secondary           Int?    @db.SmallInt
+  is_representation         String? @db.VarChar(1)
+}
+
+model jibun_address_sejong {
+  manage_number             String  @id @db.VarChar(25)
+  serial_number             Int     @db.SmallInt
+  bupjungdong_code          String? @db.VarChar(10)
+  sido_name                 String? @db.VarChar(20)
+  sigungu_name              String? @db.VarChar(20)
+  bupjung_eupmyeondong_name String? @db.VarChar(20)
+  bupjunglee_name           String? @db.VarChar(20)
+  is_mountain               String? @db.VarChar(1)
+  jibun_primary             Int?    @db.SmallInt
+  jibun_secondary           Int?    @db.SmallInt
+  is_representation         String? @db.VarChar(1)
+}
+
+model jibun_address_gyeongnam {
+  manage_number             String  @id @db.VarChar(25)
+  serial_number             Int     @db.SmallInt
+  bupjungdong_code          String? @db.VarChar(10)
+  sido_name                 String? @db.VarChar(20)
+  sigungu_name              String? @db.VarChar(20)
+  bupjung_eupmyeondong_name String? @db.VarChar(20)
+  bupjunglee_name           String? @db.VarChar(20)
+  is_mountain               String? @db.VarChar(1)
+  jibun_primary             Int?    @db.SmallInt
+  jibun_secondary           Int?    @db.SmallInt
+  is_representation         String? @db.VarChar(1)
+}
+
+model jibun_address_gyeongbuk {
+  manage_number             String  @id @db.VarChar(25)
+  serial_number             Int     @db.SmallInt
+  bupjungdong_code          String? @db.VarChar(10)
+  sido_name                 String? @db.VarChar(20)
+  sigungu_name              String? @db.VarChar(20)
+  bupjung_eupmyeondong_name String? @db.VarChar(20)
+  bupjunglee_name           String? @db.VarChar(20)
+  is_mountain               String? @db.VarChar(1)
+  jibun_primary             Int?    @db.SmallInt
+  jibun_secondary           Int?    @db.SmallInt
+  is_representation         String? @db.VarChar(1)
+}
+
+model jibun_address_chungnam {
+  manage_number             String  @id @db.VarChar(25)
+  serial_number             Int     @db.SmallInt
+  bupjungdong_code          String? @db.VarChar(10)
+  sido_name                 String? @db.VarChar(20)
+  sigungu_name              String? @db.VarChar(20)
+  bupjung_eupmyeondong_name String? @db.VarChar(20)
+  bupjunglee_name           String? @db.VarChar(20)
+  is_mountain               String? @db.VarChar(1)
+  jibun_primary             Int?    @db.SmallInt
+  jibun_secondary           Int?    @db.SmallInt
+  is_representation         String? @db.VarChar(1)
+}
+
+model jibun_address_chungbuk {
+  manage_number             String  @id @db.VarChar(25)
+  serial_number             Int     @db.SmallInt
+  bupjungdong_code          String? @db.VarChar(10)
+  sido_name                 String? @db.VarChar(20)
+  sigungu_name              String? @db.VarChar(20)
+  bupjung_eupmyeondong_name String? @db.VarChar(20)
+  bupjunglee_name           String? @db.VarChar(20)
+  is_mountain               String? @db.VarChar(1)
+  jibun_primary             Int?    @db.SmallInt
+  jibun_secondary           Int?    @db.SmallInt
+  is_representation         String? @db.VarChar(1)
+}
+
+model jibun_address_jeonnam {
+  manage_number             String  @id @db.VarChar(25)
+  serial_number             Int     @db.SmallInt
+  bupjungdong_code          String? @db.VarChar(10)
+  sido_name                 String? @db.VarChar(20)
+  sigungu_name              String? @db.VarChar(20)
+  bupjung_eupmyeondong_name String? @db.VarChar(20)
+  bupjunglee_name           String? @db.VarChar(20)
+  is_mountain               String? @db.VarChar(1)
+  jibun_primary             Int?    @db.SmallInt
+  jibun_secondary           Int?    @db.SmallInt
+  is_representation         String? @db.VarChar(1)
+}
+
+model jibun_address_jeonbuk {
+  manage_number             String  @id @db.VarChar(25)
+  serial_number             Int     @db.SmallInt
+  bupjungdong_code          String? @db.VarChar(10)
+  sido_name                 String? @db.VarChar(20)
+  sigungu_name              String? @db.VarChar(20)
+  bupjung_eupmyeondong_name String? @db.VarChar(20)
+  bupjunglee_name           String? @db.VarChar(20)
+  is_mountain               String? @db.VarChar(1)
+  jibun_primary             Int?    @db.SmallInt
+  jibun_secondary           Int?    @db.SmallInt
+  is_representation         String? @db.VarChar(1)
+}
+
+model jibun_address_jeju {
+  manage_number             String  @id @db.VarChar(25)
+  serial_number             Int     @db.SmallInt
+  bupjungdong_code          String? @db.VarChar(10)
+  sido_name                 String? @db.VarChar(20)
+  sigungu_name              String? @db.VarChar(20)
+  bupjung_eupmyeondong_name String? @db.VarChar(20)
+  bupjunglee_name           String? @db.VarChar(20)
+  is_mountain               String? @db.VarChar(1)
+  jibun_primary             Int?    @db.SmallInt
+  jibun_secondary           Int?    @db.SmallInt
+  is_representation         String? @db.VarChar(1)
+}
+
+model roadname_address_seoul {
+  manage_number             String  @id @db.VarChar(25)
+  roadname_code             String  @db.VarChar(12)
+  eupmyeondong_number       String  @db.VarChar(2)
+  basement                  String? @db.VarChar(1)
+  building_primary_number   Int?    @db.SmallInt
+  building_secondary_number Int?    @db.SmallInt
+  basic_area_number         String? @db.VarChar(5)
+  change_reason_code        String? @db.VarChar(2)
+  notice_date               String? @db.VarChar(8)
+  previous_roadname_address String? @db.VarChar(25)
+  has_detail                String? @db.VarChar(1)
+}
+
+model roadname_address_busan {
+  manage_number             String  @id @db.VarChar(25)
+  roadname_code             String  @db.VarChar(12)
+  eupmyeondong_number       String  @db.VarChar(2)
+  basement                  String? @db.VarChar(1)
+  building_primary_number   Int?    @db.SmallInt
+  building_secondary_number Int?    @db.SmallInt
+  basic_area_number         String? @db.VarChar(5)
+  change_reason_code        String? @db.VarChar(2)
+  notice_date               String? @db.VarChar(8)
+  previous_roadname_address String? @db.VarChar(25)
+  has_detail                String? @db.VarChar(1)
+}
+
+model roadname_address_incheon {
+  manage_number             String  @id @db.VarChar(25)
+  roadname_code             String  @db.VarChar(12)
+  eupmyeondong_number       String  @db.VarChar(2)
+  basement                  String? @db.VarChar(1)
+  building_primary_number   Int?    @db.SmallInt
+  building_secondary_number Int?    @db.SmallInt
+  basic_area_number         String? @db.VarChar(5)
+  change_reason_code        String? @db.VarChar(2)
+  notice_date               String? @db.VarChar(8)
+  previous_roadname_address String? @db.VarChar(25)
+  has_detail                String? @db.VarChar(1)
+}
+
+model roadname_address_daegu {
+  manage_number             String  @id @db.VarChar(25)
+  roadname_code             String  @db.VarChar(12)
+  eupmyeondong_number       String  @db.VarChar(2)
+  basement                  String? @db.VarChar(1)
+  building_primary_number   Int?    @db.SmallInt
+  building_secondary_number Int?    @db.SmallInt
+  basic_area_number         String? @db.VarChar(5)
+  change_reason_code        String? @db.VarChar(2)
+  notice_date               String? @db.VarChar(8)
+  previous_roadname_address String? @db.VarChar(25)
+  has_detail                String? @db.VarChar(1)
+}
+
+model roadname_address_daejeon {
+  manage_number             String  @id @db.VarChar(25)
+  roadname_code             String  @db.VarChar(12)
+  eupmyeondong_number       String  @db.VarChar(2)
+  basement                  String? @db.VarChar(1)
+  building_primary_number   Int?    @db.SmallInt
+  building_secondary_number Int?    @db.SmallInt
+  basic_area_number         String? @db.VarChar(5)
+  change_reason_code        String? @db.VarChar(2)
+  notice_date               String? @db.VarChar(8)
+  previous_roadname_address String? @db.VarChar(25)
+  has_detail                String? @db.VarChar(1)
+}
+
+model roadname_address_ulsan {
+  manage_number             String  @id @db.VarChar(25)
+  roadname_code             String  @db.VarChar(12)
+  eupmyeondong_number       String  @db.VarChar(2)
+  basement                  String? @db.VarChar(1)
+  building_primary_number   Int?    @db.SmallInt
+  building_secondary_number Int?    @db.SmallInt
+  basic_area_number         String? @db.VarChar(5)
+  change_reason_code        String? @db.VarChar(2)
+  notice_date               String? @db.VarChar(8)
+  previous_roadname_address String? @db.VarChar(25)
+  has_detail                String? @db.VarChar(1)
+}
+
+model roadname_address_gwangju {
+  manage_number             String  @id @db.VarChar(25)
+  roadname_code             String  @db.VarChar(12)
+  eupmyeondong_number       String  @db.VarChar(2)
+  basement                  String? @db.VarChar(1)
+  building_primary_number   Int?    @db.SmallInt
+  building_secondary_number Int?    @db.SmallInt
+  basic_area_number         String? @db.VarChar(5)
+  change_reason_code        String? @db.VarChar(2)
+  notice_date               String? @db.VarChar(8)
+  previous_roadname_address String? @db.VarChar(25)
+  has_detail                String? @db.VarChar(1)
+}
+
+model roadname_address_gyeonggi {
+  manage_number             String  @id @db.VarChar(25)
+  roadname_code             String  @db.VarChar(12)
+  eupmyeondong_number       String  @db.VarChar(2)
+  basement                  String? @db.VarChar(1)
+  building_primary_number   Int?    @db.SmallInt
+  building_secondary_number Int?    @db.SmallInt
+  basic_area_number         String? @db.VarChar(5)
+  change_reason_code        String? @db.VarChar(2)
+  notice_date               String? @db.VarChar(8)
+  previous_roadname_address String? @db.VarChar(25)
+  has_detail                String? @db.VarChar(1)
+}
+
+model roadname_address_gangwon {
+  manage_number             String  @id @db.VarChar(25)
+  roadname_code             String  @db.VarChar(12)
+  eupmyeondong_number       String  @db.VarChar(2)
+  basement                  String? @db.VarChar(1)
+  building_primary_number   Int?    @db.SmallInt
+  building_secondary_number Int?    @db.SmallInt
+  basic_area_number         String? @db.VarChar(5)
+  change_reason_code        String? @db.VarChar(2)
+  notice_date               String? @db.VarChar(8)
+  previous_roadname_address String? @db.VarChar(25)
+  has_detail                String? @db.VarChar(1)
+}
+
+model roadname_address_gyeongnam {
+  manage_number             String  @id @db.VarChar(25)
+  roadname_code             String  @db.VarChar(12)
+  eupmyeondong_number       String  @db.VarChar(2)
+  basement                  String? @db.VarChar(1)
+  building_primary_number   Int?    @db.SmallInt
+  building_secondary_number Int?    @db.SmallInt
+  basic_area_number         String? @db.VarChar(5)
+  change_reason_code        String? @db.VarChar(2)
+  notice_date               String? @db.VarChar(8)
+  previous_roadname_address String? @db.VarChar(25)
+  has_detail                String? @db.VarChar(1)
+}
+
+model roadname_address_gyeongbuk {
+  manage_number             String  @id @db.VarChar(25)
+  roadname_code             String  @db.VarChar(12)
+  eupmyeondong_number       String  @db.VarChar(2)
+  basement                  String? @db.VarChar(1)
+  building_primary_number   Int?    @db.SmallInt
+  building_secondary_number Int?    @db.SmallInt
+  basic_area_number         String? @db.VarChar(5)
+  change_reason_code        String? @db.VarChar(2)
+  notice_date               String? @db.VarChar(8)
+  previous_roadname_address String? @db.VarChar(25)
+  has_detail                String? @db.VarChar(1)
+}
+
+model roadname_address_jeonnam {
+  manage_number             String  @id @db.VarChar(25)
+  roadname_code             String  @db.VarChar(12)
+  eupmyeondong_number       String  @db.VarChar(2)
+  basement                  String? @db.VarChar(1)
+  building_primary_number   Int?    @db.SmallInt
+  building_secondary_number Int?    @db.SmallInt
+  basic_area_number         String? @db.VarChar(5)
+  change_reason_code        String? @db.VarChar(2)
+  notice_date               String? @db.VarChar(8)
+  previous_roadname_address String? @db.VarChar(25)
+  has_detail                String? @db.VarChar(1)
+}
+
+model roadname_address_jeonbku {
+  manage_number             String  @id @db.VarChar(25)
+  roadname_code             String  @db.VarChar(12)
+  eupmyeondong_number       String  @db.VarChar(2)
+  basement                  String? @db.VarChar(1)
+  building_primary_number   Int?    @db.SmallInt
+  building_secondary_number Int?    @db.SmallInt
+  basic_area_number         String? @db.VarChar(5)
+  change_reason_code        String? @db.VarChar(2)
+  notice_date               String? @db.VarChar(8)
+  previous_roadname_address String? @db.VarChar(25)
+  has_detail                String? @db.VarChar(1)
+}
+
+model roadname_address_chungnam {
+  manage_number             String  @id @db.VarChar(25)
+  roadname_code             String  @db.VarChar(12)
+  eupmyeondong_number       String  @db.VarChar(2)
+  basement                  String? @db.VarChar(1)
+  building_primary_number   Int?    @db.SmallInt
+  building_secondary_number Int?    @db.SmallInt
+  basic_area_number         String? @db.VarChar(5)
+  change_reason_code        String? @db.VarChar(2)
+  notice_date               String? @db.VarChar(8)
+  previous_roadname_address String? @db.VarChar(25)
+  has_detail                String? @db.VarChar(1)
+}
+
+model roadname_address_chungbuk {
+  manage_number             String  @id @db.VarChar(25)
+  roadname_code             String  @db.VarChar(12)
+  eupmyeondong_number       String  @db.VarChar(2)
+  basement                  String? @db.VarChar(1)
+  building_primary_number   Int?    @db.SmallInt
+  building_secondary_number Int?    @db.SmallInt
+  basic_area_number         String? @db.VarChar(5)
+  change_reason_code        String? @db.VarChar(2)
+  notice_date               String? @db.VarChar(8)
+  previous_roadname_address String? @db.VarChar(25)
+  has_detail                String? @db.VarChar(1)
+}
+
+model roadname_address_sejong {
+  manage_number             String  @id @db.VarChar(25)
+  roadname_code             String  @db.VarChar(12)
+  eupmyeondong_number       String  @db.VarChar(2)
+  basement                  String? @db.VarChar(1)
+  building_primary_number   Int?    @db.SmallInt
+  building_secondary_number Int?    @db.SmallInt
+  basic_area_number         String? @db.VarChar(5)
+  change_reason_code        String? @db.VarChar(2)
+  notice_date               String? @db.VarChar(8)
+  previous_roadname_address String? @db.VarChar(25)
+  has_detail                String? @db.VarChar(1)
+}
+
+model roadname_address_jeju {
   manage_number             String  @id @db.VarChar(25)
   roadname_code             String  @db.VarChar(12)
   eupmyeondong_number       String  @db.VarChar(2)
