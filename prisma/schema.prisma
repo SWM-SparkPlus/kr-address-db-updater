@@ -617,7 +617,7 @@ model roadname_address_jeonnam {
   has_detail                String? @db.VarChar(1)
 }
 
-model roadname_address_jeonbku {
+model roadname_address_jeonbuk {
   manage_number             String  @id @db.VarChar(25)
   roadname_code             String  @db.VarChar(12)
   eupmyeondong_number       String  @db.VarChar(2)
