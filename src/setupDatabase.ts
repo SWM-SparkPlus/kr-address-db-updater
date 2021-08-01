@@ -5,9 +5,7 @@ import './lib/env'
 import { logger } from './lib/logger'
 import EventEmitter from 'events'
 import { downloadFile, TDownloadFileOption } from './lib/fileDownloader'
-
-const eventEmitter = new EventEmitter()
-eventEmitter.setMaxListeners(100)
+import { writeEncodedFileAndImport } from './lib/utf8Writer'
 
 console.warn(
   `[HeavyJobWarning] !!! This job contains cpu intensive workload such as string encode/decode and high network usage !!!`
@@ -15,7 +13,7 @@ console.warn(
 
 // 전월 구하기
 const date = new Date()
-const previousMonth = dayjs(date.setMonth(date.getMonth() - 3)).format('YYYYMM')
+const previousMonth = dayjs(date.setMonth(date.getMonth() - 2)).format('YYYYMM')
 
 logger.info(`[DownloadInfo] This job will download total data based on date '${previousMonth}'`)
 
@@ -55,14 +53,25 @@ const downloadOption: TDownloadFileOption = {
 // 다운로드 실행
 const main = async () => {
   try {
-    await downloadFile(downloadOption)
+    // 다운로드
+    const zipEntries = await downloadFile(downloadOption)
+
+    // 인코딩
+    zipEntries.forEach(entry => {
+      entry.getDataAsync((data, err) => {
+        if (err) throw err
+
+        writeEncodedFileAndImport(data, entry, downloadOption.downloadDir)
+      })
+    })
+
+    // 임포트 스크립트
   } catch (err) {
-    logger.error(`[DownloadError] ${err}`)
     fs.rmSync(resourceDir, { force: true, recursive: true })
-    process.exit(1)
+    throw err
   }
 }
 
 main().catch(e => {
-  console.error('망함!' + e)
+  logger.error(`[SetupDatabaseError] ${e}`)
 })

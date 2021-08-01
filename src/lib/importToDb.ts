@@ -1,35 +1,16 @@
-import { exec, spawn } from 'child_process'
-import { readdirSync } from 'fs'
-import 'dotenv/config'
-import path from 'path/posix'
+import { spawn } from 'child_process'
 import { logger } from './logger'
 
-const { MYSQL_ROOT_PASSWORD, MYSQL_DATABASE } = process.env
-
+/**
+ * MySQL에서 LOAD DATA를 병렬처리 하기위해 자식 프로세스를 생성하는 함수
+ *
+ * @param tableName 입력할 테이블명. 테이블 명이면서 파일 이름이어야 함.
+ */
 export const importToDb = (tableName: string) => {
   logger.info(`[ImportStarts] Import starts with table name: ${tableName}`)
 
-  let stdoutResult = ''
-  let hasErr = false
-
-  const execution = exec(
-    `sh ./scripts/import_total_data.sh ${tableName}`,
-    (err, stdout, stderr) => {
-      if (err || stderr) {
-        logger.error(err || stderr)
-      }
-
-      logger.info(stdout)
-    }
+  const importScript = spawn(`sh`, ['./scripts/import_total_data.sh', tableName]).setMaxListeners(0)
+  importScript.on('close', () =>
+    logger.info(`[ImportComplete] Complete importing on table: ${tableName}`)
   )
-}
-
-try {
-  readdirSync(path.resolve(__dirname) + '/../../resources/total').map(fileName => {
-    if (fileName.split('.')[1] === 'txt') {
-      importToDb(fileName.split('.')[0])
-    }
-  })
-} catch (err) {
-  logger.error(err)
 }

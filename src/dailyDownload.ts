@@ -2,8 +2,8 @@ import dayjs from 'dayjs'
 import https from 'https'
 import fs from 'fs'
 import path from 'path'
-import extract from 'extract-zip'
 import iconv from 'iconv-lite'
+import Zip from 'adm-zip'
 import { logger } from './lib/logger'
 
 // 어제 날짜 구하기
@@ -52,7 +52,7 @@ https.get(url, res => {
   // 스트림 입력 종료시에 압축 해제
   writeStream.on('finish', async () => {
     try {
-      await extract(zipPath, { dir: targetPath })
+      new Zip(zipPath).getEntries().forEach(entry => {})
     } catch (err) {
       // zip 파일이 아니거나, 온전하지 못하거나, 날짜에 맞는 파일을 다운받지 못했을 경우 에러 발생
       logger.error(`[ZipExtractError] ${err}`)

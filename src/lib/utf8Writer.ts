@@ -1,6 +1,6 @@
 import AdmZip from 'adm-zip'
 import EventEmitter from 'events'
-import { createWriteStream } from 'fs'
+import { createWriteStream, readdirSync } from 'fs'
 import iconv from 'iconv-lite'
 import { Readable } from 'stream'
 import { SidoObject, TSido } from './sido'
@@ -29,6 +29,8 @@ export const writeEncodedFileAndImport = (
   // 확장자 추출
   const dotSplitFilename = encodedFilename.split('.')
   const ext = dotSplitFilename[dotSplitFilename.length - 1]
+
+  let numOfFiles = readdirSync(writeDir).length - 1
 
   // 확장자와 이름을 확인하여 데이터베이스에 필요한 파일만 사용
   if (ext === 'txt' && !encodedFilename.includes('자료건수')) {
@@ -61,7 +63,8 @@ export const writeEncodedFileAndImport = (
 
     // 쓰기가 끝나면 import 실행
     readableContentStream.on('close', () => {
-      encoderAndWriteEvent.emit('finish', tableName)
+      numOfFiles -= 1
+      encoderAndWriteEvent.emit('finish', tableName, numOfFiles)
     })
   }
 }
