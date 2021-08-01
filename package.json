@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "download:daily": "ts-node src/dailyDownload.ts",
-    "download:total": "ts-node src/totalDownload.ts",
+    "setup:total": "ts-node src/setupDatabase.ts",
     "import:total": "sh scripts/import_total_data.sh",
     "prisma:init": "npx prisma introspect && npx prisma generate",
     "prepare": "husky install"
