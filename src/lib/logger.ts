@@ -1,8 +1,9 @@
+import dayjs from 'dayjs'
 import fs from 'fs'
 import { createLogger, format, transports } from 'winston'
 import WinstonDaily from 'winston-daily-rotate-file'
 
-const { combine, printf, timestamp, label } = format
+const { combine, printf } = format
 
 // logs dir
 const logDir = `${__dirname}/../../logs`
@@ -12,7 +13,7 @@ if (!fs.existsSync(logDir)) {
 }
 
 const logFormat = printf(
-  ({ level, message, timestamp, label }) => `${timestamp} [${label}] ${level}: ${message}`
+  ({ level, message }) => `${dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss')} ${level}: ${message}`
 )
 
 /*

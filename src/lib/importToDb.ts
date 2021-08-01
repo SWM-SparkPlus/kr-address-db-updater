@@ -1,46 +1,35 @@
-import { spawn } from 'child_process'
-import EventEmitter from 'events'
+import { exec, spawn } from 'child_process'
+import { readdirSync } from 'fs'
+import 'dotenv/config'
+import path from 'path/posix'
 import { logger } from './logger'
 
 const { MYSQL_ROOT_PASSWORD, MYSQL_DATABASE } = process.env
 
-export const importerEventListener = new EventEmitter().setMaxListeners(100)
-
-importerEventListener.on('start', (tableName: string) => {
-  importToDb(tableName)
-})
-
 export const importToDb = (tableName: string) => {
+  logger.info(`[ImportStarts] Import starts with table name: ${tableName}`)
+
   let stdoutResult = ''
-  let hasError = false
+  let hasErr = false
 
-  const importSql = `
-  SET GLOBAL local_infile = true;
-  
-  LOAD DATA LOCAL INFILE '/tmp/resources/total/${tableName}.txt'
-                INTO TABLE ${tableName}
-                FIELDS TERMINATED BY '|'
-                LINES TERMINATED BY '\n';
-                `
-  const spawnListener = spawn(
-    `docker exec -it $(docker ps | grep mysql | awk '{ print $1 }') mysql --local-infile=1 -uroot -p${MYSQL_ROOT_PASSWORD} ${MYSQL_DATABASE} -e ${importSql}`
-  ).setMaxListeners(100)
+  const execution = exec(
+    `sh ./scripts/import_total_data.sh ${tableName}`,
+    (err, stdout, stderr) => {
+      if (err || stderr) {
+        logger.error(err || stderr)
+      }
 
-  spawnListener.stdout.on('data', data => {
-    stdoutResult += data
+      logger.info(stdout)
+    }
+  )
+}
+
+try {
+  readdirSync(path.resolve(__dirname) + '/../../resources/total').map(fileName => {
+    if (fileName.split('.')[1] === 'txt') {
+      importToDb(fileName.split('.')[0])
+    }
   })
-
-  spawnListener.on('error', () => {
-    hasError = true
-  })
-
-  spawnListener.stderr.on('data', data => {
-    stdoutResult += data
-  })
-
-  spawnListener.on('close', () => {
-    hasError
-      ? logger.info(`[ImportStdout] ${stdoutResult}`)
-      : logger.error(`[ImportStderr] ${stdoutResult}`)
-  })
+} catch (err) {
+  logger.error(err)
 }
