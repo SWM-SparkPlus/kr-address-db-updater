@@ -3,8 +3,7 @@ import fs from 'fs'
 import path from 'path'
 import './lib/env'
 import { logger } from './lib/logger'
-import EventEmitter from 'events'
-import { downloadFile, TDownloadFileOption } from './lib/fileDownloader'
+import { downloadFileAndGetEntries, TDownloadFileOption } from './lib/fileDownloader'
 import { writeEncodedFileAndImport } from './lib/utf8Writer'
 
 console.warn(
@@ -27,12 +26,11 @@ const url = encodeURI(
 
 const rootDir = path.resolve(__dirname + '/..')
 const resourceDir = `${rootDir}/resources/total`
-// 파일이름, 디렉토리명, WriteStream 생성
 const fileName = `${previousMonth}_total.zip`
 const zipPath = `${resourceDir}/${fileName}`
 
 // 클린 다운로드를 위해 기존 리소스 삭제
-if (fs.existsSync(resourceDir)) {
+if (!fs.existsSync(resourceDir)) {
   try {
     fs.rmSync(resourceDir, { recursive: true, force: true })
     fs.mkdirSync(resourceDir, { recursive: true })
@@ -54,7 +52,7 @@ const downloadOption: TDownloadFileOption = {
 const main = async () => {
   try {
     // 다운로드
-    const zipEntries = await downloadFile(downloadOption)
+    const zipEntries = await downloadFileAndGetEntries(downloadOption)
 
     // 인코딩
     zipEntries.forEach(entry => {
@@ -65,7 +63,7 @@ const main = async () => {
       })
     })
 
-    // 임포트 스크립트
+    fs.rmSync(zipPath)
   } catch (err) {
     fs.rmSync(resourceDir, { force: true, recursive: true })
     throw err

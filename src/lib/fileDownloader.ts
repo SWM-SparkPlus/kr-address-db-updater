@@ -16,7 +16,10 @@ export type TDownloadFileOption = {
  * @param writeStream 쓰기 스트림
  * @param zipPath 다운받을 압축파일 파일 경로
  */
-export function downloadFile({ url, writeStream }: TDownloadFileOption): Promise<IZipEntry[]> {
+export function downloadFileAndGetEntries({
+  url,
+  writeStream,
+}: TDownloadFileOption): Promise<IZipEntry[]> {
   return new Promise((resolve, reject) => {
     https.get(url, res => {
       if (!res.statusCode) {

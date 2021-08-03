@@ -3,7 +3,7 @@ import fs from 'fs'
 import path from 'path'
 import iconv from 'iconv-lite'
 import { logger } from './lib/logger'
-import { downloadFile, TDownloadFileOption } from './lib/fileDownloader'
+import { downloadFileAndGetEntries, TDownloadFileOption } from './lib/fileDownloader'
 
 // 어제 날짜 구하기
 const date = new Date()
@@ -48,7 +48,7 @@ const downloadOption: TDownloadFileOption = {
 }
 
 const main = async () => {
-  ;(await downloadFile(downloadOption)).forEach(entry => {
+  ;(await downloadFileAndGetEntries(downloadOption)).forEach(entry => {
     entry.getDataAsync((data, err) => {
       if (err) throw err
 
