@@ -12,7 +12,5 @@ services:
       - ./scripts:/tmp/resources/scripts
     ports:
       - 3306:3306
-    environment:
-      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
-      MYSQL_DATABASE: '${MYSQL_DATABASE}'
-      MYSQL_USER: '${MYSQL_USER}'
+    env_file:
+      - .env
