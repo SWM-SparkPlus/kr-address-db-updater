@@ -1,13 +1,12 @@
 # DB Updater
 
-이 저장소는 소프트웨어 마에스트로 제 12기 팀 Spark+의 도로명주소 DB를 구축하기 위한 DDL과 최신의 도로명 주소 DB를 유지하기 위한 업데이트를 담당하는 node.js 서버를 구현합니다.
+이 저장소는 소프트웨어 마에스트로 제 12기 팀 Spark+의 한국 주소체계 데이터베이스를 구축하기 위해 **MySQL 데이터베이스 구축**과 **데이터베이스 최신화를 자동화**하는 `Node.js`로 구현합니다.
 
 ## 빠른 시작
 
 ```s
 # MySQL서버가 localhost:3306에 서비스중이라고 가정합니다.
 # 필요하다면 레포지토리에 제공되는 docker-compose.yml 을 사용하여 도커 컨테이너를 실행하면 됩니다.
-# 예제는 yarn 으로 진행합니다.
 
 ###
 # 1. 레포지토리 클론
@@ -15,32 +14,36 @@
 
 $ git clone https://git.swmgit.org/swm-12/12_swm12/db-updater.git
 $ cd db-updater
-# 환경변수 설정
-$ cat ./.env.example > .env
 
 ###
-# 2. 프로젝트 의존성 설치
+# 2. 환경변수 설정
 ###
 
-$ yarn
+# .env 파일의 DATABASE_URL, MYSQL_ROOT_PASSWORD, MYSQL_DATABASE, MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD 를 채웁니다.
 
 ###
-# 3. 주소 데이터베이스 다운로드
+# 3. 프로젝트 의존성 설치
 ###
 
-$ yarn download:total
+$ npm install
 
 ###
-# 4. Prisma client 생성
+# 4. 주소 데이터베이스 다운로드
 ###
 
-$ yarn prisma:init
+$ npm run setup:all
+
+###
+# 4. Prisma schema를 이용하여 데이터베이스 테이블 생성 후 업데이트를 위한 Prisma Client 생성
+###
+
+$ npm run prisma:init
 
 ###
 # 5. 일일 데이터 다운로드
 ###
 
-$ yarn download:daily
+$ npm run download:daily
 ```
 
 ## 아키텍처
