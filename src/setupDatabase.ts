@@ -1,10 +1,10 @@
 import dayjs from 'dayjs'
-import fs from 'fs'
-import path from 'path'
+import { existsSync, rmSync, mkdirSync, createWriteStream } from 'fs'
 import './lib/env'
 import { logger } from './lib/logger'
 import { downloadFileAndGetEntries, TDownloadFileOption } from './lib/fileDownloader'
 import { writeEncodedFileAndImport } from './lib/utf8Writer'
+import { totalDir } from './lib/projectPath'
 
 console.warn(
   `[HeavyJobWarning] !!! This job contains cpu intensive workload such as string encode/decode and high network usage !!!`
@@ -24,16 +24,15 @@ const url = encodeURI(
   )}&ctprvnCd=00&gubun=MTCH&stdde=${previousMonth}&fileName=${previousMonth}_주소DB_전체분.zip&realFileName=${previousMonth}ALLMTCHG00.zip&indutyCd=999&purpsCd=999&indutyRm=수집종료&purpsRm=수집종료`
 )
 
-const rootDir = path.resolve(__dirname + '/..')
-const resourceDir = `${rootDir}/resources/total`
+const downloadDir = totalDir
 const fileName = `${previousMonth}_total.zip`
-const zipPath = `${resourceDir}/${fileName}`
+const zipPath = `${downloadDir}/${fileName}`
 
 // 클린 다운로드를 위해 기존 리소스 삭제
-if (!fs.existsSync(resourceDir)) {
+if (!existsSync(downloadDir)) {
   try {
-    fs.rmSync(resourceDir, { recursive: true, force: true })
-    fs.mkdirSync(resourceDir, { recursive: true })
+    rmSync(downloadDir, { recursive: true, force: true })
+    mkdirSync(downloadDir, { recursive: true })
     logger.info(`[DownloadPreparation] Cleaning resource directory completed.`)
   } catch (err) {
     logger.error(`[DownloadPreparationError] ${err}`)
@@ -41,11 +40,11 @@ if (!fs.existsSync(resourceDir)) {
   }
 }
 
-const downdloadStream = fs.createWriteStream(zipPath)
+const downdloadStream = createWriteStream(zipPath)
 const downloadOption: TDownloadFileOption = {
   url,
   writeStream: downdloadStream,
-  downloadDir: resourceDir,
+  downloadDir: downloadDir,
 }
 
 // 다운로드 실행
@@ -63,9 +62,9 @@ const main = async () => {
       })
     })
 
-    fs.rmSync(zipPath)
+    rmSync(zipPath)
   } catch (err) {
-    fs.rmSync(resourceDir, { force: true, recursive: true })
+    rmSync(downloadDir, { force: true, recursive: true })
     throw err
   }
 }
