@@ -17,4 +17,4 @@ FIELDS TERMINATED BY '|'
 LINES TERMINATED BY '\n';
 "
 
-docker exec $(docker ps | grep mysql | awk '{ print $1 }') mysql --local-infile=1 -uroot -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE -e "$load_script"
+docker exec $(docker ps | grep mysql | awk '{ print $1 }') mysql --local-infile=1 -h$MYSQL_HOST -p$MYSQL_PORT -uroot -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE -e "$load_script"

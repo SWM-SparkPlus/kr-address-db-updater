@@ -3,9 +3,9 @@
   "scripts": {
     "download:daily": "ts-node src/downloadFiles.ts --daily",
     "download:total": "ts-node src/downloadFiles.ts --total",
-    "setup:all": "npm run prisma:db:push && ts-node src/setupDatabase.ts",
-    "setup:import:only": "npm run prisma:db:push && ts-node src/importToDatabase.ts",
-    "prisma:init": "npx prisma db push",
+    "setup:all": "npm run prisma:init && ts-node src/setupDatabase.ts",
+    "setup:import:only": "ts-node src/importToDatabase.ts",
+    "prisma:init": "npx prisma db push && npx prisma generate",
     "prepare": "husky install"
   },
   "repository": {

@@ -9,7 +9,6 @@ services:
     volumes:
       - ./data/db:/var/lib/mysql
       - ./resources:/tmp/resources
-      - ./scripts:/tmp/resources/scripts
     ports:
       - 3306:3306
     env_file:
