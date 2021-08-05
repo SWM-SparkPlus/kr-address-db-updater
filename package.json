@@ -1,9 +1,10 @@
 {
   "private": true,
   "scripts": {
-    "download:daily": "ts-node src/dailyDownload.ts",
+    "download:daily": "ts-node src/downloadFiles.ts --daily",
+    "download:total": "ts-node src/downloadFiles.ts --total",
     "setup:all": "npm run prisma:db:push && ts-node src/setupDatabase.ts",
-    "setup:import:only": "npm run prisma:db:push && ts-node src/importOnly.ts",
+    "setup:import:only": "npm run prisma:db:push && ts-node src/importToDatabase.ts",
     "prisma:init": "npx prisma db push",
     "prepare": "husky install"
   },

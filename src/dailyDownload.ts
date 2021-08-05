@@ -22,7 +22,6 @@ const downloadStream = createWriteStream(zipPath)
 const downloadOption: TDownloadFileOption = {
   url,
   writeStream: downloadStream,
-  downloadDir,
 }
 
 // 클린 다운로드를 위해 기존 리소스 삭제

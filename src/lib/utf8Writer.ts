@@ -11,6 +11,13 @@ encoderAndWriteEvent.on('finish', (tableName: string) => {
   importToDb(tableName)
 })
 
+export type TWriteAndImportOption = {
+  data: Buffer
+  entryOfZip: AdmZip.IZipEntry
+  writeDir: string
+  doImport: boolean
+}
+
 /**
  * EUC-KR 버퍼 데이터를 받아 UTF8로 인코딩하고 파일로 쓰기를 실행하는 함수
  *
@@ -18,11 +25,12 @@ encoderAndWriteEvent.on('finish', (tableName: string) => {
  * @param entryOfZip Zip 파일의 엔트리
  * @param writeDir 인코딩된 데이터를 쓸 디렉토리 경로
  */
-export const writeEncodedFileAndImport = (
-  data: Buffer,
-  entryOfZip: AdmZip.IZipEntry,
-  writeDir: string
-) => {
+export const writeEncodedFileAndImport = ({
+  data,
+  entryOfZip,
+  writeDir,
+  doImport,
+}: TWriteAndImportOption) => {
   // 파일명 우선 인코딩
   const encodedFilename = iconv.decode(entryOfZip.rawEntryName, 'euc-kr')
 
@@ -62,9 +70,11 @@ export const writeEncodedFileAndImport = (
     readableContentStream.pipe(fileWriteStream)
 
     // 쓰기가 끝나면 import 실행
-    readableContentStream.on('close', () => {
-      numOfFiles -= 1
-      encoderAndWriteEvent.emit('finish', tableName, numOfFiles)
-    })
+    doImport
+      ? readableContentStream.on('close', () => {
+          numOfFiles -= 1
+          encoderAndWriteEvent.emit('finish', tableName, numOfFiles)
+        })
+      : null
   }
 }

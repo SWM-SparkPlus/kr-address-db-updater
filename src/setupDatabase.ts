@@ -44,7 +44,6 @@ const downdloadStream = createWriteStream(zipPath)
 const downloadOption: TDownloadFileOption = {
   url,
   writeStream: downdloadStream,
-  downloadDir: downloadDir,
 }
 
 // 다운로드 실행
@@ -58,7 +57,12 @@ const main = async () => {
       entry.getDataAsync((data, err) => {
         if (err) throw err
 
-        writeEncodedFileAndImport(data, entry, downloadOption.downloadDir)
+        writeEncodedFileAndImport({
+          data,
+          entryOfZip: entry,
+          writeDir: downloadDir,
+          doImport: true,
+        })
       })
     })
 
