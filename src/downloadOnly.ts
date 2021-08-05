@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events'
 import { downloadFileAndGetEntries, TDownloadFileOption } from './lib/fileDownloader'
 import { logger } from './lib/logger'
-import { createWriteStream, WriteStream } from 'fs'
+import { createWriteStream, existsSync, mkdirSync } from 'fs'
 import dayjs from 'dayjs'
 import { dailyDir, totalDir } from './lib/projectPath'
 import { writeEncodedFileAndImport } from './lib/utf8Writer'
@@ -14,7 +14,7 @@ downloadOnlyEvent.on('finish', (target: string) => {
   logger.info(`[DonwloadOnlyScriptCompletion] Download ${target} completed.`)
 })
 
-const argCandidate = ['--daily', 'd', '--total', '-t']
+const argCandidate = ['--daily', '-d', '--total', '-t']
 const date = new Date()
 
 try {
@@ -22,7 +22,7 @@ try {
     if (argCandidate.includes(target)) {
       let url: string
       let downloadDir: string
-      let writeStream: WriteStream
+      let writeStream = createWriteStream(downloadDir)
 
       // 매개변수에 따라 다르게 처리
       if (target === '--daily' || target === '-d') {
@@ -46,21 +46,24 @@ try {
         downloadDir = totalDir
       }
 
-      writeStream = createWriteStream(downloadDir)
-      const entries = await downloadFileAndGetEntries({ url, writeStream } as TDownloadFileOption)
+      if (!existsSync(downloadDir)) {
+        mkdirSync(downloadDir, { recursive: true })
+      }
 
-      entries.forEach(entry => {
-        entry.getDataAsync((data, err) => {
-          if (err) throw err
+      ;(await downloadFileAndGetEntries({ url, writeStream } as TDownloadFileOption)).forEach(
+        entry => {
+          entry.getDataAsync((data, err) => {
+            if (err) throw err
 
-          writeEncodedFileAndImport({
-            data,
-            entryOfZip: entry,
-            writeDir: downloadDir,
-            doImport: false,
+            writeEncodedFileAndImport({
+              data,
+              entryOfZip: entry,
+              writeDir: downloadDir,
+              doImport: false,
+            })
           })
-        })
-      })
+        }
+      )
     } else {
       logger.error(`[UnexpectedArgvError] argv ${target} is unsupported.`)
       process.exit(0)
