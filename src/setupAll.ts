@@ -31,7 +31,6 @@ const zipPath = `${downloadDir}/${fileName}`
 // 클린 다운로드를 위해 기존 리소스 삭제
 if (!existsSync(downloadDir)) {
   try {
-    rmSync(downloadDir, { recursive: true, force: true })
     mkdirSync(downloadDir, { recursive: true })
     logger.info(`[DownloadPreparation] Cleaning resource directory completed.`)
   } catch (err) {

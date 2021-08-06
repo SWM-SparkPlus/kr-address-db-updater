@@ -9,3 +9,5 @@ resources/
 logs/
 
 .env
+
+.DS_Store
