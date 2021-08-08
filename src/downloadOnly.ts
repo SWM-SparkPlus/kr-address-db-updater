@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events'
 import { downloadFileAndGetEntries, TDownloadFileOption } from './lib/fileDownloader'
 import { logger } from './lib/logger'
-import { createWriteStream, existsSync, mkdirSync } from 'fs'
+import { createWriteStream, existsSync, mkdirSync, rmSync } from 'fs'
 import dayjs from 'dayjs'
 import { dailyDir, totalDir } from './lib/projectPath'
 import { writeEncodedFileAndImport } from './lib/utf8Writer'
@@ -28,7 +28,7 @@ async function main() {
 
       const yesterday = dayjs(date.setDate(date.getDate() - 1)).format('YYYYMMDD')
       url = encodeURI(
-        `https://www.juso.go.kr/dn.do?reqType=DC&stdde=${yesterday}&indutyCd=999&purpsCd=999&indutyRm=수집종료&purpsRm=수집종료`
+        `https://www.juso.go.kr/dn.do?reqType=DCM&stdde=${yesterday}&indutyCd=999&purpsCd=999&indutyRm=수집종료&purpsRm=수집종료`
       )
       downloadDir = dailyDir
     } else if (target === '--total' || target === '-t') {
@@ -63,14 +63,15 @@ async function main() {
         })
       }
     )
+
+    rmSync(writeStream.path)
   } else {
     logger.error(`[UnexpectedArgvError] argv ${target} is unsupported.`)
     process.exit(0)
   }
 }
 
-main()
-  .then()
-  .catch(e => {
-    logger.error(e)
-  })
+main().catch(err => {
+  logger.error(`[UnexpectedError] ${err}`)
+  process.exit(1)
+})
