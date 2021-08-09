@@ -1,13 +1,10 @@
 # DB Updater
 
-이 저장소는 소프트웨어 마에스트로 제 12기 팀 Spark+의 한국 주소체계 데이터베이스를 구축하기 위해 **MySQL 데이터베이스 구축**과 **데이터베이스 최신화를 자동화**하는 `Node.js`로 구현합니다.
+이 저장소는 소프트웨어 마에스트로 제 12기 팀 Spark+의 한국 주소체계 데이터베이스를 구축하기 위해 **MySQL 데이터베이스 구축**과 **데이터베이스 최신화를 자동화**하는 시스템을 `Node.js`와 `TypeScript`로 구현합니다.
 
 ## 빠른 시작
 
 ```s
-# MySQL서버가 localhost:3306에 서비스중이라고 가정합니다.
-# 필요하다면 레포지토리에 제공되는 docker-compose.yml 을 사용하여 도커 컨테이너를 실행하면 됩니다.
-
 ###
 # 1. 레포지토리 클론
 ###
@@ -19,7 +16,17 @@ $ cd db-updater
 # 2. 환경변수 설정
 ###
 
-# .env 파일의 DATABASE_URL, MYSQL_ROOT_PASSWORD, MYSQL_DATABASE, MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD 를 채웁니다.
+# .env 파일의 DATABASE_URL, MYSQL_HOST, MYSQL_PORT, MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD, MYSQL_ROOT_PASSWORD 를 채웁니다.
+# 예제에서는 아래의 환경변수를 사용합니다.
+# DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}
+
+# MYSQL_HOST=127.0.0.1
+# MYSQL_PORT=3306
+# MYSQL_DATABASE=sparkplus
+
+# MYSQL_USER=sparkplus
+# MYSQL_PASSWORD=sparkplus
+# MYSQL_ROOT_PASSWORD=sparkplus
 
 ###
 # 3. 프로젝트 의존성 설치
@@ -28,22 +35,29 @@ $ cd db-updater
 $ npm install
 
 ###
-# 4. 주소 데이터베이스 다운로드
+# 4. 주소 데이터베이스 전체분 다운로드
 ###
 
-$ npm run setup:all
+$ npm run download:total
 
 ###
-# 4. Prisma schema를 이용하여 데이터베이스 테이블 생성 후 업데이트를 위한 Prisma Client 생성
+# 5. 데이터베이스 서버 실행(docker-compose 사용)
+###
+
+$ docker-compose up -d
+
+###
+# 6. Prisma schema를 이용하여 데이터베이스 스키마 생성 후 Prisma ORM Client 생성
 ###
 
 $ npm run prisma:init
 
 ###
-# 5. 일일 데이터 다운로드
+# 7. 다운로드받은 파일을 데이터베이스에 import
 ###
 
-$ npm run download:daily
+$ npm run setup:import:only
+
 ```
 
 ## 아키텍처
@@ -123,7 +137,3 @@ $ npm run download:daily
 | 7    | 건축물대장 건물명 | 40   | 문자 |     |                            |
 | 8    | 시군구 건물명     | 40   | 문자 |     |                            |
 | 9    | 공동주택여부      | 1    | 문자 |     | 0: 비공동주택, 1: 공동주택 |
-
-## 데이터베이스 업데이트 서버 라우팅 구조
-
-<!-- 서버, 데이터베이스, 도로명주소 페이지 포함하는 아키텍처 필요 -->

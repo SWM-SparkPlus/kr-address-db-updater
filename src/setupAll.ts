@@ -1,10 +1,13 @@
 import dayjs from 'dayjs'
-import { existsSync, rmSync, mkdirSync, createWriteStream } from 'fs'
+import { rmSync, createWriteStream } from 'fs'
 import './lib/env'
 import { logger } from './lib/logger'
 import { downloadFileAndGetEntries, TDownloadFileOption } from './lib/fileDownloader'
 import { writeEncodedFileAndImport } from './lib/utf8Writer'
 import { totalDir } from './lib/projectPath'
+import { downloadPathHandler } from './lib/pathHandler'
+
+downloadPathHandler()
 
 console.warn(
   `[HeavyJobWarning] !!! This job contains cpu intensive workload such as string encode/decode and high network usage !!!`
@@ -27,17 +30,6 @@ const url = encodeURI(
 const downloadDir = totalDir
 const fileName = `${previousMonth}_total.zip`
 const zipPath = `${downloadDir}/${fileName}`
-
-// 클린 다운로드를 위해 기존 리소스 삭제
-if (!existsSync(downloadDir)) {
-  try {
-    mkdirSync(downloadDir, { recursive: true })
-    logger.info(`[DownloadPreparation] Cleaning resource directory completed.`)
-  } catch (err) {
-    logger.error(`[DownloadPreparationError] ${err}`)
-    process.exit(1)
-  }
-}
 
 const downdloadStream = createWriteStream(zipPath)
 const downloadOption: TDownloadFileOption = {
