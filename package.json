@@ -4,7 +4,7 @@
     "download:daily": "ts-node src/downloadOnly.ts --daily",
     "download:total": "ts-node src/downloadOnly.ts --total",
     "setup:all": "npm run prisma:init && ts-node src/setupAll.ts",
-    "setup:import:only": "ts-node src/importOnly.ts",
+    "setup:import:only": "npm run prisma:init && ts-node src/importOnly.ts",
     "prisma:init": "npx prisma db push && npx prisma generate",
     "prepare": "husky install"
   },
