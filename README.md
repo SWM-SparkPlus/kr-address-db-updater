@@ -4,7 +4,15 @@
 
 ## 빠른 시작
 
+이 프로젝트는 `Node.js`, `Docker` 및 `docker-compose` 의존성으로 가집니다. 의존성이 설치되어있지 않을 경우 실행할 수 없으니 설치가 필요합니다.
+
+- [Node.js 다운로드](https://nodejs.org/en/download/)
+- [Docker 다운로드](https://docs.docker.com/get-docker/)
+- [docker-compose 다운로드](https://docs.docker.com/compose/install/)
+
 ```s
+# 이 예제는 Linux 서버에서 시스템을 구축하는 예제를 구현합니다.
+
 ###
 # 1. 레포지토리 클론
 ###
@@ -16,17 +24,10 @@ $ cd db-updater
 # 2. 환경변수 설정
 ###
 
-# .env 파일의 DATABASE_URL, MYSQL_HOST, MYSQL_PORT, MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD, MYSQL_ROOT_PASSWORD 를 채웁니다.
-# 예제에서는 아래의 환경변수를 사용합니다.
-# DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}
+# .env 파일의 DATABASE_URL, MYSQL_HOST, MYSQL_PORT, MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD, MYSQL_ROOT_PASSWORD 를 채워야 합니다.
+# 예제에서는 .env.example의 예제 환경변수를 그대로 사용합니다.
 
-# MYSQL_HOST=127.0.0.1
-# MYSQL_PORT=3306
-# MYSQL_DATABASE=sparkplus
-
-# MYSQL_USER=sparkplus
-# MYSQL_PASSWORD=sparkplus
-# MYSQL_ROOT_PASSWORD=sparkplus
+cat .env.example > .env
 
 ###
 # 3. 프로젝트 의존성 설치
@@ -35,7 +36,7 @@ $ cd db-updater
 $ npm install
 
 ###
-# 4. 주소 데이터베이스 전체분 다운로드
+# 4. 주소 데이터베이스 전체분 다운로드(약 2분 소요)
 ###
 
 $ npm run download:total
@@ -47,22 +48,28 @@ $ npm run download:total
 $ docker-compose up -d
 
 ###
-# 6. Prisma schema를 이용하여 데이터베이스 스키마 생성 후 Prisma ORM Client 생성
-###
-
-$ npm run prisma:init
-
-###
-# 7. 다운로드받은 파일을 데이터베이스에 import
+# 6. 다운로드받은 파일을 데이터베이스에 import 합니다.
 ###
 
 $ npm run setup:import:only
 
 ```
 
+## 특징
+
+1. 국내 최초의 한국 주소체계 데이터베이스 자동화 구축 및 최신화 시스템
+2. AMD64 아키텍처 기반 UNIX 서버 최적화
+3. 오전 8시 데이터베이스 최신화 업데이트 동작
+
 ## 아키텍처
 
-<!-- !서버와 데이터베이스 모식도 넣을 것! -->
+### Spark+ 전체 아키텍처
+
+![](./statics/sparkplus_architecture.png)
+
+### db-updater 아키텍처
+
+![](./statics/db_updater_architecture.png)
 
 ## 도로명주소 데이터베이스 테이블 관계도
 
@@ -137,3 +144,7 @@ $ npm run setup:import:only
 | 7    | 건축물대장 건물명 | 40   | 문자 |     |                            |
 | 8    | 시군구 건물명     | 40   | 문자 |     |                            |
 | 9    | 공동주택여부      | 1    | 문자 |     | 0: 비공동주택, 1: 공동주택 |
+
+## LICENCE
+
+[MIT](https://github.com/SWM-SparkPlus/db-updater/blob/master/LICENSE)
