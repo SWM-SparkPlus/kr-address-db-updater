@@ -687,12 +687,11 @@ model roadname_address_jeju {
   has_detail                String? @db.VarChar(1)
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model roadname_code {
-  roadname_code       String  @db.VarChar(12)
+  roadname_code       String   @db.VarChar(12)
   roadname            String  @db.VarChar(80)
   roadname_eng        String? @db.VarChar(80)
-  eupmyeondong_number String  @db.VarChar(2)
+  eupmyeondong_number String   @db.VarChar(2)
   sido_name           String? @db.VarChar(20)
   sido_eng            String? @db.VarChar(40)
   sigungu             String? @db.VarChar(20)
@@ -707,5 +706,5 @@ model roadname_code {
   declare_date        String? @db.VarChar(8)
   expire_date         String? @db.VarChar(8)
 
-  @@ignore
+  @@id([roadname_code, eupmyeondong_number])
 }
