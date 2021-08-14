@@ -5,6 +5,7 @@
     "download:total": "ts-node src/downloadOnly.ts --total",
     "setup:all": "npm run prisma:init && ts-node src/setupAll.ts",
     "setup:import:only": "npm run prisma:init && ts-node src/importOnly.ts",
+    "update:daily": "ts-node src/lib/dailyUpdater.ts",
     "prisma:init": "npx prisma db push && npx prisma generate",
     "prepare": "husky install"
   },
@@ -15,7 +16,7 @@
   "keywords": [],
   "author": "TayPark (interrupt@kakao.com)",
   "dependencies": {
-    "@prisma/client": "^2.29.0",
+    "@prisma/client": "^2.29.1",
     "adm-zip": "^0.5.5",
     "dayjs": "^1.10.6",
     "dotenv": "^10.0.0",
@@ -30,7 +31,7 @@
     "nodemon": "^2.0.12",
     "prettier": "^2.3.2",
     "pretty-quick": "^3.1.1",
-    "prisma": "^2.29.0",
+    "prisma": "^2.29.1",
     "ts-node": "^10.1.0",
     "typescript": "^4.3.5"
   }

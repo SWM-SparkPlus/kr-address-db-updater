@@ -10,6 +10,7 @@ services:
       - ./data/db:/var/lib/mysql
       - ./resources:/tmp/resources
       - ./env/my.cnf:/etc/mysql/my.cnf
+      - ./data/log:/var/log/mysql
     ports:
       - 3306:3306
     env_file:
