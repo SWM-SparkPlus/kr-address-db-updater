@@ -17,8 +17,27 @@ export type TSido =
   | '경상남도'
   | '경상북도'
 
+export type TSidoEng =
+  | 'seoul'
+  | 'incheon'
+  | 'daejeon'
+  | 'daegu'
+  | 'ulsan'
+  | 'busan'
+  | 'gwangju'
+  | 'sejong'
+  | 'jeju'
+  | 'gyeonggi'
+  | 'gangwon'
+  | 'chungnam'
+  | 'chungbuk'
+  | 'jeonnam'
+  | 'jeonbuk'
+  | 'gyeongnam'
+  | 'gyeongbuk'
+
 export type TSidoObject = {
-  [key in TSido]: string
+  [key in TSido]: TSidoEng
 }
 
 export const SidoObject: TSidoObject = {
@@ -40,3 +59,9 @@ export const SidoObject: TSidoObject = {
   경상남도: 'gyeongnam',
   경상북도: 'gyeongbuk',
 }
+
+type ValueOf<T> = T[keyof T]
+
+export type TTablePrefix = 'additional_info' | 'roadname_address' | 'jibun_address'
+
+export type TTableName = `${TTablePrefix}_${ValueOf<TSidoObject>}`
