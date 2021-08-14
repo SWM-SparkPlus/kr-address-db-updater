@@ -715,5 +715,5 @@ model manage_number_index {
   sigungu_eng         String  @db.VarChar(40)
   addinfo             Int?    @db.TinyInt
   juso                Int?    @db.TinyInt
-  jubun               Int?    @db.TinyInt
+  jibun               Int?    @db.TinyInt
 }
