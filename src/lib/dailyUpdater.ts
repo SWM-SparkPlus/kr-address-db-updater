@@ -1,9 +1,15 @@
-import { prismaClient } from '../prisma/prismaClient'
+import {
+  createOne,
+  deleteOnyByManageNumber,
+  prismaClient,
+  updateOnyByManageNumber,
+} from '../prisma/prismaClient'
 import { createReadStream, readdirSync, readSync } from 'fs'
 import { dailyDir } from './projectPath'
 import { createInterface } from 'readline'
 import { logger } from './logger'
 import { Prisma } from '@prisma/client'
+import { TAddInfoTableSchema, TIntegratedTableName, TIntegratedTableSchema } from './sido'
 
 const entries = readdirSync(dailyDir)
 
@@ -14,15 +20,19 @@ async function dailyUpdate() {
       crlfDelay: Infinity,
     })
 
+    let tablePrefix = ''
+    let tablePostfix = ''
+    let changeReasonCode = ''
+    let inputData: TIntegratedTableSchema = undefined
+
     if (entry.includes('ADDINFO')) {
+      tablePrefix = 'additional_info'
+
       rl.on('line', async data => {
         const splitData = data.split('|')
+        changeReasonCode = splitData[9]
 
-        // 관리번호 기반으로 어떤 테이블인지 먼저 확인하고
-
-        // 해당 테이블로 upsert 쿼리
-
-        const addInfo: Prisma.additional_info_jejuCreateInput = {
+        inputData = {
           manage_number: splitData[0],
           hangjungdong_code: splitData[1],
           hangjungdong_name: splitData[2],
@@ -34,20 +44,17 @@ async function dailyUpdate() {
           is_apt: splitData[8],
         }
 
-        try {
-          await prismaClient.additional_info_jeju.upsert({
-            where: { manage_number: addInfo.manage_number },
-            update: addInfo,
-            create: addInfo,
-          })
-        } catch (e) {
-          throw e
-        }
+        // 관리번호 기반으로 어떤 테이블인지 먼저 확인하고
+        tablePostfix = 'jeju'
       })
     } else if (entries.includes('JIBUN')) {
+      tablePrefix = 'jibun_address'
+
       rl.on('line', async data => {
         const splitData = data.split('|')
-        const addInfo: Prisma.jibun_address_jejuCreateInput = {
+        changeReasonCode = splitData[9]
+
+        inputData = {
           manage_number: splitData[0],
           serial_number: +splitData[1],
           bupjungdong_code: splitData[2],
@@ -60,21 +67,15 @@ async function dailyUpdate() {
           jibun_secondary: +splitData[9],
           is_representation: splitData[10],
         }
-
-        try {
-          await prismaClient.jibun_address_jeju.upsert({
-            where: { manage_number: addInfo.manage_number },
-            update: addInfo,
-            create: addInfo,
-          })
-        } catch (e) {
-          throw e
-        }
       })
     } else if (entries.includes('JUSO')) {
+      tablePrefix = 'roadname_address'
+
       rl.on('line', async data => {
         const splitData = data.split('|')
-        const addInfo: Prisma.roadname_address_jejuCreateInput = {
+        changeReasonCode = splitData[9]
+
+        inputData = {
           manage_number: splitData[0],
           roadname_code: splitData[1],
           eupmyeondong_number: splitData[2],
@@ -87,20 +88,11 @@ async function dailyUpdate() {
           previous_roadname_address: splitData[9],
           has_detail: splitData[10],
         }
-
-        try {
-          await prismaClient.roadname_address_jeju.upsert({
-            where: { manage_number: addInfo.manage_number },
-            update: addInfo,
-            create: addInfo,
-          })
-        } catch (e) {
-          throw e
-        }
       })
     } else if (entries.includes('ROAD')) {
       rl.on('line', async data => {
         const splitData = data.split('|')
+
         const inputData: Prisma.roadname_codeCreateInput = {
           roadname_code: splitData[0],
           roadname: splitData[1],
@@ -132,10 +124,25 @@ async function dailyUpdate() {
             update: inputData,
             create: inputData,
           })
+          return
         } catch (e) {
           throw e
         }
       })
+    }
+
+    const tableName = (tablePrefix + '_' + tablePostfix) as TIntegratedTableName
+
+    try {
+      if (changeReasonCode === '31') {
+        await createOne(tableName, inputData)
+      } else if (changeReasonCode === '34') {
+        await updateOnyByManageNumber(tableName, inputData.manage_number, inputData)
+      } else if (changeReasonCode === '63') {
+        await deleteOnyByManageNumber(tableName, inputData.manage_number, inputData)
+      }
+    } catch (err) {
+      throw err
     }
   }
 }

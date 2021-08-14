@@ -709,7 +709,11 @@ model roadname_code {
   @@id([roadname_code, eupmyeondong_number])
 }
 
-model manage_number_meta {
+model manage_number_index {
   manage_number       String  @id @db.VarChar(25)
-  tables              Json
+  sigungu             String  @db.VarChar(20)
+  sigungu_eng         String  @db.VarChar(40)
+  addinfo             Int?    @db.TinyInt
+  juso                Int?    @db.TinyInt
+  jubun               Int?    @db.TinyInt
 }
