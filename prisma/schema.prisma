@@ -711,15 +711,15 @@ model roadname_code {
 
 model addinfo_manage_number_index {
   manage_number       String  @id @db.VarChar(25)
-  tablename           String  @db.VarChar(20)
+  tablename           String  @db.VarChar(30)
 }
 
 model juso_manage_number_index {
   manage_number       String  @id @db.VarChar(25)
-  tablename           String  @db.VarChar(20)
+  tablename           String  @db.VarChar(30)
 }
 
 model jibun_manage_number_index {
   manage_number       String  @id @db.VarChar(25)
-  tablename           String  @db.VarChar(20)
+  tablename           String  @db.VarChar(30)
 }
