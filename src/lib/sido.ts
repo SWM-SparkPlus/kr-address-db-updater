@@ -33,7 +33,6 @@ import {
   jibun_address_sejong,
   jibun_address_seoul,
   jibun_address_ulsan,
-  Prisma,
   roadname_address_busan,
   roadname_address_chungbuk,
   roadname_address_chungnam,

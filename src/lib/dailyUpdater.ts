@@ -1,15 +1,27 @@
 import {
-  createOne,
-  deleteOnyByManageNumber,
+  createOnAddinfoTable,
+  createOnJibunTable,
+  createOnJusoTable,
+  deleteOnAddinfoByManageNumber,
+  deleteOnJibunByManageNumber,
+  deleteOnJusoByManageNumber,
   prismaClient,
-  updateOnyByManageNumber,
+  updateOnAddinfoTableByManageNumber,
+  updateOnJibunTableByManageNumber,
+  updateOnJusoTableByManageNumber,
 } from '../prisma/prismaClient'
 import { createReadStream, readdirSync, readSync } from 'fs'
 import { dailyDir } from './projectPath'
 import { createInterface } from 'readline'
 import { logger } from './logger'
 import { Prisma } from '@prisma/client'
-import { TAddInfoTableSchema, TIntegratedTableName, TIntegratedTableSchema } from './sido'
+import {
+  TAddInfoTableSchema,
+  TIntegratedTableName,
+  TIntegratedTableSchema,
+  TJibunTableSchema,
+  TRoadnameTableSchema,
+} from './sido'
 
 const entries = readdirSync(dailyDir)
 
@@ -20,13 +32,13 @@ async function dailyUpdate() {
       crlfDelay: Infinity,
     })
 
-    let tablePrefix = ''
-    let tablePostfix = ''
-    let changeReasonCode = ''
-    let inputData: TIntegratedTableSchema = undefined
+    let changeReasonCode: string = ''
+    let tablename: string = ''
+    let target = ''
+    let inputData = null
 
     if (entry.includes('ADDINFO')) {
-      tablePrefix = 'additional_info'
+      target = 'addinfo'
 
       rl.on('line', async data => {
         const splitData = data.split('|')
@@ -42,13 +54,21 @@ async function dailyUpdate() {
           master_building_name: splitData[6],
           sigungu_building_name: splitData[7],
           is_apt: splitData[8],
-        }
+        } as TAddInfoTableSchema
 
-        // 관리번호 기반으로 어떤 테이블인지 먼저 확인하고
-        tablePostfix = 'jeju'
+        const findResult = await prismaClient.addinfo_manage_number_index.findFirst({
+          where: {
+            manage_number: splitData[0],
+          },
+          select: {
+            tablename: true,
+          },
+        })
+
+        tablename = findResult?.tablename as string
       })
     } else if (entries.includes('JIBUN')) {
-      tablePrefix = 'jibun_address'
+      target = 'jibun'
 
       rl.on('line', async data => {
         const splitData = data.split('|')
@@ -66,10 +86,21 @@ async function dailyUpdate() {
           jibun_primary: +splitData[8],
           jibun_secondary: +splitData[9],
           is_representation: splitData[10],
-        }
+        } as TJibunTableSchema
+
+        const findResult = await prismaClient.jibun_manage_number_index.findFirst({
+          where: {
+            manage_number: splitData[0],
+          },
+          select: {
+            tablename: true,
+          },
+        })
+
+        tablename = findResult?.tablename as string
       })
     } else if (entries.includes('JUSO')) {
-      tablePrefix = 'roadname_address'
+      target = 'juso'
 
       rl.on('line', async data => {
         const splitData = data.split('|')
@@ -87,7 +118,18 @@ async function dailyUpdate() {
           notice_date: splitData[8],
           previous_roadname_address: splitData[9],
           has_detail: splitData[10],
-        }
+        } as TRoadnameTableSchema
+
+        const findResult = await prismaClient.juso_manage_number_index.findFirst({
+          where: {
+            manage_number: splitData[0],
+          },
+          select: {
+            tablename: true,
+          },
+        })
+
+        tablename = findResult?.tablename as string
       })
     } else if (entries.includes('ROAD')) {
       rl.on('line', async data => {
@@ -131,15 +173,46 @@ async function dailyUpdate() {
       })
     }
 
-    const tableName = (tablePrefix + '_' + tablePostfix) as TIntegratedTableName
-
     try {
       if (changeReasonCode === '31') {
-        await createOne(tableName, inputData)
+        // 생성
+        if (target === 'juso') {
+          await createOnJusoTable(tablename, inputData as TRoadnameTableSchema)
+        } else if (target === 'jibun') {
+          await createOnJibunTable(tablename, inputData as TJibunTableSchema)
+        } else if (target === 'addinfo') {
+          await createOnAddinfoTable(tablename, inputData as TAddInfoTableSchema)
+        }
       } else if (changeReasonCode === '34') {
-        await updateOnyByManageNumber(tableName, inputData.manage_number, inputData)
+        // 변경
+        if (target === 'juso') {
+          await updateOnJusoTableByManageNumber(
+            tablename,
+            inputData?.manage_number,
+            inputData as TRoadnameTableSchema
+          )
+        } else if (target === 'jibun') {
+          await updateOnJibunTableByManageNumber(
+            tablename,
+            inputData?.manage_number,
+            inputData as TJibunTableSchema
+          )
+        } else if (target === 'addinfo') {
+          await updateOnAddinfoTableByManageNumber(
+            tablename,
+            inputData?.manage_number,
+            inputData as TAddInfoTableSchema
+          )
+        }
       } else if (changeReasonCode === '63') {
-        await deleteOnyByManageNumber(tableName, inputData.manage_number, inputData)
+        // 삭제
+        if (target === 'juso') {
+          await deleteOnJusoByManageNumber(tablename, inputData?.manage_number)
+        } else if (target === 'jibun') {
+          await deleteOnJibunByManageNumber(tablename, inputData?.manage_number)
+        } else if (target === 'addinfo') {
+          await deleteOnAddinfoByManageNumber(tablename, inputData?.manage_number)
+        }
       }
     } catch (err) {
       throw err
@@ -152,3 +225,10 @@ dailyUpdate()
     logger.info('Job finished.')
   })
   .catch(e => logger.error(e))
+function deleteonaddinfo(
+  tablename: string,
+  manage_number: string,
+  inputData: TIntegratedTableSchema
+) {
+  throw new Error('Function not implemented.')
+}
