@@ -27,14 +27,16 @@ secure-file-priv= NULL
 local-infile
 log-error
 
-# slow queries
-slow_query_log  = 1
-slow_query_log_file = /var/log/mysql/slow.log
-long_query_time = 3
-general_log     = 1
-general_log_file = /var/log/mysql/general.log
-
 # Query and logs
+log-error = /var/log/mysql/mysqld.err
+general_log     = 1
+general_log_file = /var/log/mysql/general_query.log
+slow_query_log  = 1
+slow_query_log_file = /var/log/mysql/slow_query.log
+long_query_time = 3
+
+# Error log - should be very few entries.
+log_error = /var/log/mysql/error.log
 
 # Custom config should go here
 !includedir /etc/mysql/conf.d/

@@ -15,7 +15,7 @@ console.warn(
 
 // 전월 구하기
 const date = new Date()
-const previousMonth = dayjs(date.setMonth(date.getMonth() - 2)).format('YYYYMM')
+const previousMonth = dayjs(date.setMonth(date.getMonth() - 1)).format('YYYYMM')
 
 logger.info(`[DownloadInfo] This job will download total data based on date '${previousMonth}'`)
 

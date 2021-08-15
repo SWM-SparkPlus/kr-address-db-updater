@@ -212,7 +212,7 @@ model additional_info_jeju {
 }
 
 model jibun_address_seoul {
-  manage_number             String  @id @db.VarChar(25)
+  manage_number             String  @db.VarChar(25)
   serial_number             Int     @db.SmallInt
   bupjungdong_code          String? @db.VarChar(10)
   sido_name                 String? @db.VarChar(20)
@@ -223,10 +223,12 @@ model jibun_address_seoul {
   jibun_primary             Int?    @db.SmallInt
   jibun_secondary           Int?    @db.SmallInt
   is_representation         String? @db.VarChar(1)
+  
+  @@id([manage_number, serial_number])
 }
 
 model jibun_address_incheon {
-  manage_number             String  @id @db.VarChar(25)
+  manage_number             String  @db.VarChar(25)
   serial_number             Int     @db.SmallInt
   bupjungdong_code          String? @db.VarChar(10)
   sido_name                 String? @db.VarChar(20)
@@ -237,10 +239,12 @@ model jibun_address_incheon {
   jibun_primary             Int?    @db.SmallInt
   jibun_secondary           Int?    @db.SmallInt
   is_representation         String? @db.VarChar(1)
+  
+  @@id([manage_number, serial_number])
 }
 
 model jibun_address_gangwon {
-  manage_number             String  @id @db.VarChar(25)
+  manage_number             String  @db.VarChar(25)
   serial_number             Int     @db.SmallInt
   bupjungdong_code          String? @db.VarChar(10)
   sido_name                 String? @db.VarChar(20)
@@ -251,10 +255,12 @@ model jibun_address_gangwon {
   jibun_primary             Int?    @db.SmallInt
   jibun_secondary           Int?    @db.SmallInt
   is_representation         String? @db.VarChar(1)
+  
+  @@id([manage_number, serial_number])
 }
 
 model jibun_address_gyeonggi {
-  manage_number             String  @id @db.VarChar(25)
+  manage_number             String  @db.VarChar(25)
   serial_number             Int     @db.SmallInt
   bupjungdong_code          String? @db.VarChar(10)
   sido_name                 String? @db.VarChar(20)
@@ -265,10 +271,12 @@ model jibun_address_gyeonggi {
   jibun_primary             Int?    @db.SmallInt
   jibun_secondary           Int?    @db.SmallInt
   is_representation         String? @db.VarChar(1)
+  
+  @@id([manage_number, serial_number])
 }
 
 model jibun_address_daegu {
-  manage_number             String  @id @db.VarChar(25)
+  manage_number             String  @db.VarChar(25)
   serial_number             Int     @db.SmallInt
   bupjungdong_code          String? @db.VarChar(10)
   sido_name                 String? @db.VarChar(20)
@@ -279,10 +287,12 @@ model jibun_address_daegu {
   jibun_primary             Int?    @db.SmallInt
   jibun_secondary           Int?    @db.SmallInt
   is_representation         String? @db.VarChar(1)
+  
+  @@id([manage_number, serial_number])
 }
 
 model jibun_address_daejeon {
-  manage_number             String  @id @db.VarChar(25)
+  manage_number             String  @db.VarChar(25)
   serial_number             Int     @db.SmallInt
   bupjungdong_code          String? @db.VarChar(10)
   sido_name                 String? @db.VarChar(20)
@@ -293,10 +303,12 @@ model jibun_address_daejeon {
   jibun_primary             Int?    @db.SmallInt
   jibun_secondary           Int?    @db.SmallInt
   is_representation         String? @db.VarChar(1)
+  
+  @@id([manage_number, serial_number])
 }
 
 model jibun_address_busan {
-  manage_number             String  @id @db.VarChar(25)
+  manage_number             String  @db.VarChar(25)
   serial_number             Int     @db.SmallInt
   bupjungdong_code          String? @db.VarChar(10)
   sido_name                 String? @db.VarChar(20)
@@ -307,10 +319,12 @@ model jibun_address_busan {
   jibun_primary             Int?    @db.SmallInt
   jibun_secondary           Int?    @db.SmallInt
   is_representation         String? @db.VarChar(1)
+  
+  @@id([manage_number, serial_number])
 }
 
 model jibun_address_ulsan {
-  manage_number             String  @id @db.VarChar(25)
+  manage_number             String  @db.VarChar(25)
   serial_number             Int     @db.SmallInt
   bupjungdong_code          String? @db.VarChar(10)
   sido_name                 String? @db.VarChar(20)
@@ -321,10 +335,12 @@ model jibun_address_ulsan {
   jibun_primary             Int?    @db.SmallInt
   jibun_secondary           Int?    @db.SmallInt
   is_representation         String? @db.VarChar(1)
+  
+  @@id([manage_number, serial_number])
 }
 
 model jibun_address_gwangju {
-  manage_number             String  @id @db.VarChar(25)
+  manage_number             String  @db.VarChar(25)
   serial_number             Int     @db.SmallInt
   bupjungdong_code          String? @db.VarChar(10)
   sido_name                 String? @db.VarChar(20)
@@ -335,10 +351,12 @@ model jibun_address_gwangju {
   jibun_primary             Int?    @db.SmallInt
   jibun_secondary           Int?    @db.SmallInt
   is_representation         String? @db.VarChar(1)
+  
+  @@id([manage_number, serial_number])
 }
 
 model jibun_address_sejong {
-  manage_number             String  @id @db.VarChar(25)
+  manage_number             String  @db.VarChar(25)
   serial_number             Int     @db.SmallInt
   bupjungdong_code          String? @db.VarChar(10)
   sido_name                 String? @db.VarChar(20)
@@ -349,10 +367,12 @@ model jibun_address_sejong {
   jibun_primary             Int?    @db.SmallInt
   jibun_secondary           Int?    @db.SmallInt
   is_representation         String? @db.VarChar(1)
+  
+  @@id([manage_number, serial_number])
 }
 
 model jibun_address_gyeongnam {
-  manage_number             String  @id @db.VarChar(25)
+  manage_number             String  @db.VarChar(25)
   serial_number             Int     @db.SmallInt
   bupjungdong_code          String? @db.VarChar(10)
   sido_name                 String? @db.VarChar(20)
@@ -363,10 +383,12 @@ model jibun_address_gyeongnam {
   jibun_primary             Int?    @db.SmallInt
   jibun_secondary           Int?    @db.SmallInt
   is_representation         String? @db.VarChar(1)
+  
+  @@id([manage_number, serial_number])
 }
 
 model jibun_address_gyeongbuk {
-  manage_number             String  @id @db.VarChar(25)
+  manage_number             String  @db.VarChar(25)
   serial_number             Int     @db.SmallInt
   bupjungdong_code          String? @db.VarChar(10)
   sido_name                 String? @db.VarChar(20)
@@ -377,10 +399,12 @@ model jibun_address_gyeongbuk {
   jibun_primary             Int?    @db.SmallInt
   jibun_secondary           Int?    @db.SmallInt
   is_representation         String? @db.VarChar(1)
+  
+  @@id([manage_number, serial_number])
 }
 
 model jibun_address_chungnam {
-  manage_number             String  @id @db.VarChar(25)
+  manage_number             String  @db.VarChar(25)
   serial_number             Int     @db.SmallInt
   bupjungdong_code          String? @db.VarChar(10)
   sido_name                 String? @db.VarChar(20)
@@ -391,10 +415,12 @@ model jibun_address_chungnam {
   jibun_primary             Int?    @db.SmallInt
   jibun_secondary           Int?    @db.SmallInt
   is_representation         String? @db.VarChar(1)
+  
+  @@id([manage_number, serial_number])
 }
 
 model jibun_address_chungbuk {
-  manage_number             String  @id @db.VarChar(25)
+  manage_number             String  @db.VarChar(25)
   serial_number             Int     @db.SmallInt
   bupjungdong_code          String? @db.VarChar(10)
   sido_name                 String? @db.VarChar(20)
@@ -405,10 +431,12 @@ model jibun_address_chungbuk {
   jibun_primary             Int?    @db.SmallInt
   jibun_secondary           Int?    @db.SmallInt
   is_representation         String? @db.VarChar(1)
+  
+  @@id([manage_number, serial_number])
 }
 
 model jibun_address_jeonnam {
-  manage_number             String  @id @db.VarChar(25)
+  manage_number             String  @db.VarChar(25)
   serial_number             Int     @db.SmallInt
   bupjungdong_code          String? @db.VarChar(10)
   sido_name                 String? @db.VarChar(20)
@@ -419,10 +447,12 @@ model jibun_address_jeonnam {
   jibun_primary             Int?    @db.SmallInt
   jibun_secondary           Int?    @db.SmallInt
   is_representation         String? @db.VarChar(1)
+  
+  @@id([manage_number, serial_number])
 }
 
 model jibun_address_jeonbuk {
-  manage_number             String  @id @db.VarChar(25)
+  manage_number             String  @db.VarChar(25)
   serial_number             Int     @db.SmallInt
   bupjungdong_code          String? @db.VarChar(10)
   sido_name                 String? @db.VarChar(20)
@@ -433,10 +463,12 @@ model jibun_address_jeonbuk {
   jibun_primary             Int?    @db.SmallInt
   jibun_secondary           Int?    @db.SmallInt
   is_representation         String? @db.VarChar(1)
+  
+  @@id([manage_number, serial_number])
 }
 
 model jibun_address_jeju {
-  manage_number             String  @id @db.VarChar(25)
+  manage_number             String  @db.VarChar(25)
   serial_number             Int     @db.SmallInt
   bupjungdong_code          String? @db.VarChar(10)
   sido_name                 String? @db.VarChar(20)
@@ -447,6 +479,8 @@ model jibun_address_jeju {
   jibun_primary             Int?    @db.SmallInt
   jibun_secondary           Int?    @db.SmallInt
   is_representation         String? @db.VarChar(1)
+  
+  @@id([manage_number, serial_number])
 }
 
 model roadname_address_seoul {
