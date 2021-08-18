@@ -116,14 +116,11 @@ export const SidoObject: TSidoObject = {
 
 type ValueOf<T> = T[keyof T]
 
-export type TTablePrefix = 'additional_info' | 'roadname_address' | 'jibun_address'
-
 export type TAddInfoTableName = `additional_info_${ValueOf<TSidoObject>}`
 export type TRoadnameTableName = `roadname_address_${ValueOf<TSidoObject>}`
 export type TJibunTableName = `jibun_address_${ValueOf<TSidoObject>}`
 
 export type TIntegratedTableName = TAddInfoTableName | TRoadnameTableName | TJibunTableName
-export type TIntegratedTableSchema = TAddInfoTableSchema | TJibunTableSchema | TRoadnameTableSchema
 
 export type TAddInfoTableSchema = additional_info_busan &
   additional_info_seoul &
@@ -178,3 +175,5 @@ export type TRoadnameTableSchema = roadname_address_busan &
   roadname_address_sejong &
   roadname_address_jeonnam &
   roadname_address_ulsan
+
+export type TIntegratedTableSchema = TAddInfoTableSchema | TJibunTableSchema | TRoadnameTableSchema
