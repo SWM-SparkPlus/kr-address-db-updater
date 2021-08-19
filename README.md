@@ -17,7 +17,7 @@
 # 1. 레포지토리 클론
 ###
 
-$ git clone https://git.swmgit.org/swm-12/12_swm12/db-updater.git
+$ git clone https://github.com/SWM-SparkPlus/db-updater.git
 $ cd db-updater
 
 ###
