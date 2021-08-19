@@ -27,7 +27,7 @@ $ cd db-updater
 # .env 파일의 DATABASE_URL, MYSQL_HOST, MYSQL_PORT, MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD, MYSQL_ROOT_PASSWORD 를 채워야 합니다.
 # 예제에서는 .env.example의 예제 환경변수를 그대로 사용합니다.
 
-cat .env.example > .env
+$ cat .env.example > .env
 
 ###
 # 3. 프로젝트 의존성 설치
