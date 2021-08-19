@@ -1,5 +1,5 @@
 import { prismaClient } from '../prisma/prismaClient'
-import { createReadStream, readdirSync, readSync } from 'fs'
+import { createReadStream, readdirSync } from 'fs'
 import { dailyDir } from './projectPath'
 import { createInterface } from 'readline'
 import { logger } from './logger'
@@ -7,7 +7,6 @@ import { Prisma } from '@prisma/client'
 import {
   TAddInfoTableName,
   TAddInfoTableSchema,
-  TIntegratedTableSchema,
   TJibunTableSchema,
   TRoadnameTableSchema,
 } from './sido'
@@ -25,6 +24,7 @@ async function dailyUpdate() {
     let tablename: string = ''
 
     if (entry.includes('ADDINFO')) {
+      // 부가정보 업데이트
       rl.on('line', async data => {
         const splitData = data.split('|')
         changeReasonCode = splitData[9]
@@ -41,38 +41,45 @@ async function dailyUpdate() {
           is_apt: splitData[8],
         }
 
-        const findResult = await prismaClient.addinfo_manage_number_index.findFirst({
-          where: {
-            manage_number: splitData[0],
-          },
-          select: {
-            tablename: true,
-          },
-        })
-
-        console.log(findResult)
-
-        tablename = findResult?.tablename as TAddInfoTableName
-
-        if (changeReasonCode === '31') {
-          await prismaClient[tablename as TAddInfoTableName].create({
-            data: data as TJibunTableSchema,
+        try {
+          const findResult = await prismaClient.addinfo_manage_number_index.findFirst({
+            where: {
+              manage_number: splitData[0],
+            },
+            select: {
+              tablename: true,
+            },
           })
-        } else if (changeReasonCode === '34') {
-          await prismaClient[tablename as TAddInfoTableName].update({
-            where: { manage_number: inputData.manage_number },
-            data: data as TJibunTableSchema,
-          })
-        } else if (changeReasonCode === '63') {
-          await prismaClient[tablename as TAddInfoTableName].delete({
-            where: { manage_number: inputData.manage_number },
-          })
+          console.log(findResult)
+          tablename = findResult?.tablename as TAddInfoTableName
+        } catch (err) {
+          throw err
+        }
+
+        try {
+          if (changeReasonCode === '31') {
+            await prismaClient[tablename as TAddInfoTableName].create({
+              data: data as TJibunTableSchema,
+            })
+          } else if (changeReasonCode === '34') {
+            await prismaClient[tablename as TAddInfoTableName].update({
+              where: { manage_number: inputData.manage_number },
+              data: data as TJibunTableSchema,
+            })
+          } else if (changeReasonCode === '63') {
+            await prismaClient[tablename as TAddInfoTableName].delete({
+              where: { manage_number: inputData.manage_number },
+            })
+          }
+        } catch (err) {
+          throw err
         }
       })
     } else if (entries.includes('JIBUN')) {
+      // 지번주소 업데이트
       rl.on('line', async data => {
         const splitData = data.split('|')
-        changeReasonCode = splitData[9]
+        changeReasonCode = splitData[11]
 
         const inputData: TJibunTableSchema = {
           manage_number: splitData[0],
@@ -99,25 +106,30 @@ async function dailyUpdate() {
 
         tablename = findResult?.tablename as TAddInfoTableName
 
-        if (changeReasonCode === '31') {
-          await prismaClient[tablename as TAddInfoTableName].create({
-            data: data as TJibunTableSchema,
-          })
-        } else if (changeReasonCode === '34') {
-          await prismaClient[tablename as TAddInfoTableName].update({
-            where: { manage_number: inputData.manage_number },
-            data: data as TJibunTableSchema,
-          })
-        } else if (changeReasonCode === '63') {
-          await prismaClient[tablename as TAddInfoTableName].delete({
-            where: { manage_number: inputData.manage_number },
-          })
+        try {
+          if (changeReasonCode === '31') {
+            await prismaClient[tablename as TAddInfoTableName].create({
+              data: data as TJibunTableSchema,
+            })
+          } else if (changeReasonCode === '34') {
+            await prismaClient[tablename as TAddInfoTableName].update({
+              where: { manage_number: inputData.manage_number },
+              data: data as TJibunTableSchema,
+            })
+          } else if (changeReasonCode === '63') {
+            await prismaClient[tablename as TAddInfoTableName].delete({
+              where: { manage_number: inputData.manage_number },
+            })
+          }
+        } catch (err) {
+          throw err
         }
       })
     } else if (entries.includes('JUSO')) {
+      // 도로명주소 업데이트
       rl.on('line', async data => {
         const splitData = data.split('|')
-        changeReasonCode = splitData[9]
+        changeReasonCode = splitData[10]
 
         const inputData: TRoadnameTableSchema = {
           manage_number: splitData[0],
@@ -144,22 +156,27 @@ async function dailyUpdate() {
 
         tablename = findResult?.tablename as string
 
-        if (changeReasonCode === '31') {
-          await prismaClient[tablename as TAddInfoTableName].create({
-            data: data as TJibunTableSchema,
-          })
-        } else if (changeReasonCode === '34') {
-          await prismaClient[tablename as TAddInfoTableName].update({
-            where: { manage_number: inputData.manage_number },
-            data: data as TJibunTableSchema,
-          })
-        } else if (changeReasonCode === '63') {
-          await prismaClient[tablename as TAddInfoTableName].delete({
-            where: { manage_number: inputData.manage_number },
-          })
+        try {
+          if (changeReasonCode === '31') {
+            await prismaClient[tablename as TAddInfoTableName].create({
+              data: data as TJibunTableSchema,
+            })
+          } else if (changeReasonCode === '34') {
+            await prismaClient[tablename as TAddInfoTableName].update({
+              where: { manage_number: inputData.manage_number },
+              data: data as TJibunTableSchema,
+            })
+          } else if (changeReasonCode === '63') {
+            await prismaClient[tablename as TAddInfoTableName].delete({
+              where: { manage_number: inputData.manage_number },
+            })
+          }
+        } catch (err) {
+          throw err
         }
       })
     } else if (entries.includes('ROAD')) {
+      // 도로명코드 업데이트
       rl.on('line', async data => {
         const splitData = data.split('|')
 
