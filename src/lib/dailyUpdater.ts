@@ -1,23 +1,12 @@
-import {
-  createOnAddinfoTable,
-  createOnJibunTable,
-  createOnJusoTable,
-  deleteOnAddinfoByManageNumber,
-  deleteOnJibunByManageNumber,
-  deleteOnJusoByManageNumber,
-  prismaClient,
-  updateOnAddinfoTableByManageNumber,
-  updateOnJibunTableByManageNumber,
-  updateOnJusoTableByManageNumber,
-} from '../prisma/prismaClient'
+import { prismaClient } from '../prisma/prismaClient'
 import { createReadStream, readdirSync, readSync } from 'fs'
 import { dailyDir } from './projectPath'
 import { createInterface } from 'readline'
 import { logger } from './logger'
 import { Prisma } from '@prisma/client'
 import {
+  TAddInfoTableName,
   TAddInfoTableSchema,
-  TIntegratedTableName,
   TIntegratedTableSchema,
   TJibunTableSchema,
   TRoadnameTableSchema,
@@ -34,17 +23,13 @@ async function dailyUpdate() {
 
     let changeReasonCode: string = ''
     let tablename: string = ''
-    let target = ''
-    let inputData = null
 
     if (entry.includes('ADDINFO')) {
-      target = 'addinfo'
-
       rl.on('line', async data => {
         const splitData = data.split('|')
         changeReasonCode = splitData[9]
 
-        inputData = {
+        const inputData: TAddInfoTableSchema = {
           manage_number: splitData[0],
           hangjungdong_code: splitData[1],
           hangjungdong_name: splitData[2],
@@ -54,7 +39,7 @@ async function dailyUpdate() {
           master_building_name: splitData[6],
           sigungu_building_name: splitData[7],
           is_apt: splitData[8],
-        } as TAddInfoTableSchema
+        }
 
         const findResult = await prismaClient.addinfo_manage_number_index.findFirst({
           where: {
@@ -65,16 +50,31 @@ async function dailyUpdate() {
           },
         })
 
-        tablename = findResult?.tablename as string
+        console.log(findResult)
+
+        tablename = findResult?.tablename as TAddInfoTableName
+
+        if (changeReasonCode === '31') {
+          await prismaClient[tablename as TAddInfoTableName].create({
+            data: data as TJibunTableSchema,
+          })
+        } else if (changeReasonCode === '34') {
+          await prismaClient[tablename as TAddInfoTableName].update({
+            where: { manage_number: inputData.manage_number },
+            data: data as TJibunTableSchema,
+          })
+        } else if (changeReasonCode === '63') {
+          await prismaClient[tablename as TAddInfoTableName].delete({
+            where: { manage_number: inputData.manage_number },
+          })
+        }
       })
     } else if (entries.includes('JIBUN')) {
-      target = 'jibun'
-
       rl.on('line', async data => {
         const splitData = data.split('|')
         changeReasonCode = splitData[9]
 
-        inputData = {
+        const inputData: TJibunTableSchema = {
           manage_number: splitData[0],
           serial_number: +splitData[1],
           bupjungdong_code: splitData[2],
@@ -86,7 +86,7 @@ async function dailyUpdate() {
           jibun_primary: +splitData[8],
           jibun_secondary: +splitData[9],
           is_representation: splitData[10],
-        } as TJibunTableSchema
+        }
 
         const findResult = await prismaClient.jibun_manage_number_index.findFirst({
           where: {
@@ -97,16 +97,29 @@ async function dailyUpdate() {
           },
         })
 
-        tablename = findResult?.tablename as string
+        tablename = findResult?.tablename as TAddInfoTableName
+
+        if (changeReasonCode === '31') {
+          await prismaClient[tablename as TAddInfoTableName].create({
+            data: data as TJibunTableSchema,
+          })
+        } else if (changeReasonCode === '34') {
+          await prismaClient[tablename as TAddInfoTableName].update({
+            where: { manage_number: inputData.manage_number },
+            data: data as TJibunTableSchema,
+          })
+        } else if (changeReasonCode === '63') {
+          await prismaClient[tablename as TAddInfoTableName].delete({
+            where: { manage_number: inputData.manage_number },
+          })
+        }
       })
     } else if (entries.includes('JUSO')) {
-      target = 'juso'
-
       rl.on('line', async data => {
         const splitData = data.split('|')
         changeReasonCode = splitData[9]
 
-        inputData = {
+        const inputData: TRoadnameTableSchema = {
           manage_number: splitData[0],
           roadname_code: splitData[1],
           eupmyeondong_number: splitData[2],
@@ -118,7 +131,7 @@ async function dailyUpdate() {
           notice_date: splitData[8],
           previous_roadname_address: splitData[9],
           has_detail: splitData[10],
-        } as TRoadnameTableSchema
+        }
 
         const findResult = await prismaClient.juso_manage_number_index.findFirst({
           where: {
@@ -130,6 +143,21 @@ async function dailyUpdate() {
         })
 
         tablename = findResult?.tablename as string
+
+        if (changeReasonCode === '31') {
+          await prismaClient[tablename as TAddInfoTableName].create({
+            data: data as TJibunTableSchema,
+          })
+        } else if (changeReasonCode === '34') {
+          await prismaClient[tablename as TAddInfoTableName].update({
+            where: { manage_number: inputData.manage_number },
+            data: data as TJibunTableSchema,
+          })
+        } else if (changeReasonCode === '63') {
+          await prismaClient[tablename as TAddInfoTableName].delete({
+            where: { manage_number: inputData.manage_number },
+          })
+        }
       })
     } else if (entries.includes('ROAD')) {
       rl.on('line', async data => {
@@ -156,66 +184,24 @@ async function dailyUpdate() {
         }
 
         try {
-          await prismaClient.roadname_code.upsert({
-            where: {
-              roadname_code_eupmyeondong_number: {
-                roadname_code: inputData.roadname_code,
-                eupmyeondong_number: inputData.eupmyeondong_code as string,
+          if (inputData.change_history === '신규') {
+            await prismaClient.roadname_code.create({ data: inputData })
+          } else {
+            await prismaClient.roadname_code.upsert({
+              where: {
+                roadname_code_eupmyeondong_number: {
+                  roadname_code: inputData.roadname_code,
+                  eupmyeondong_number: inputData.eupmyeondong_number,
+                },
               },
-            },
-            update: inputData,
-            create: inputData,
-          })
-          return
+              update: inputData,
+              create: inputData,
+            })
+          }
         } catch (e) {
           throw e
         }
       })
-    }
-
-    try {
-      if (changeReasonCode === '31') {
-        // 생성
-        if (target === 'juso') {
-          await createOnJusoTable(tablename, inputData as TRoadnameTableSchema)
-        } else if (target === 'jibun') {
-          await createOnJibunTable(tablename, inputData as TJibunTableSchema)
-        } else if (target === 'addinfo') {
-          await createOnAddinfoTable(tablename, inputData as TAddInfoTableSchema)
-        }
-      } else if (changeReasonCode === '34') {
-        // 변경
-        if (target === 'juso') {
-          await updateOnJusoTableByManageNumber(
-            tablename,
-            inputData?.manage_number,
-            inputData as TRoadnameTableSchema
-          )
-        } else if (target === 'jibun') {
-          await updateOnJibunTableByManageNumber(
-            tablename,
-            inputData?.manage_number,
-            inputData as TJibunTableSchema
-          )
-        } else if (target === 'addinfo') {
-          await updateOnAddinfoTableByManageNumber(
-            tablename,
-            inputData?.manage_number,
-            inputData as TAddInfoTableSchema
-          )
-        }
-      } else if (changeReasonCode === '63') {
-        // 삭제
-        if (target === 'juso') {
-          await deleteOnJusoByManageNumber(tablename, inputData?.manage_number)
-        } else if (target === 'jibun') {
-          await deleteOnJibunByManageNumber(tablename, inputData?.manage_number)
-        } else if (target === 'addinfo') {
-          await deleteOnAddinfoByManageNumber(tablename, inputData?.manage_number)
-        }
-      }
-    } catch (err) {
-      throw err
     }
   }
 }
@@ -225,10 +211,3 @@ dailyUpdate()
     logger.info('Job finished.')
   })
   .catch(e => logger.error(e))
-function deleteonaddinfo(
-  tablename: string,
-  manage_number: string,
-  inputData: TIntegratedTableSchema
-) {
-  throw new Error('Function not implemented.')
-}
