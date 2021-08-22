@@ -119,6 +119,7 @@ type ValueOf<T> = T[keyof T]
 export type TAddInfoTableName = `additional_info_${ValueOf<TSidoObject>}`
 export type TRoadnameTableName = `roadname_address_${ValueOf<TSidoObject>}`
 export type TJibunTableName = `jibun_address_${ValueOf<TSidoObject>}`
+export type TTableDelegate = `${TAddInfoTableName | TRoadnameTableName | TJibunTableName}Delegate`
 
 export type TIntegratedTableName = TAddInfoTableName | TRoadnameTableName | TJibunTableName
 
