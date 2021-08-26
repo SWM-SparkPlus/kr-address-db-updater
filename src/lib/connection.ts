@@ -1,22 +1,19 @@
 import 'reflect-metadata'
 import 'dotenv/config'
-import { Connection, ConnectionOptions, createConnection, Logger, QueryRunner } from 'typeorm'
+import {
+  Connection,
+  ConnectionOptions,
+  createConnection,
+  getRepository,
+  Logger,
+  QueryRunner,
+} from 'typeorm'
 import { getRoadnameCodeEntity, RoadcodeEntity } from '../entities/roadcode.entity'
 import { logger } from './logger'
+import { ormConfig } from '../../ormconfig'
+import { AddInfoEntity, addMetadata, getAddinfoEntityByTableName } from '../entities/addinfo.entity'
 
 const { MYSQL_HOST, MYSQL_PORT, MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD } = process.env
-
-export const connectionOption: ConnectionOptions = {
-  type: 'mysql',
-  host: MYSQL_HOST,
-  port: (MYSQL_PORT as unknown as number) || undefined,
-  username: MYSQL_USER,
-  password: MYSQL_PASSWORD,
-  database: MYSQL_DATABASE,
-  entities: [__dirname + '/../entities/*.ts'],
-  synchronize: false,
-  logging: true,
-}
 
 class CustomLogger implements Logger {
   logQuery(query: string, parameters?: any[], queryRunner?: QueryRunner) {
@@ -70,7 +67,7 @@ class ConnectionService {
     const key = entityType
 
     if (!this.connectionMap.has(key)) {
-      const connection = createConnection(connectionOption)
+      const connection = createConnection(ormConfig)
       this.connectionMap.set(key, connection)
     }
     return this.connectionMap.get(key) as Promise<Connection>
@@ -80,10 +77,15 @@ class ConnectionService {
 export const connectionService = new ConnectionService()
 
 async function main() {
-  const roadcode = new RoadcodeEntity()
-  const connect = await connectionService.getConnection(roadcode)
-  const repo = connect.createEntityManager()
-  console.log(await repo.find(RoadcodeEntity))
+  // const roadcode = getRoadnameCodeEntity()
+  // const repo = connect.createEntityManager()
+  // console.log(await repo.findOne(RoadcodeEntity))
+
+  const connection = await getConnection(ormConfig)
+  const addinfo = getAddinfoEntityByTableName('additional_info_seoul')
+  addMetadata(connection, addinfo)
+
+  console.log(await connection.manager.findOne(addinfo))
 }
 
 main()
@@ -93,3 +95,5 @@ main()
   .catch(e => {
     console.error(e)
   })
+
+// getConnection(connectionOption).then(async conn => {
