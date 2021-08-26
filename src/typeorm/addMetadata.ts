@@ -2,7 +2,7 @@ import { Connection, EntitySchema } from 'typeorm'
 import { ConnectionMetadataBuilder } from 'typeorm/connection/ConnectionMetadataBuilder'
 import { EntityMetadataValidator } from 'typeorm/metadata-builder/EntityMetadataValidator'
 
-export const addMetadata = (
+export const addMetadata = async (
   connection: Connection,
   entity: Function | EntitySchema<any> | string
 ) => {

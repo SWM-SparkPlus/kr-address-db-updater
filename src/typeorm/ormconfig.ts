@@ -10,5 +10,5 @@ export const ormConfig: MysqlConnectionOptions = {
   database: process.env.MYSQL_DATABASE,
   synchronize: false,
   logging: ['query', 'error'],
-  entities: ['src/typeorm/entities/**/*.ts'],
+  entities: ['src/typeorm/entities/**/*{.ts, .js}'],
 }

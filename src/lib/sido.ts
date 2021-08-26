@@ -119,7 +119,10 @@ type ValueOf<T> = T[keyof T]
 export type TAddInfoTableName = `additional_info_${ValueOf<TSidoObject>}`
 export type TRoadnameTableName = `roadname_address_${ValueOf<TSidoObject>}`
 export type TJibunTableName = `jibun_address_${ValueOf<TSidoObject>}`
-
+export type TIndexTableName =
+  | 'juso_manage_number_index'
+  | 'jibun_manage_number_index'
+  | 'addinfo_manage_number_index'
 export type TIntegratedTableName = TAddInfoTableName | TRoadnameTableName | TJibunTableName
 
 export type TAddInfoTableSchema = additional_info_busan &
