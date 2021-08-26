@@ -10,10 +10,8 @@ import {
   TJibunTableSchema,
   TRoadnameTableSchema,
 } from './sido'
-import { connectionService } from './createConnection'
-import { getAddinfoEntityByTableName } from '../entities/addinfo.entity'
-import { connectionOption, getConnection } from './connection'
-import { getRoadnameCodeEntity, RoadcodeEntity } from '../entities/roadcode.entity'
+import { getAddinfoEntityByTableName } from '../typeorm/entities/addinfo.entity'
+import { getRoadnameCodeEntity, RoadcodeEntity } from '../typeorm/entities/roadcode.entity'
 import { Connection, getManager, getRepository } from 'typeorm'
 
 const entries = readdirSync(dailyDir)
