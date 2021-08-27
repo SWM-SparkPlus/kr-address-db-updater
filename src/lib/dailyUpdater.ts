@@ -128,7 +128,7 @@ try {
           addMetadata(connection, jibunEntity)
 
           // 실제 일일 변동분 업데이트
-          if (changeReasonCode in ['31', '34']) {
+          if (changeReasonCode === '31' || changeReasonCode === '34') {
             connection.manager.save(jibunEntity, inputData, { reload: false })
           } else if (changeReasonCode === '63') {
             connection.manager.delete(jibunEntity, {
@@ -136,55 +136,6 @@ try {
               serial_number: inputData.serial_number,
             })
           }
-
-          // if (changeReasonCode === '31') {
-          //   // 신규
-          //   const tablePostfix = SidoObject[inputData.sido_name as TSido]
-          //   const tableName = `jibun_address_${tablePostfix}` as TJibunTableName
-          //   const targetEntity = getJibunEntityByTableName(tableName)
-          //   const indexEntity = getManageNumberIndexTableName('jibun_manage_number_index')
-          //   addMetadata(connection, targetEntity)
-          //   addMetadata(connection, indexEntity)
-          //   connection.manager.save(targetEntity, inputData, { reload: false })
-
-          //   // 인덱스가 존재하지 않을 경우에만 인덱스 추가(기존 관리번호에 새로운 일련번호)
-          //   const findIndex = await connection.manager.findOne(indexEntity, { manage_number: inputData.manage_number })
-          //   if (!findIndex) connection.manager.save(indexEntity, { manage_number: inputData.manage_number, tablename: tableName }, { reload: false })
-          // } else {
-          //   // 수정 또는 삭제
-          //   const jusoIndexEntity = getManageNumberIndexTableName('jibun_manage_number_index')
-          //   addMetadata(connection, jusoIndexEntity)
-          //   const findIndex = await connection.manager.findOne(jusoIndexEntity, {
-          //     manage_number: inputData.manage_number,
-          //   })
-
-          //   const tableName = findIndex?.tablename as TJibunTableName
-
-          //   // 인덱스가 없는 케이스 핸들링
-          //   if (!tableName) {
-          //     const areaName = SidoObject[inputData.sido_name as TSido]
-          //     const targetTableName = `jibun_address_${areaName}`
-          //     const newTargetEntity = getJibunEntityByTableName(targetTableName as TJibunTableName)
-          //     addMetadata(connection, newTargetEntity)
-          //     connection.manager.save(jusoIndexEntity, { manage_number: inputData.manage_number, tablename: targetTableName })
-          //     connection.manager.save(newTargetEntity, inputData)
-          //   }
-
-          //   const targetTableEntity = getJibunEntityByTableName(tableName)
-          //   addMetadata(connection, targetTableEntity)
-
-          //   if (changeReasonCode === '34') {
-          //     connection.manager.update(targetTableEntity, {
-          //       manage_number: inputData.manage_number,
-          //       serial_number: inputData.serial_number
-          //     }, inputData)
-          //   } else if (changeReasonCode === '63') {
-          //     connection.manager.delete(targetTableEntity, {
-          //       manage_number: inputData.manage_number,
-          //       serial_number: inputData.serial_number
-          //     })
-          //   }
-          // }
         })
       }
       // else if (entry.includes('MATCHING_JUSO')) {
@@ -296,7 +247,5 @@ try {
 } catch (err) {
   logger.error(err)
   console.error(err)
-  process.exit(0)
-} finally {
-  process.exit(0)
+  process.exit(1)
 }

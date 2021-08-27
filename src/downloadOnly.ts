@@ -29,7 +29,7 @@ async function downloadOnly() {
     if (arg === '--daily' || arg === '-d') {
       logger.info(`[DownloadDailyStart]`)
 
-      const yesterday = dayjs(date.setDate(date.getDate() - 19)).format('YYYYMMDD')
+      const yesterday = dayjs(date.setDate(date.getDate() - 1)).format('YYYYMMDD')
       url = encodeURI(
         `https://www.juso.go.kr/dn.do?reqType=DCM&stdde=${yesterday}&indutyCd=999&purpsCd=999&indutyRm=수집종료&purpsRm=수집종료`
       )

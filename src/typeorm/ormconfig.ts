@@ -11,4 +11,5 @@ export const ormConfig: MysqlConnectionOptions = {
   synchronize: false,
   logging: ['query', 'error'],
   entities: ['src/typeorm/entities/**/*{.ts, .js}'],
+  maxQueryExecutionTime: 3000,
 }
