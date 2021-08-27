@@ -3,7 +3,7 @@ import { logger } from '../lib/logger'
 
 export default class TypeOrmLogger implements Logger {
   logQuery(query: string, parameters?: any[], queryRunner?: QueryRunner) {
-    logger.info(`[TypeOrmLogQuery] ${query}`)
+    // logger.info(`[TypeOrmLogQuery] ${query}`)
   }
 
   logQueryError(
@@ -16,7 +16,7 @@ export default class TypeOrmLogger implements Logger {
   }
 
   logQuerySlow(time: number, query: string, parameters?: any[], queryRunner?: QueryRunner) {
-    logger.info(`[TypeOrmLogSlowQuery] ${time} on ${query}`)
+    logger.warn(`[TypeOrmLogSlowQuery] ${time} on ${query}`)
   }
 
   logSchemaBuild(message: string, queryRunner?: QueryRunner) {
@@ -28,6 +28,6 @@ export default class TypeOrmLogger implements Logger {
   }
 
   log(level: 'log' | 'info' | 'warn', message: any, queryRunner?: QueryRunner) {
-    logger.info(`[TypeOrmLog] ${level}: ${message}`)
+    // logger.info(`[TypeOrmLog] ${level}: ${message}`)
   }
 }
