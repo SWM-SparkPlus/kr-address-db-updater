@@ -3,7 +3,7 @@ import { logger } from '../lib/logger'
 
 export default class TypeOrmLogger implements Logger {
   logQuery(query: string, parameters?: any[], queryRunner?: QueryRunner) {
-    // logger.info(`[TypeOrmLogQuery] ${query}`)
+    logger.info(`[TypeORMLogQuery] ${query}`)
   }
 
   logQueryError(
@@ -12,22 +12,22 @@ export default class TypeOrmLogger implements Logger {
     parameters?: any[],
     queryRunner?: QueryRunner
   ) {
-    logger.error(`[TypeOrmLogQueryError] Error occured on query ${query} : ${error}`)
+    logger.error(`[TypeORMLogQueryError] Error occured on query ${query} : ${error}`)
   }
 
   logQuerySlow(time: number, query: string, parameters?: any[], queryRunner?: QueryRunner) {
-    logger.warn(`[TypeOrmLogSlowQuery] Spend ${time}ms for ${query}`)
+    logger.warn(`[TypeORMLogSlowQuery] Spend ${time}ms for ${query}`)
   }
 
   logSchemaBuild(message: string, queryRunner?: QueryRunner) {
-    logger.info(`[TypeOrmSchemaLog] ${message}`)
+    logger.info(`[TypeORMSchemaLog] ${message}`)
   }
 
   logMigration(message: string, queryRunner?: QueryRunner) {
-    logger.info(`[TypeOrmMigrationLog] ${message}`)
+    logger.info(`[TypeORMMigrationLog] ${message}`)
   }
 
   log(level: 'log' | 'info' | 'warn', message: any, queryRunner?: QueryRunner) {
-    logger.info(`[TypeOrmLog] ${level}: ${message}`)
+    logger.info(`[TypeORMLog] ${level}: ${message}`)
   }
 }
