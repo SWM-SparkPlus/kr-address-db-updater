@@ -139,113 +139,116 @@ try {
       //     }
       //   })
       // }
-      if (entry.includes('MATCHING_JUSO')) {
-        // 도로명주소
-        rl.on('line', async data => {
-          const splitData = data.split('|')
-          const inputData: JusoModel = {
-            manage_number: splitData[0],
-            roadname_code: splitData[1],
-            eupmyeondong_number: splitData[2],
-            basement: splitData[3],
-            building_primary_number: +splitData[4],
-            building_secondary_number: +splitData[5],
-            basic_area_number: splitData[6],
-            change_reason_code: splitData[7],
-            notice_date: splitData[8],
-            previous_roadname_address: splitData[9],
-            has_detail: splitData[10],
-          }
-
-          changeReasonCode = splitData[7]
-
-          // 인덱스 테이블 우선 조회
-          const jusoIndexEntity = getManageNumberIndexTableName('juso_manage_number_index')
-          addMetadata(connection, jusoIndexEntity)
-          const jusoTableNameIndexQuery = await connection.manager.findOne(jusoIndexEntity, {
-            manage_number: inputData.manage_number,
-          })
-
-          let updateTableName = jusoTableNameIndexQuery?.tablename
-
-          // 인덱스가 없을 경우 직접 생성
-          if (!updateTableName) {
-            const findByRoadcode = await connection.manager.findOne(RoadcodeEntity, {
-              roadname_code: inputData.roadname_code,
-            })
-            updateTableName = `roadname_address_${
-              SidoObject[findByRoadcode?.sido_name as TSido]
-            }` as TRoadnameTableName
-            console.log('Second', updateTableName)
-            await connection.manager.save(
-              jusoIndexEntity,
-              { manage_number: inputData.manage_number, tablename: updateTableName },
-              { reload: false }
-            )
-          }
-
-          //  엔터티 생성 후 메터데이터 추가
-          const jusoEntity = getJusoEntityByTableName(updateTableName as TRoadnameTableName)
-          addMetadata(connection, jusoEntity)
-
-          // 실제 일일 변동분 업데이트
-          if (changeReasonCode === '31') {
-            connection.manager.save(jusoEntity, inputData, { reload: false })
-          } else if (changeReasonCode === '34') {
-            connection.manager.update(
-              jusoEntity,
-              { manage_number: inputData.manage_number },
-              inputData
-            )
-          } else if (changeReasonCode === '63') {
-            connection.manager.delete(jusoEntity, {
-              manage_number: inputData.manage_number,
-            })
-          }
-        })
-      }
-      // else if (entry.includes('MATCHING_ROAD')) {
-      //   // 도로명코드
+      // if (entry.includes('MATCHING_JUSO')) {
+      //   // 도로명주소
       //   rl.on('line', async data => {
       //     const splitData = data.split('|')
-      //     const inputData: RoadcodeEntity = {
-      //       roadname_code: splitData[0],
-      //       roadname: splitData[1],
-      //       roadname_eng: splitData[2],
-      //       eupmyeondong_number: splitData[3],
-      //       sido_name: splitData[4],
-      //       sido_eng: splitData[5],
-      //       sigungu: splitData[6],
-      //       sigungu_eng: splitData[7],
-      //       eupmyeondong: splitData[8],
-      //       eupmyeondong_eng: splitData[9],
-      //       eupmyeondong_type: splitData[10],
-      //       eupmyeondong_code: splitData[11],
-      //       is_using: splitData[12],
-      //       change_reason: splitData[13],
-      //       change_history: splitData[14],
-      //       declare_date: splitData[15],
-      //       expire_date: splitData[16],
+      //     const inputData: JusoModel = {
+      //       manage_number: splitData[0],
+      //       roadname_code: splitData[1],
+      //       eupmyeondong_number: splitData[2],
+      //       basement: splitData[3],
+      //       building_primary_number: +splitData[4],
+      //       building_secondary_number: +splitData[5],
+      //       basic_area_number: splitData[6],
+      //       change_reason_code: splitData[7],
+      //       notice_date: splitData[8],
+      //       previous_roadname_address: splitData[9],
+      //       has_detail: splitData[10],
       //     }
 
-      //     const targetTableEntity = RoadcodeEntity
+      //     changeReasonCode = splitData[7]
 
-      //     if (inputData.change_history === '신규') {
-      //       // 존재하지 않을 경우...
-      //       connection.manager.save(targetTableEntity, inputData, { reload: false })
-      //     } else {
-      //       // 존재할 경우: 수정 또는 삭제
+      //     // 인덱스 테이블 우선 조회
+      //     const jusoIndexEntity = getManageNumberIndexTableName('juso_manage_number_index')
+      //     addMetadata(connection, jusoIndexEntity)
+      //     const jusoTableNameIndexQuery = await connection.manager.findOne(jusoIndexEntity, {
+      //       manage_number: inputData.manage_number,
+      //     })
+
+      //     let updateTableName = jusoTableNameIndexQuery?.tablename
+
+      //     // 인덱스가 없을 경우 직접 생성
+      //     if (!updateTableName) {
+      //       const findByRoadcode = await connection.manager.findOne(RoadcodeEntity, {
+      //         roadname_code: inputData.roadname_code,
+      //       })
+      //       updateTableName = `roadname_address_${
+      //         SidoObject[findByRoadcode?.sido_name as TSido]
+      //       }` as TRoadnameTableName
+      //       console.log('Second', updateTableName)
+      //       await connection.manager.save(
+      //         jusoIndexEntity,
+      //         { manage_number: inputData.manage_number, tablename: updateTableName },
+      //         { reload: false }
+      //       )
+      //     }
+
+      //     //  엔터티 생성 후 메터데이터 추가
+      //     const jusoEntity = getJusoEntityByTableName(updateTableName as TRoadnameTableName)
+      //     addMetadata(connection, jusoEntity)
+
+      //     // 실제 일일 변동분 업데이트
+      //     if (changeReasonCode === '31') {
+      //       connection.manager.save(jusoEntity, inputData, { reload: false })
+      //     } else if (changeReasonCode === '34') {
       //       connection.manager.update(
-      //         targetTableEntity,
-      //         {
-      //           roadname_code: inputData.roadname_code,
-      //           eupmyeondong_code: inputData.eupmyeondong_code,
-      //         },
+      //         jusoEntity,
+      //         { manage_number: inputData.manage_number },
       //         inputData
       //       )
+      //     } else if (changeReasonCode === '63') {
+      //       connection.manager.delete(jusoEntity, {
+      //         manage_number: inputData.manage_number,
+      //       })
       //     }
       //   })
       // }
+      if (entry.includes('MATCHING_ROAD')) {
+        // 도로명코드
+        rl.on('line', async data => {
+          if (data === 'No Data') return
+
+          const splitData = data.split('|')
+          const inputData: RoadcodeEntity = {
+            roadname_code: splitData[0],
+            roadname: splitData[1],
+            roadname_eng: splitData[2],
+            eupmyeondong_number: splitData[3],
+            sido_name: splitData[4],
+            sido_eng: splitData[5],
+            sigungu: splitData[6],
+            sigungu_eng: splitData[7],
+            eupmyeondong: splitData[8],
+            eupmyeondong_eng: splitData[9],
+            eupmyeondong_type: splitData[10],
+            eupmyeondong_code: splitData[11],
+            is_using: splitData[12],
+            change_reason: splitData[13],
+            change_history: splitData[14],
+            declare_date: splitData[15],
+            expire_date: splitData[16],
+          }
+
+          const findResult = await connection.manager.findOne(RoadcodeEntity, {
+            roadname_code: inputData.roadname_code,
+            eupmyeondong_code: inputData.eupmyeondong_code,
+          })
+
+          if (!findResult) {
+            connection.manager.save(RoadcodeEntity, inputData, { reload: false })
+          } else {
+            connection.manager.update(
+              RoadcodeEntity,
+              {
+                roadname_code: inputData.roadname_code,
+                eupmyeondong_code: inputData.eupmyeondong_code,
+              },
+              inputData
+            )
+          }
+        })
+      }
     }
   })()
 } catch (err) {
