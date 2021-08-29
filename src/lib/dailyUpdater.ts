@@ -83,123 +83,127 @@ try {
       //     }
       //   })
       // }
-      if (entry.includes('MATCHING_JIBUN')) {
-        // 지번주소
+      // if (entry.includes('MATCHING_JIBUN')) {
+      //   // 지번주소
+      //   rl.on('line', async data => {
+      //     const splitData = data.split('|')
+      //     const inputData = {
+      //       manage_number: splitData[0],
+      //       serial_number: +splitData[1],
+      //       bupjungdong_code: splitData[2],
+      //       sido_name: splitData[3],
+      //       sigungu_name: splitData[4],
+      //       bupjung_eupmyeondong_name: splitData[5],
+      //       bupjunglee_name: splitData[6],
+      //       is_mountain: splitData[7],
+      //       jibun_primary: +splitData[8],
+      //       jibun_secondary: +splitData[9],
+      //       is_representation: splitData[10],
+      //     }
+
+      //     changeReasonCode = splitData[11]
+
+      //     // 인덱스 테이블 우선 조회
+      //     const jibunIndexEntity = getManageNumberIndexTableName('jibun_manage_number_index')
+      //     addMetadata(connection, jibunIndexEntity)
+      //     const jibunTableNameIndex = await connection.manager.findOne(jibunIndexEntity, {
+      //       manage_number: inputData.manage_number,
+      //     })
+      //     let updateTableName = jibunTableNameIndex?.tablename
+
+      //     // 인덱스가 없을 경우 직접 생성
+      //     if (!updateTableName) {
+      //       updateTableName = `jibun_address_${SidoObject[inputData.sido_name as TSido]
+      //         }` as TJibunTableName
+      //       connection.manager.save(
+      //         jibunIndexEntity,
+      //         { manage_number: inputData.manage_number, tablename: updateTableName },
+      //         { reload: false }
+      //       )
+      //     }
+
+      //     // 엔터티 생성 후 메터데이터 추가
+      //     const jibunEntity = getJibunEntityByTableName(updateTableName as TJibunTableName)
+      //     addMetadata(connection, jibunEntity)
+
+      //     // 실제 일일 변동분 업데이트
+      //     if (changeReasonCode === '31') {
+      //       connection.manager.save(jibunEntity, inputData, { reload: false })
+      //     } else if (changeReasonCode === '34') {
+      //       connection.manager.update(jibunEntity, { manage_number: inputData.manage_number, serial_number: inputData.serial_number }, inputData)
+      //     } else if (changeReasonCode === '63') {
+      //       connection.manager.delete(jibunEntity, {
+      //         manage_number: inputData.manage_number,
+      //         serial_number: inputData.serial_number,
+      //       })
+      //     }
+      //   })
+      // }
+      if (entry.includes('MATCHING_JUSO')) {
+        // 도로명주소
         rl.on('line', async data => {
           const splitData = data.split('|')
-          const inputData = {
+          const inputData: JusoModel = {
             manage_number: splitData[0],
-            serial_number: +splitData[1],
-            bupjungdong_code: splitData[2],
-            sido_name: splitData[3],
-            sigungu_name: splitData[4],
-            bupjung_eupmyeondong_name: splitData[5],
-            bupjunglee_name: splitData[6],
-            is_mountain: splitData[7],
-            jibun_primary: +splitData[8],
-            jibun_secondary: +splitData[9],
-            is_representation: splitData[10],
+            roadname_code: splitData[1],
+            eupmyeondong_number: splitData[2],
+            basement: splitData[3],
+            building_primary_number: +splitData[4],
+            building_secondary_number: +splitData[5],
+            basic_area_number: splitData[6],
+            change_reason_code: splitData[7],
+            notice_date: splitData[8],
+            previous_roadname_address: splitData[9],
+            has_detail: splitData[10],
           }
 
-          changeReasonCode = splitData[11]
+          changeReasonCode = splitData[7]
 
           // 인덱스 테이블 우선 조회
-          const jibunIndexEntity = getManageNumberIndexTableName('jibun_manage_number_index')
-          addMetadata(connection, jibunIndexEntity)
-          const jibunTableNameIndex = await connection.manager.findOne(jibunIndexEntity, {
+          const jusoIndexEntity = getManageNumberIndexTableName('juso_manage_number_index')
+          addMetadata(connection, jusoIndexEntity)
+          const jusoTableNameIndexQuery = await connection.manager.findOne(jusoIndexEntity, {
             manage_number: inputData.manage_number,
           })
-          let updateTableName = jibunTableNameIndex?.tablename
+
+          let updateTableName = jusoTableNameIndexQuery?.tablename
 
           // 인덱스가 없을 경우 직접 생성
-          if (!jibunTableNameIndex) {
-            updateTableName = `jibun_address_${
-              SidoObject[inputData.sido_name as TSido]
-            }` as TJibunTableName
-            connection.manager.save(
-              jibunIndexEntity,
+          if (!updateTableName) {
+            const findByRoadcode = await connection.manager.findOne(RoadcodeEntity, {
+              roadname_code: inputData.roadname_code,
+            })
+            updateTableName = `roadname_address_${
+              SidoObject[findByRoadcode?.sido_name as TSido]
+            }` as TRoadnameTableName
+            console.log('Second', updateTableName)
+            await connection.manager.save(
+              jusoIndexEntity,
               { manage_number: inputData.manage_number, tablename: updateTableName },
               { reload: false }
             )
           }
 
-          // 엔터티 생성 후 메터데이터 추가
-          const jibunEntity = getJibunEntityByTableName(updateTableName as TJibunTableName)
-          addMetadata(connection, jibunEntity)
+          //  엔터티 생성 후 메터데이터 추가
+          const jusoEntity = getJusoEntityByTableName(updateTableName as TRoadnameTableName)
+          addMetadata(connection, jusoEntity)
 
           // 실제 일일 변동분 업데이트
-          if (changeReasonCode === '31' || changeReasonCode === '34') {
-            connection.manager.save(jibunEntity, inputData, { reload: false })
+          if (changeReasonCode === '31') {
+            connection.manager.save(jusoEntity, inputData, { reload: false })
+          } else if (changeReasonCode === '34') {
+            connection.manager.update(
+              jusoEntity,
+              { manage_number: inputData.manage_number },
+              inputData
+            )
           } else if (changeReasonCode === '63') {
-            connection.manager.delete(jibunEntity, {
+            connection.manager.delete(jusoEntity, {
               manage_number: inputData.manage_number,
-              serial_number: inputData.serial_number,
             })
           }
         })
       }
-      // else if (entry.includes('MATCHING_JUSO')) {
-      //   // 도로명주소
-      //   rl.on('line', async data => {
-      //     const splitData = data.split('|')
-      //     const inputData: JusoModel = {
-      //       manage_number: splitData[0],
-      //       roadname_code: splitData[1],
-      //       eupmyeondong_number: splitData[2],
-      //       basement: splitData[3],
-      //       building_primary_number: +splitData[4],
-      //       building_secondary_number: +splitData[5],
-      //       basic_area_number: splitData[6],
-      //       change_reason_code: splitData[7],
-      //       notice_date: splitData[8],
-      //       previous_roadname_address: splitData[9],
-      //       has_detail: splitData[10],
-      //     }
-
-      //     changeReasonCode = splitData[7]
-
-      //     if (changeReasonCode === '31') {
-      //       // 신규
-      //       const findByCompositeKey = await connection.manager.find(RoadcodeEntity, {
-      //         where: {
-      //           roadname_code: inputData.roadname_code,
-      //           eupmyeondong_code: inputData.eupmyeondong_number,
-      //         },
-      //       })
-      //       const targetArea = findByCompositeKey.pop()?.eupmyeondong_eng.toLowerCase()
-      //       const tableName = `roadname_address_${targetArea}` as TRoadnameTableName
-      //       const targetEntity = getJusoEntityByTableName(tableName)
-
-      //       addMetadata(connection, targetEntity)
-      //       await connection.manager.save(targetEntity, inputData, {
-      //         reload: false,
-      //       })
-      //     } else {
-      //       // 수정 또는 삭제
-      //       const jusoIndexEntity = getManageNumberIndexTableName('juso_manage_number_index')
-      //       addMetadata(connection, jusoIndexEntity)
-      //       const findIndex = await connection.manager.find(jusoIndexEntity, {
-      //         manage_number: inputData.manage_number,
-      //       })
-
-      //       const tableName = findIndex.pop()?.tablename as TRoadnameTableName
-      //       const targetTableEntity = getJusoEntityByTableName(tableName)
-      //       addMetadata(connection, targetTableEntity)
-
-      //       if (changeReasonCode === '34') {
-      //         connection.manager.update(
-      //           targetTableEntity,
-      //           { manage_number: inputData.manage_number },
-      //           inputData
-      //         )
-      //       } else if (changeReasonCode === '63') {
-      //         connection.manager.delete(targetTableEntity, {
-      //           manage_number: inputData.manage_number,
-      //         })
-      //       }
-      //     }
-      //   })
-      // }
       // else if (entry.includes('MATCHING_ROAD')) {
       //   // 도로명코드
       //   rl.on('line', async data => {
@@ -247,5 +251,4 @@ try {
 } catch (err) {
   logger.error(err)
   console.error(err)
-  process.exit(1)
 }

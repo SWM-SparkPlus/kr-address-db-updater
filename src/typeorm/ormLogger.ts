@@ -3,7 +3,7 @@ import { logger } from '../lib/logger'
 
 export default class TypeOrmLogger implements Logger {
   logQuery(query: string, parameters?: any[], queryRunner?: QueryRunner) {
-    logger.info(`[TypeOrmLogQuery] ${query}`)
+    // logger.info(`[TypeOrmLogQuery] ${query}`)
   }
 
   logQueryError(
