@@ -123,7 +123,7 @@ export type TIntegratedTableName = TAddInfoTableName | TRoadnameTableName | TJib
 export type TIndexTableName =
   | 'juso_manage_number_index'
   | 'jibun_manage_number_index'
-  | 'addinfo_manage_number_index'ㅋ
+  | 'addinfo_manage_number_index'
 
 export type TAddInfoTableSchema = additional_info_busan &
   additional_info_seoul &
