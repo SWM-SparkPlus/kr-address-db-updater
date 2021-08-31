@@ -1,6 +1,6 @@
 import { readdirSync } from 'fs'
 import path from 'path'
-import { importToDb } from './lib/importToDb'
+import { importToDb } from './lib/importAddressFileToDb'
 import { logger } from './lib/logger'
 import { EDatabaseImport } from './types/import.type'
 

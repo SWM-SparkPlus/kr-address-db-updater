@@ -1,11 +1,11 @@
 import { EventEmitter } from 'events'
-import { downloadFileAndGetEntries } from './lib/fileDownloader'
+import { downloadFileAndGetEntries } from './lib/downloadAndGetEntries'
 import { logger } from './lib/logger'
 import { createWriteStream, rmSync } from 'fs'
 import dayjs from 'dayjs'
 import { dailyDir, totalDir } from './lib/projectPath'
-import { writeEncodedFileAndImport } from './lib/addressFileWriter'
-import { downloadPathHandler } from './lib/pathHandler'
+import { writeAddressFileAndImport } from './lib/addressFileWriter'
+import { downloadPathHandler } from './lib/projectPathHandler'
 import { TDownloadFileOption } from './types/option.type'
 
 downloadPathHandler()
@@ -54,7 +54,7 @@ async function downloadOnly() {
         entry.getDataAsync((data, err) => {
           if (err) throw err
 
-          writeEncodedFileAndImport({
+          writeAddressFileAndImport({
             data,
             entryOfZip: entry,
             writeDir: downloadDir,

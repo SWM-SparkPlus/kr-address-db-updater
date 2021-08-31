@@ -2,10 +2,10 @@ import dayjs from 'dayjs'
 import { rmSync, createWriteStream } from 'fs'
 import './lib/env'
 import { logger } from './lib/logger'
-import { downloadFileAndGetEntries } from './lib/fileDownloader'
-import { writeEncodedFileAndImport } from './lib/addressFileWriter'
+import { downloadFileAndGetEntries } from './lib/downloadAndGetEntries'
+import { writeAddressFileAndImport } from './lib/addressFileWriter'
 import { totalDir } from './lib/projectPath'
-import { downloadPathHandler } from './lib/pathHandler'
+import { downloadPathHandler } from './lib/projectPathHandler'
 import { TDownloadFileOption } from './types/option.type'
 
 downloadPathHandler()
@@ -49,7 +49,7 @@ const main = async () => {
       entry.getDataAsync((data, err) => {
         if (err) throw err
 
-        writeEncodedFileAndImport({
+        writeAddressFileAndImport({
           data,
           entryOfZip: entry,
           writeDir: downloadDir,
