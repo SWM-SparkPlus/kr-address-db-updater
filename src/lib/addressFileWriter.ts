@@ -3,13 +3,14 @@ import EventEmitter from 'events'
 import { createWriteStream, readdirSync } from 'fs'
 import iconv from 'iconv-lite'
 import { Readable } from 'stream'
-import { SidoObject, TSido } from './sido'
+import { EDatabaseImport } from '../types/import.type'
+import { SidoObject, TSido } from '../types/sido.type'
 import { importToDb } from './importToDb'
 import { logger } from './logger'
 
 export const encoderAndWriteEvent = new EventEmitter().setMaxListeners(100)
-encoderAndWriteEvent.on('finish', (tableName: string) => {
-  importToDb(tableName)
+encoderAndWriteEvent.on('finish', (tableName: string, target: EDatabaseImport) => {
+  importToDb(tableName, target)
 })
 
 export type TWriteAndImportOption = {
@@ -81,7 +82,7 @@ export const writeEncodedFileAndImport = ({
     doImport
       ? readableContentStream.on('close', () => {
           numOfFiles -= 1
-          encoderAndWriteEvent.emit('finish', tableName, numOfFiles)
+          encoderAndWriteEvent.emit('finish', tableName, EDatabaseImport.Address)
         })
       : null
   } else if (txtRegex.test(ext) && rawFileName.includes('AlterD.JUSUMT')) {

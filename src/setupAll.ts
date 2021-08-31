@@ -3,7 +3,7 @@ import { rmSync, createWriteStream } from 'fs'
 import './lib/env'
 import { logger } from './lib/logger'
 import { downloadFileAndGetEntries, TDownloadFileOption } from './lib/fileDownloader'
-import { writeEncodedFileAndImport } from './lib/utf8Writer'
+import { writeEncodedFileAndImport } from './lib/addressFileWriter'
 import { totalDir } from './lib/projectPath'
 import { downloadPathHandler } from './lib/pathHandler'
 

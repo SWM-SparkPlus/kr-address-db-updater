@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm'
-import { TRoadnameTableName } from '../../lib/sido'
+import { TRoadnameTableName } from '../../types/sido.type'
 
 export function getJusoEntityByTableName(tableName: TRoadnameTableName) {
   @Entity({ name: tableName, synchronize: false })

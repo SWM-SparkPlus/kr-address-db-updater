@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm'
-import { TAddInfoTableName } from '../../lib/sido'
+import { TAddInfoTableName } from '../../types/sido.type'
 
 export function getAddinfoEntityByTableName(tableName: TAddInfoTableName) {
   @Entity({ name: tableName, synchronize: false })

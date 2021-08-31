@@ -4,7 +4,7 @@ import { logger } from './lib/logger'
 import { createWriteStream, rmSync } from 'fs'
 import dayjs from 'dayjs'
 import { dailyDir, totalDir } from './lib/projectPath'
-import { writeEncodedFileAndImport } from './lib/utf8Writer'
+import { writeEncodedFileAndImport } from './lib/addressFileWriter'
 import { downloadPathHandler } from './lib/pathHandler'
 
 downloadPathHandler()

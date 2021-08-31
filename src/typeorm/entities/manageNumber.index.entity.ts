@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm'
-import { TIndexTableName } from '../../lib/sido'
+import { TIndexTableName } from '../../types/sido.type'
 
 export function getManageNumberIndexTableName(tableName: TIndexTableName) {
   @Entity({ name: tableName, synchronize: false })

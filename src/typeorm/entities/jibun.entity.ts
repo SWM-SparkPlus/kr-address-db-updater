@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm'
-import { TJibunTableName } from '../../lib/sido'
+import { TJibunTableName } from '../../types/sido.type'
 
 export function getJibunEntityByTableName(tableName: TJibunTableName) {
   @Entity({ name: tableName, synchronize: false })
