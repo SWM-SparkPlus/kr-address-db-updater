@@ -1,10 +1,10 @@
-import AdmZip from 'adm-zip'
 import EventEmitter from 'events'
 import { createWriteStream, readdirSync } from 'fs'
 import iconv from 'iconv-lite'
 import { Readable } from 'stream'
 import { EDatabaseImport } from '../types/import.type'
-import { SidoObject, TSido } from '../types/sido.type'
+import { TWriteAndImportOption } from '../types/option.type'
+import { SidoObject, TSido } from '../types/sido.collections'
 import { importToDb } from './importToDb'
 import { logger } from './logger'
 
@@ -13,15 +13,8 @@ encoderAndWriteEvent.on('finish', (tableName: string, target: EDatabaseImport) =
   importToDb(tableName, target)
 })
 
-export type TWriteAndImportOption = {
-  data: Buffer
-  entryOfZip: AdmZip.IZipEntry
-  writeDir: string
-  doImport: boolean
-}
-
 /**
- * EUC-KR 버퍼 데이터를 받아 UTF8로 인코딩하고 파일로 쓰기를 실행하는 함수
+ * EUC-KR encoded Buffer를 받아 UTF8로 인코딩하고 파일로 쓰기를 실행하는 함수
  *
  * @param data 인코딩할 데이터
  * @param entryOfZip Zip 파일의 엔트리
@@ -40,8 +33,6 @@ export const writeEncodedFileAndImport = ({
   // 확장자 추출
   const dotSplitFilename = encodedFilename.split('.')
   const ext = dotSplitFilename[dotSplitFilename.length - 1]
-
-  let numOfFiles = readdirSync(writeDir).length - 1
 
   // 확장자와 이름을 확인하여 데이터베이스에 필요한 파일만 사용
   if (
@@ -81,7 +72,6 @@ export const writeEncodedFileAndImport = ({
     // 쓰기가 끝나면 import 실행
     doImport
       ? readableContentStream.on('close', () => {
-          numOfFiles -= 1
           encoderAndWriteEvent.emit('finish', tableName, EDatabaseImport.Address)
         })
       : null

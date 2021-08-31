@@ -1,9 +1,9 @@
-import AdmZip from 'adm-zip'
 import EventEmitter from 'events'
 import { createWriteStream, readdirSync } from 'fs'
 import { Readable } from 'stream'
 import { EDatabaseImport } from '../types/import.type'
-import { SidoObject, TSido } from '../types/sido.type'
+import { TWriteAndImportOption } from '../types/option.type'
+import { SidoObject, TSido } from '../types/sido.collections'
 import { importToDb } from './importToDb'
 import { logger } from './logger'
 
@@ -11,13 +11,6 @@ export const writeEvent = new EventEmitter().setMaxListeners(100)
 writeEvent.on('finish', (tableName: string, target: EDatabaseImport) => {
   importToDb(tableName, target)
 })
-
-export type TWriteAndImportOption = {
-  data: Buffer
-  entryOfZip: AdmZip.IZipEntry
-  writeDir: string
-  doImport: boolean
-}
 
 /**
  * EUC-KR 버퍼 데이터를 받아 UTF8로 인코딩하고 파일로 쓰기를 실행하는 함수

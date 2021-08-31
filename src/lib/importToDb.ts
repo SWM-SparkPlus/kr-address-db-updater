@@ -2,12 +2,6 @@ import { spawn } from 'child_process'
 import { EDatabaseImport } from '../types/import.type'
 import { logger } from './logger'
 
-const metaData = {
-  additional_info: 'addinfo_manage_number_index',
-  jibun_address: 'jibun_manage_number_index',
-  roadname_address: 'road_manage_number_index',
-}
-
 /**
  * MySQL에서 LOAD DATA를 병렬처리 하기위해 자식 프로세스를 생성하는 함수
  *

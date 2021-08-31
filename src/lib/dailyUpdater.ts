@@ -11,7 +11,7 @@ import {
   TRoadnameTableName,
   TSido,
   TSidoObject,
-} from '../types/sido.type'
+} from '../types/sido.collections'
 import { getAddinfoEntityByTableName } from '../typeorm/entities/addinfo.entity'
 import { getConnection } from '../typeorm/connection'
 import { ormConfig } from '../typeorm/ormConfig'

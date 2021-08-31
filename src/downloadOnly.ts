@@ -1,11 +1,12 @@
 import { EventEmitter } from 'events'
-import { downloadFileAndGetEntries, TDownloadFileOption } from './lib/fileDownloader'
+import { downloadFileAndGetEntries } from './lib/fileDownloader'
 import { logger } from './lib/logger'
 import { createWriteStream, rmSync } from 'fs'
 import dayjs from 'dayjs'
 import { dailyDir, totalDir } from './lib/projectPath'
 import { writeEncodedFileAndImport } from './lib/addressFileWriter'
 import { downloadPathHandler } from './lib/pathHandler'
+import { TDownloadFileOption } from './types/option.type'
 
 downloadPathHandler()
 
