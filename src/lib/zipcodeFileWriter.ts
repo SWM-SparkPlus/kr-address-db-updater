@@ -6,6 +6,7 @@ import { TWriteAndImportOption } from '../types/option.type'
 import { SidoObject, TSido } from '../types/sido.collections'
 import { importToDb } from './importToDb'
 import { logger } from './logger'
+import iconv from 'iconv-lite'
 
 export const writeEvent = new EventEmitter().setMaxListeners(100)
 writeEvent.on('finish', (tableName: string, target: EDatabaseImport) => {
@@ -25,7 +26,7 @@ export const zipcodeFileWriterAndImport = ({
   writeDir,
   doImport,
 }: TWriteAndImportOption) => {
-  const fileName = entryOfZip.entryName
+  const fileName = iconv.decode(entryOfZip.rawEntryName, 'euc-kr')
   const txtRegex = /^[tT][xX][tT]$/
   // 확장자 추출
   const dotSplitFilename = fileName.split('.')
@@ -34,7 +35,7 @@ export const zipcodeFileWriterAndImport = ({
   // 확장자와 이름을 확인하여 데이터베이스에 필요한 파일만 사용
   if (txtRegex.test(ext) && !fileName.includes('참고자료')) {
     // MySQL에서 읽을 수 있도록 영어로 변환
-    const sidoName = dotSplitFilename[0].split('_')[1] as TSido
+    const sidoName = dotSplitFilename[0] as TSido
     const tablePostfix = SidoObject[sidoName]
 
     const readableContentStream = Readable.from(data)

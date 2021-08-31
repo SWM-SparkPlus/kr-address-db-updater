@@ -1,10 +1,11 @@
-import { createWriteStream } from 'fs'
+import { createWriteStream, rmSync } from 'fs'
 import { downloadFileAndGetEntries } from './fileDownloader'
 import { logger } from './logger'
 import { downloadPathHandler } from './pathHandler'
 import { totalDir } from './projectPath'
 import { writeEncodedFileAndImport } from './addressFileWriter'
 import { TDownloadFileOption } from '../types/option.type'
+import { zipcodeFileWriterAndImport } from './zipcodeFileWriter'
 
 downloadPathHandler()
 
@@ -22,20 +23,31 @@ async function downloadZipcodeFilesAndWrite() {
   const filePath = `${totalDir}/zipcode_DB.zip`
   const writeStream = createWriteStream(filePath)
 
+  // await (await downloadFileAndGetEntries({ url, writeStream })).forEach(entry => {
+  //   const data = entry.getData()
+  // })
+
+  // new AdmZip(filePath).getEntries().forEach(entry => {
+  //   console.log(iconv.decode(entry.rawEntryName, 'euc-kr'))
+  //   console.log(entry.getData().toString()).
+  // })
+
   await (
     await downloadFileAndGetEntries({ url, writeStream } as TDownloadFileOption)
   ).forEach(entry => {
     entry.getDataAsync((data, err) => {
       if (err) throw err
 
-      writeEncodedFileAndImport({
+      zipcodeFileWriterAndImport({
         data,
         entryOfZip: entry,
-        writeDir: `${totalDir}/${entry.name}`,
+        writeDir: totalDir,
         doImport: false,
       })
     })
   })
+
+  rmSync(filePath)
 }
 
 downloadZipcodeFilesAndWrite().catch(err => {
