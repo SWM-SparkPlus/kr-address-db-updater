@@ -1,12 +1,11 @@
 import { createWriteStream, rmSync } from 'fs'
-import { downloadFileAndGetEntries } from './downloadAndGetEntries'
-import { logger } from './logger'
-import { downloadPathHandler } from './projectPathHandler'
-import { totalDir } from './projectPath'
-import { TDownloadFileOption } from '../types/option.type'
-import { zipcodeFileWriterAndImport } from './zipcodeFileWriter'
-
-downloadPathHandler()
+import dayjs from 'dayjs'
+import { downloadFileAndGetEntries } from '../downloadAndGetEntries'
+import { logger } from '../logger'
+import { downloadPathHandler } from '../path/handler.path'
+import { totalDir } from '../path'
+import { TDownloadFileOption } from '../../types/option.type'
+import { zipcodeFileWriterAndImport } from './write.zipcode'
 
 /**
  * 우편번호 데이버테이스를 다운받고 로컬머신에 파일로 기록하는 함수
@@ -16,6 +15,12 @@ downloadPathHandler()
  * 3. 파일 쓰기가 끝나면 import flag에 따라 import 수행
  */
 async function downloadZipcodeFilesAndWrite() {
+  downloadPathHandler()
+
+  const date = new Date()
+  const previousMonth = dayjs(date.setMonth(date.getMonth() - 2)).format('YYYYMM')
+  logger.info(`[Preparation] Start on ${date}, download based on ${previousMonth}`)
+
   const url = 'https://www.epost.go.kr/search/areacd/zipcode_DB.zip'
   const filePath = `${totalDir}/zipcode_DB.zip`
   const writeStream = createWriteStream(filePath)
@@ -39,5 +44,5 @@ async function downloadZipcodeFilesAndWrite() {
 }
 
 downloadZipcodeFilesAndWrite().catch(err => {
-  logger.error(err)
+  logger.error(`[DownloadZipcodeFilesError] ${err}`)
 })

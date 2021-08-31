@@ -1,12 +1,12 @@
 import EventEmitter from 'events'
-import { createWriteStream, readdirSync } from 'fs'
+import { createWriteStream } from 'fs'
 import { Readable } from 'stream'
-import { EDatabaseImport } from '../types/import.type'
-import { TWriteAndImportOption } from '../types/option.type'
-import { SidoObject, TSido } from '../types/sido.collections'
-import { importToDb } from './importAddressFileToDb'
-import { logger } from './logger'
 import iconv from 'iconv-lite'
+import { EDatabaseImport } from '../../types/import.type'
+import { TWriteAndImportOption } from '../../types/option.type'
+import { SidoObject, TSido } from '../../types/sido.collections'
+import { importToDb } from '../address/importToDb.address'
+import { logger } from '../logger'
 
 export const writeEvent = new EventEmitter().setMaxListeners(100)
 writeEvent.on('finish', (tableName: string, target: EDatabaseImport) => {

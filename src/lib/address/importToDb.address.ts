@@ -1,6 +1,6 @@
 import { spawn } from 'child_process'
-import { EDatabaseImport } from '../types/import.type'
-import { logger } from './logger'
+import { EDatabaseImport } from '../../types/import.type'
+import { logger } from '../logger'
 
 /**
  * MySQL에서 LOAD DATA를 병렬처리 하기위해 자식 프로세스를 생성하는 함수

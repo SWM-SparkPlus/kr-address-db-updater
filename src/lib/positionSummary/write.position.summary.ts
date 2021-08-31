@@ -1,12 +1,11 @@
 import EventEmitter from 'events'
-import { createWriteStream, readdirSync } from 'fs'
+import { createWriteStream } from 'fs'
 import iconv from 'iconv-lite'
 import { Readable } from 'stream'
-import { EDatabaseImport } from '../types/import.type'
-import { TWriteAndImportOption } from '../types/option.type'
-import { SidoObject, TSido } from '../types/sido.collections'
-import { importToDb } from './importAddressFileToDb'
-import { logger } from './logger'
+import { EDatabaseImport } from '../../types/import.type'
+import { TWriteAndImportOption } from '../../types/option.type'
+import { importToDb } from '../address/importToDb.address'
+import { logger } from '../logger'
 
 export const encoderAndWriteEvent = new EventEmitter().setMaxListeners(100)
 encoderAndWriteEvent.on('finish', (tableName: string, target: EDatabaseImport) => {
@@ -28,7 +27,6 @@ export const writePositionSummaryAndImport = ({
 }: TWriteAndImportOption) => {
   // 파일명 우선 인코딩
   const entryName = entryOfZip.entryName
-  // const encodedFilename = iconv.decode(entryOfZip.rawEntryName, 'euc-kr')
   const txtRegex = /^[tT][xX][tT]$/
   // 확장자 추출
   const dotSplitFilename = entryName.split('.')

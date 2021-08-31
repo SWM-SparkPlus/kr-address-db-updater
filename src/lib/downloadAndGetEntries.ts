@@ -1,6 +1,6 @@
 import https from 'https'
-import { logger } from './logger'
 import Zip, { IZipEntry } from 'adm-zip'
+import { logger } from './logger'
 import { TDownloadFileOption } from '../types/option.type'
 
 /**

@@ -1,7 +1,7 @@
 import { createReadStream, readdirSync } from 'fs'
-import { dailyDir } from './projectPath'
+import { dailyDir } from '../path'
 import { createInterface } from 'readline'
-import { logger } from './logger'
+import { logger } from '../logger'
 import {
   SidoObject,
   TAddInfoTableName,
@@ -11,18 +11,18 @@ import {
   TRoadnameTableName,
   TSido,
   TSidoObject,
-} from '../types/sido.collections'
-import { getAddinfoEntityByTableName } from '../typeorm/entities/addinfo.entity'
-import { getConnection } from '../typeorm/connection'
-import { ormConfig } from '../typeorm/ormConfig'
-import { addMetadata } from '../typeorm/addMetadata'
-import { getManageNumberIndexTableName } from '../typeorm/entities/manageNumber.index.entity'
-import { getJibunEntityByTableName } from '../typeorm/entities/jibun.entity'
-import { getJusoEntityByTableName } from '../typeorm/entities/juso.entity'
-import { JusoModel } from '../models/juso.model'
-import { JibunModel } from '../models/jibun.model'
-import { AddInfoModel } from '../models/addInfo.model'
-import { RoadcodeEntity } from '../typeorm/entities/roadcode.entity'
+} from '../../types/sido.collections'
+import { getAddinfoEntityByTableName } from '../../typeorm/entities/addinfo.entity'
+import { getConnection } from '../../typeorm/connection'
+import { ormConfig } from '../../typeorm/ormConfig'
+import { addMetadata } from '../../typeorm/addMetadata'
+import { getManageNumberIndexTableName } from '../../typeorm/entities/manageNumber.index.entity'
+import { getJibunEntityByTableName } from '../../typeorm/entities/jibun.entity'
+import { getJusoEntityByTableName } from '../../typeorm/entities/juso.entity'
+import { JusoModel } from '../../models/juso.model'
+import { JibunModel } from '../../models/jibun.model'
+import { AddInfoModel } from '../../models/addInfo.model'
+import { RoadcodeEntity } from '../../typeorm/entities/roadcode.entity'
 
 const entries = readdirSync(dailyDir)
 

@@ -1,10 +1,11 @@
 {
   "private": true,
   "scripts": {
-    "download:address:daily": "ts-node src/downloadOnly.ts --daily",
-    "download:address:total": "ts-node src/downloadOnly.ts --total",
-    "download:summary:total": "ts-node src/lib/downloadPositionSummary.ts -t",
-    "download:summary:monthly": "ts-node src/lib/downloadPositionSummary.ts -m",
+    "download:address:daily": "ts-node src/lib/address/download.address.ts --daily",
+    "download:address:total": "ts-node src/lib/address/download.address.ts --total",
+    "download:summary:total": "ts-node src/lib/positionSummary/download.position.summary.ts -t",
+    "download:summary:monthly": "ts-node src/lib/positionSummary/download.position.summary.ts -m",
+    "download:zipcode:total": "ts-node src/lib/zipcode/download.zipcode.ts",
     "setup:all": "npm run prisma:init && ts-node src/setupAll.ts",
     "setup:import:only": "npm run prisma:init && ts-node src/importOnly.ts",
     "update:daily": "ts-node src/lib/dailyAddressUpdater.ts",

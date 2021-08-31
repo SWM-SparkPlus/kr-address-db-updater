@@ -3,9 +3,9 @@ import { rmSync, createWriteStream } from 'fs'
 import './lib/env'
 import { logger } from './lib/logger'
 import { downloadFileAndGetEntries } from './lib/downloadAndGetEntries'
-import { writeAddressFileAndImport } from './lib/addressFileWriter'
-import { totalDir } from './lib/projectPath'
-import { downloadPathHandler } from './lib/projectPathHandler'
+import { writeAddressFileAndImport } from './lib/address/write.address'
+import { totalDir } from './lib/path'
+import { downloadPathHandler } from './lib/path/handler.path'
 import { TDownloadFileOption } from './types/option.type'
 
 downloadPathHandler()
