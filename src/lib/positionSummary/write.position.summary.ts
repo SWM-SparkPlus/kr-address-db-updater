@@ -4,12 +4,12 @@ import iconv from 'iconv-lite'
 import { Readable } from 'stream'
 import { EDatabaseImport } from '../../types/import.type'
 import { TWriteAndImportOption } from '../../types/option.type'
-import { importToDb } from '../address/importToDb.address'
+import { importToDb } from '../address/importFile.address'
 import { logger } from '../logger'
 
 export const encoderAndWriteEvent = new EventEmitter().setMaxListeners(100)
-encoderAndWriteEvent.on('finish', (tableName: string, target: EDatabaseImport) => {
-  importToDb(tableName, target)
+encoderAndWriteEvent.on('finish', (tableName: string) => {
+  importToDb(tableName)
 })
 
 /**

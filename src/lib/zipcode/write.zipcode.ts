@@ -5,12 +5,12 @@ import iconv from 'iconv-lite'
 import { EDatabaseImport } from '../../types/import.type'
 import { TWriteAndImportOption } from '../../types/option.type'
 import { SidoObject, TSido } from '../../types/sido.collections'
-import { importToDb } from '../address/importToDb.address'
+import { importToDb } from '../address/importFile.address'
 import { logger } from '../logger'
 
 export const writeEvent = new EventEmitter().setMaxListeners(100)
-writeEvent.on('finish', (tableName: string, target: EDatabaseImport) => {
-  importToDb(tableName, target)
+writeEvent.on('finish', (tableName: string) => {
+  importToDb(tableName)
 })
 
 /**

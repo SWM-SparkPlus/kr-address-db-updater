@@ -5,12 +5,12 @@ import { Readable } from 'stream'
 import { EDatabaseImport } from '../../types/import.type'
 import { TWriteAndImportOption } from '../../types/option.type'
 import { SidoObject, TSido } from '../../types/sido.collections'
-import { importToDb } from './importToDb.address'
+import { importToDb } from './importFile.address'
 import { logger } from '../logger'
 
 export const encoderAndWriteEvent = new EventEmitter().setMaxListeners(100)
 encoderAndWriteEvent.on('finish', (tableName: string, target: EDatabaseImport) => {
-  importToDb(tableName, target)
+  importToDb(tableName)
 })
 
 /**

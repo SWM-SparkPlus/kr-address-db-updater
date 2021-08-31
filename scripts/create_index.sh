@@ -18,4 +18,6 @@ INSERT INTO $target (manage_number, tablename)
   FROM $reference_table
 "
 
-docker exec $(docker ps | grep mysql | awk '{ print $1 }') mysql -h$MYSQL_HOST -P$MYSQL_PORT -uroot -p$MYSQL_ROOT_PASSWORD -D$MYSQL_DATABASE -e "$create_index_script" >> ./logs/info/mysql_create_index.log
+docker exec $(docker ps | grep mysql | awk '{ print $1 }') \
+mysql -h$MYSQL_HOST -P$MYSQL_PORT -uroot -p$MYSQL_ROOT_PASSWORD -D$MYSQL_DATABASE \
+-e "$create_index_script"

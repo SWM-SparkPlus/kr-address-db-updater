@@ -7,8 +7,8 @@
     "download:summary:monthly": "ts-node src/lib/positionSummary/download.position.summary.ts -m",
     "download:zipcode:total": "ts-node src/lib/zipcode/download.zipcode.ts",
     "setup:all": "npm run prisma:init && ts-node src/setupAll.ts",
-    "setup:import:only": "npm run prisma:init && ts-node src/importOnly.ts",
-    "update:daily": "ts-node src/lib/dailyAddressUpdater.ts",
+    "setup:import:address": "npm run prisma:init && ts-node src/lib/address/doImportFile.address.ts",
+    "update:daily": "ts-node src/lib/address/updateDaily.address.ts",
     "prisma:init": "npx prisma db push && npx prisma generate",
     "prepare": "husky install"
   },

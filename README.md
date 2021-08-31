@@ -39,7 +39,7 @@ $ npm install
 # 4. 주소 데이터베이스 전체분 다운로드(약 2분 소요)
 ###
 
-$ npm run download:total
+$ npm run download:address:total
 
 ###
 # 5. 데이터베이스 서버 실행(docker-compose 사용)
@@ -51,7 +51,7 @@ $ docker-compose up -d
 # 6. 다운로드받은 파일을 데이터베이스에 import 합니다.
 ###
 
-$ npm run setup:import:only
+$ npm run setup:import:address
 
 ```
 
