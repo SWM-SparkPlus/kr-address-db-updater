@@ -39,136 +39,143 @@ try {
 
       let changeReasonCode = ''
 
-      if (entry.includes('MATCHING_ADDINFO')) {
-        // 부가정보
+      // if (entry.includes('MATCHING_ADDINFO')) {
+      //   // 부가정보
+      //   rl.on('line', async data => {
+      //     const splitData = data.split('|')
+      //     const inputData: AddInfoModel = {
+      //       manage_number: splitData[0],
+      //       hangjungdong_code: splitData[1],
+      //       hangjungdong_name: splitData[2],
+      //       zipcode: splitData[3],
+      //       zipcode_serial_number: splitData[4],
+      //       bulk_delivery_building_name: splitData[5],
+      //       master_building_name: splitData[6],
+      //       sigungu_building_name: splitData[7],
+      //       is_apt: splitData[8],
+      //     }
+      //     changeReasonCode = splitData[9]
+
+      //     const addinfoIndexEntity = getManageNumberIndexTableName('addinfo_manage_number_index')
+      //     addMetadata(connection, addinfoIndexEntity)
+
+      //     const findAddinfoIndex = await connection.manager.findOne(addinfoIndexEntity, {
+      //       manage_number: inputData.manage_number,
+      //     })
+
+      //     let tableName = findAddinfoIndex?.tablename as TAddInfoTableName
+
+      //     // 부가정보 인덱스가 존재하지 않아 테이블 특정이 어려울 경우
+      //     if (!findAddinfoIndex) {
+      //       const sidoEngName = zipcodeDecoder(inputData.zipcode as string)
+      //       tableName = `additional_info_${sidoEngName}` as TAddInfoTableName
+      //       addMetadata(connection, getAddinfoEntityByTableName(tableName))
+
+      //       // 폐지가 아닐 경우 인덱스 테이블에 추가
+      //       if (changeReasonCode !== '63')
+      //         connection.manager.save(
+      //           addinfoIndexEntity,
+      //           { manage_number: inputData.manage_number, tablename: tableName },
+      //           { reload: false }
+      //         )
+      //     }
+
+      //     // 다이나믹 쿼리를 위해 메타데이터 추가
+      //     const addinfoTableEntity = getAddinfoEntityByTableName(tableName)
+      //     addMetadata(connection, addinfoTableEntity)
+
+      //     const existingData = await connection.manager.findOne(addinfoTableEntity, {
+      //       manage_number: inputData.manage_number,
+      //     })
+
+      //     if (changeReasonCode === '31') {
+      //       if (!existingData)
+      //         connection.manager.save(addinfoTableEntity, inputData, { reload: false })
+      //     } else if (changeReasonCode === '34') {
+      //       if (!existingData)
+      //         connection.manager.save(addinfoTableEntity, inputData, { reload: false })
+      //       else
+      //         connection.manager.update(
+      //           addinfoTableEntity,
+      //           { manage_number: inputData.manage_number },
+      //           inputData
+      //         )
+      //     } else {
+      //       if (existingData)
+      //         connection.manager.delete(addinfoTableEntity, {
+      //           manage_number: inputData.manage_number,
+      //         })
+      //     }
+      //   })
+      // }
+      if (entry.includes('MATCHING_JIBUN')) {
+        // 지번주소
         rl.on('line', async data => {
           const splitData = data.split('|')
-          const inputData: AddInfoModel = {
+          const inputData = {
             manage_number: splitData[0],
-            hangjungdong_code: splitData[1],
-            hangjungdong_name: splitData[2],
-            zipcode: splitData[3],
-            zipcode_serial_number: splitData[4],
-            bulk_delivery_building_name: splitData[5],
-            master_building_name: splitData[6],
-            sigungu_building_name: splitData[7],
-            is_apt: splitData[8],
+            serial_number: +splitData[1],
+            bupjungdong_code: splitData[2],
+            sido_name: splitData[3],
+            sigungu_name: splitData[4],
+            bupjung_eupmyeondong_name: splitData[5],
+            bupjunglee_name: splitData[6],
+            is_mountain: splitData[7],
+            jibun_primary: +splitData[8],
+            jibun_secondary: +splitData[9],
+            is_representation: splitData[10],
           }
-          changeReasonCode = splitData[9]
 
-          const addinfoIndexEntity = getManageNumberIndexTableName('addinfo_manage_number_index')
-          addMetadata(connection, addinfoIndexEntity)
+          changeReasonCode = splitData[11]
 
-          const findIndex = await connection.manager.findOne(addinfoIndexEntity, {
+          // 인덱스 테이블 우선 조회
+          const jibunIndexEntity = getManageNumberIndexTableName('jibun_manage_number_index')
+          addMetadata(connection, jibunIndexEntity)
+          const findJibunIndex = await connection.manager.findOne(jibunIndexEntity, {
             manage_number: inputData.manage_number,
           })
 
-          let tableName = findIndex?.tablename as TAddInfoTableName
+          let targetTableName = findJibunIndex?.tablename as TJibunTableName
 
-          // 부가정보 인덱스가 존재하지 않아 테이블 특정이 어려울 경우
-          if (!findIndex) {
-            const sidoEngName = zipcodeDecoder(inputData.zipcode as string)
-            tableName = `additional_info_${sidoEngName}` as TAddInfoTableName
-            addMetadata(connection, getAddinfoEntityByTableName(tableName))
-
-            // 폐지가 아닐 경우 인덱스 테이블에 추가
+          // 인덱스가 없을 경우 직접 생성
+          if (!findJibunIndex) {
+            targetTableName = `jibun_address_${
+              SidoObject[inputData.sido_name as TSido]
+            }` as TJibunTableName
             if (changeReasonCode !== '63')
               connection.manager.save(
-                addinfoIndexEntity,
-                { manage_number: inputData.manage_number, tablename: tableName },
+                jibunIndexEntity,
+                { manage_number: inputData.manage_number, tablename: targetTableName },
                 { reload: false }
               )
           }
 
-          // 다이나믹 쿼리를 위해 메타데이터 추가
-          const addinfoTableEntity = getAddinfoEntityByTableName(tableName)
-          addMetadata(connection, addinfoTableEntity)
+          // 엔터티 생성 후 메터데이터 추가
+          // const jibunEntity = getJibunEntityByTableName(targetTableName)
+          // addMetadata(connection, jibunEntity)
 
-          const existingData = await connection.manager.findOne(addinfoTableEntity, {
-            manage_number: inputData.manage_number,
-          })
+          // const existingData = await connection.manager.findOne(jibunEntity, { manage_number: inputData.manage_number, serial_number: inputData.serial_number })
 
-          if (changeReasonCode === '31') {
-            if (!existingData)
-              connection.manager.save(addinfoTableEntity, inputData, { reload: false })
-          } else if (changeReasonCode === '34') {
-            if (!existingData)
-              connection.manager.save(addinfoTableEntity, inputData, { reload: false })
-            else
-              connection.manager.update(
-                addinfoTableEntity,
-                { manage_number: inputData.manage_number },
-                inputData
-              )
-          } else {
-            if (existingData)
-              connection.manager.delete(addinfoTableEntity, {
-                manage_number: inputData.manage_number,
-              })
-          }
+          // 실제 일일 변동분 업데이트
+          // if (changeReasonCode === '31') {
+          //   if (!existingData) connection.manager.save(jibunEntity, inputData, { reload: false })
+          // } else if (changeReasonCode === '34') {
+          //   if (!existingData) connection.manager.save(jibunEntity, inputData, { reload: false })
+          //   else connection.manager.update(
+          //     jibunEntity,
+          //     { manage_number: inputData.manage_number, serial_number: inputData.serial_number },
+          //     inputData
+          //   )
+          // } else if (changeReasonCode === '63') {
+          //   if (existingData) connection.manager.save(jibunEntity, inputData, { reload: false })
+          //   connection.manager.delete(jibunEntity, {
+          //     manage_number: inputData.manage_number,
+          //     serial_number: inputData.serial_number,
+          //   })
+          // }
         })
       }
-      // if (entry.includes('MATCHING_JIBUN')) {
-      //   // 지번주소
-      //   rl.on('line', async data => {
-      //     const splitData = data.split('|')
-      //     const inputData = {
-      //       manage_number: splitData[0],
-      //       serial_number: +splitData[1],
-      //       bupjungdong_code: splitData[2],
-      //       sido_name: splitData[3],
-      //       sigungu_name: splitData[4],
-      //       bupjung_eupmyeondong_name: splitData[5],
-      //       bupjunglee_name: splitData[6],
-      //       is_mountain: splitData[7],
-      //       jibun_primary: +splitData[8],
-      //       jibun_secondary: +splitData[9],
-      //       is_representation: splitData[10],
-      //     }
-
-      //     changeReasonCode = splitData[11]
-
-      //     // 인덱스 테이블 우선 조회
-      //     const jibunIndexEntity = getManageNumberIndexTableName('jibun_manage_number_index')
-      //     addMetadata(connection, jibunIndexEntity)
-      //     const jibunTableNameIndex = await connection.manager.findOne(jibunIndexEntity, {
-      //       manage_number: inputData.manage_number,
-      //     })
-      //     let updateTableName = jibunTableNameIndex?.tablename
-
-      //     // 인덱스가 없을 경우 직접 생성
-      //     if (!updateTableName) {
-      //       updateTableName = `jibun_address_${
-      //         SidoObject[inputData.sido_name as TSido]
-      //       }` as TJibunTableName
-      //       connection.manager.save(
-      //         jibunIndexEntity,
-      //         { manage_number: inputData.manage_number, tablename: updateTableName },
-      //         { reload: false }
-      //       )
-      //     }
-
-      //     // 엔터티 생성 후 메터데이터 추가
-      //     const jibunEntity = getJibunEntityByTableName(updateTableName as TJibunTableName)
-      //     addMetadata(connection, jibunEntity)
-
-      //     // 실제 일일 변동분 업데이트
-      //     if (changeReasonCode === '31') {
-      //       connection.manager.save(jibunEntity, inputData, { reload: false })
-      //     } else if (changeReasonCode === '34') {
-      //       connection.manager.update(
-      //         jibunEntity,
-      //         { manage_number: inputData.manage_number, serial_number: inputData.serial_number },
-      //         inputData
-      //       )
-      //     } else if (changeReasonCode === '63') {
-      //       connection.manager.delete(jibunEntity, {
-      //         manage_number: inputData.manage_number,
-      //         serial_number: inputData.serial_number,
-      //       })
-      //     }
-      //   })
-      // } else if (entry.includes('MATCHING_JUSO')) {
+      // else if (entry.includes('MATCHING_JUSO')) {
       //   // 도로명주소
       //   rl.on('line', async data => {
       //     const splitData = data.split('|')
@@ -191,21 +198,20 @@ try {
       //     // 인덱스 테이블 우선 조회
       //     const jusoIndexEntity = getManageNumberIndexTableName('juso_manage_number_index')
       //     addMetadata(connection, jusoIndexEntity)
-      //     const jusoTableNameIndexQuery = await connection.manager.findOne(jusoIndexEntity, {
+      //     const findJusoIndex = await connection.manager.findOne(jusoIndexEntity, {
       //       manage_number: inputData.manage_number,
       //     })
 
-      //     let updateTableName = jusoTableNameIndexQuery?.tablename
+      //     let updateTableName = findJusoIndex?.tablename
 
       //     // 인덱스가 없을 경우 직접 생성
-      //     if (!updateTableName) {
+      //     if (!findJusoIndex) {
       //       const findByRoadcode = await connection.manager.findOne(RoadcodeEntity, {
       //         roadname_code: inputData.roadname_code,
       //       })
-      //       updateTableName = `roadname_address_${
-      //         SidoObject[findByRoadcode?.sido_name as TSido]
-      //       }` as TRoadnameTableName
-      //       await connection.manager.save(
+      //       updateTableName = `roadname_address_${SidoObject[findByRoadcode?.sido_name as TSido]
+      //         }` as TRoadnameTableName
+      //       if (changeReasonCode !== '63') connection.manager.save(
       //         jusoIndexEntity,
       //         { manage_number: inputData.manage_number, tablename: updateTableName },
       //         { reload: false }
@@ -216,17 +222,20 @@ try {
       //     const jusoEntity = getJusoEntityByTableName(updateTableName as TRoadnameTableName)
       //     addMetadata(connection, jusoEntity)
 
+      //     const existingData = await connection.manager.findOne(jusoEntity, { manage_number: inputData.manage_number })
+
       //     // 실제 일일 변동분 업데이트
       //     if (changeReasonCode === '31') {
-      //       connection.manager.save(jusoEntity, inputData, { reload: false })
+      //       if (!existingData) connection.manager.save(jusoEntity, inputData, { reload: false })
       //     } else if (changeReasonCode === '34') {
-      //       connection.manager.update(
+      //       if (!existingData) connection.manager.save(jusoEntity, inputData, { reload: false })
+      //       else connection.manager.update(
       //         jusoEntity,
       //         { manage_number: inputData.manage_number },
       //         inputData
       //       )
       //     } else if (changeReasonCode === '63') {
-      //       connection.manager.delete(jusoEntity, {
+      //       if (existingData) connection.manager.delete(jusoEntity, {
       //         manage_number: inputData.manage_number,
       //       })
       //     }
