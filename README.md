@@ -156,6 +156,8 @@ $ npm run setup:import:address
 
 ### 관리번호 인덱스 테이블
 
+테이블명: TABLE_manage_number_index
+
 | 순번 | 컬럼명     | 크기 | 형식 | PK  | 비고   |
 | ---- | ---------- | ---- | ---- | --- | ------ |
 | 1    | 관리번호   | 25   | 문자 | PK  | FK     |
