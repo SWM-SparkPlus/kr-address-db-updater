@@ -139,9 +139,9 @@ try {
 
           // 인덱스가 없을 경우 직접 생성
           if (!findJibunIndex) {
-            targetTableName = `jibun_address_${
-              SidoObject[inputData.sido_name as TSido]
-            }` as TJibunTableName
+            const sidoEngName = SidoObject[inputData.sido_name as TSido]
+            targetTableName = `jibun_address_${sidoEngName}` as TJibunTableName
+
             if (changeReasonCode !== '63')
               connection.manager.save(
                 jibunIndexEntity,
@@ -151,28 +151,52 @@ try {
           }
 
           // 엔터티 생성 후 메터데이터 추가
-          // const jibunEntity = getJibunEntityByTableName(targetTableName)
-          // addMetadata(connection, jibunEntity)
+          const jibunEntity = getJibunEntityByTableName(targetTableName)
+          addMetadata(connection, jibunEntity)
 
-          // const existingData = await connection.manager.findOne(jibunEntity, { manage_number: inputData.manage_number, serial_number: inputData.serial_number })
+          const existingData = await connection.manager.findOne(jibunEntity, {
+            manage_number: inputData.manage_number,
+            serial_number: inputData.serial_number,
+          })
 
           // 실제 일일 변동분 업데이트
-          // if (changeReasonCode === '31') {
-          //   if (!existingData) connection.manager.save(jibunEntity, inputData, { reload: false })
-          // } else if (changeReasonCode === '34') {
-          //   if (!existingData) connection.manager.save(jibunEntity, inputData, { reload: false })
-          //   else connection.manager.update(
-          //     jibunEntity,
-          //     { manage_number: inputData.manage_number, serial_number: inputData.serial_number },
-          //     inputData
-          //   )
-          // } else if (changeReasonCode === '63') {
-          //   if (existingData) connection.manager.save(jibunEntity, inputData, { reload: false })
-          //   connection.manager.delete(jibunEntity, {
-          //     manage_number: inputData.manage_number,
-          //     serial_number: inputData.serial_number,
-          //   })
-          // }
+          if (changeReasonCode === '31') {
+            if (!existingData)
+              await connection.createQueryBuilder().insert().into(jibunEntity).values(inputData)
+            // if (!existingData) await connection.manager.save(jibunEntity, inputData, { reload: false })
+          } else if (changeReasonCode === '34') {
+            if (!existingData)
+              await connection.createQueryBuilder().insert().into(jibunEntity).values(inputData)
+            else
+              await connection
+                .createQueryBuilder()
+                .update(jibunEntity)
+                .set(inputData)
+                .where('manage_number = :manage_number AND serial_number = :serial_number', {
+                  manage_number: inputData.manage_number,
+                  serial_number: inputData.serial_number,
+                })
+            // if (!existingData) await connection.manager.save(jibunEntity, inputData, { reload: false })
+            // else await connection.manager.update(
+            //   jibunEntity,
+            //   { manage_number: inputData.manage_number, serial_number: inputData.serial_number },
+            //   inputData
+            // )
+          } else if (changeReasonCode === '63') {
+            if (existingData)
+              await connection
+                .createQueryBuilder()
+                .delete()
+                .from(jibunEntity)
+                .where('manage_number = :manage_number AND serial_number = :serial_number', {
+                  manage_number: inputData.manage_number,
+                  serial_number: inputData.serial_number,
+                })
+            // if (existingData) await connection.manager.delete(jibunEntity, {
+            //   manage_number: inputData.manage_number,
+            //   serial_number: inputData.serial_number,
+            // })
+          }
         })
       }
       // else if (entry.includes('MATCHING_JUSO')) {
