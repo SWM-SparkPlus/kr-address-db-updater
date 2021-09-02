@@ -23,6 +23,7 @@ import { JusoModel } from '../../models/juso.model'
 import { JibunModel } from '../../models/jibun.model'
 import { AddInfoModel } from '../../models/addInfo.model'
 import { RoadcodeEntity } from '../../typeorm/entities/roadcode.entity'
+import { zipcodeDecoder } from '../zipcode/zipcode.decoder'
 
 const entries = readdirSync(dailyDir)
 
@@ -55,31 +56,55 @@ try {
           }
           changeReasonCode = splitData[9]
 
+          const addinfoIndexEntity = getManageNumberIndexTableName('addinfo_manage_number_index')
+          addMetadata(connection, addinfoIndexEntity)
+
+          const findIndex = await connection.manager.findOne(addinfoIndexEntity, {
+            manage_number: inputData.manage_number,
+          })
+
+          let tableName = findIndex?.tablename as TAddInfoTableName
+
+          // 부가정보 인덱스가 존재하지 않아 테이블 특정이 어려울 경우
+          if (!findIndex) {
+            const sidoEngName = zipcodeDecoder(inputData.zipcode as string)
+            tableName = `additional_info_${sidoEngName}` as TAddInfoTableName
+            addMetadata(connection, getAddinfoEntityByTableName(tableName))
+
+            // 폐지가 아닐 경우 인덱스 테이블에 추가
+            if (changeReasonCode !== '63')
+              connection.manager.save(
+                addinfoIndexEntity,
+                { manage_number: inputData.manage_number, tablename: tableName },
+                { reload: false }
+              )
+          }
+
+          // 다이나믹 쿼리를 위해 메타데이터 추가
+          const addinfoTableEntity = getAddinfoEntityByTableName(tableName)
+          addMetadata(connection, addinfoTableEntity)
+
+          const existingData = await connection.manager.findOne(addinfoTableEntity, {
+            manage_number: inputData.manage_number,
+          })
+
           if (changeReasonCode === '31') {
-            // 신규
-          } else {
-            // 수정 또는 삭제
-            const addinfoIndexEntity = getManageNumberIndexTableName('addinfo_manage_number_index')
-            addMetadata(connection, addinfoIndexEntity)
-            const findIndex = await connection.manager.find(addinfoIndexEntity, {
-              manage_number: inputData.manage_number,
-            })
-
-            const tableName = findIndex.pop()?.tablename as TAddInfoTableName
-            const targetTableEntity = getAddinfoEntityByTableName(tableName)
-            addMetadata(connection, targetTableEntity)
-
-            if (changeReasonCode === '34') {
+            if (!existingData)
+              connection.manager.save(addinfoTableEntity, inputData, { reload: false })
+          } else if (changeReasonCode === '34') {
+            if (!existingData)
+              connection.manager.save(addinfoTableEntity, inputData, { reload: false })
+            else
               connection.manager.update(
-                targetTableEntity,
+                addinfoTableEntity,
                 { manage_number: inputData.manage_number },
                 inputData
               )
-            } else if (changeReasonCode === '63') {
-              connection.manager.delete(targetTableEntity, {
+          } else {
+            if (existingData)
+              connection.manager.delete(addinfoTableEntity, {
                 manage_number: inputData.manage_number,
               })
-            }
           }
         })
       }
