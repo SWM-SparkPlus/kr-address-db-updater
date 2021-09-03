@@ -2,8 +2,8 @@ export class RoadcodeModel {
   roadname_code!: string
   roadname!: string | null
   roadname_eng!: string | null
-  eupmyeondong_number!: string
-  sido_name!: string | null
+  eupmyeondong_serial_number!: string
+  sido!: string | null
   sido_eng!: string | null
   sigungu!: string | null
   sigungu_eng!: string | null

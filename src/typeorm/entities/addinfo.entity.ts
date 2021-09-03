@@ -17,7 +17,7 @@ export function getAddinfoEntityByTableName(tableName: TAddInfoTableName) {
     hangjungdong_code!: string | null
 
     @Column({ type: 'varchar' })
-    hangjungdong_name!: string | null
+    hangjungdong!: string | null
 
     @Column({ type: 'varchar' })
     zipcode!: string | null

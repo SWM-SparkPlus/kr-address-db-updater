@@ -20,25 +20,25 @@ export function getJibunEntityByTableName(tableName: TJibunTableName) {
     bupjungdong_code!: string | null
 
     @Column({ type: 'varchar' })
-    sido_name!: string | null
+    sido!: string | null
 
     @Column({ type: 'varchar' })
-    sigungu_name!: string | null
+    sigungu!: string | null
 
     @Column({ type: 'varchar' })
-    bupjung_eupmyeondong_name!: string | null
+    bupjungeupmyeondong!: string | null
 
     @Column({ type: 'varchar' })
-    bupjunglee_name!: string | null
+    bupjungli!: string | null
 
     @Column({ type: 'varchar' })
     is_mountain!: string | null
 
     @Column({ type: 'smallint' })
-    jibun_primary!: number | null
+    jibun_primary_number!: number | null
 
     @Column({ type: 'smallint' })
-    jibun_secondary!: number | null
+    jibun_secondary_number!: number | null
 
     @Column({ type: 'varchar' })
     is_representation!: string | null

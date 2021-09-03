@@ -20,13 +20,13 @@ export async function updateJibunTable(connection: Connection, data: string) {
     manage_number: splitData[0],
     serial_number: +splitData[1],
     bupjungdong_code: splitData[2],
-    sido_name: splitData[3],
-    sigungu_name: splitData[4],
-    bupjung_eupmyeondong_name: splitData[5],
-    bupjunglee_name: splitData[6],
+    sido: splitData[3],
+    sigungu: splitData[4],
+    bupjungeupmyeondong: splitData[5],
+    bupjungli: splitData[6],
     is_mountain: splitData[7],
-    jibun_primary: +splitData[8],
-    jibun_secondary: +splitData[9],
+    jibun_primary_number: +splitData[8],
+    jibun_secondary_number: +splitData[9],
     is_representation: splitData[10],
   }
 
@@ -43,7 +43,7 @@ export async function updateJibunTable(connection: Connection, data: string) {
 
   // 부가정보 인덱스가 존재하지 않아 테이블 특정이 어려울 경우
   if (!findJibunIndex) {
-    const sidoEngName = SidoObject[inputData.sido_name as TSido]
+    const sidoEngName = SidoObject[inputData.sido as TSido]
     tableName = `additional_info_${sidoEngName}` as TJibunTableName
 
     // 폐지가 아닐 경우 인덱스 테이블에 추가

@@ -1,4 +1,5 @@
 import { Connection } from 'typeorm'
+import { RoadcodeModel } from '../../../models/roadcode.model'
 import { addMetadata } from '../../../typeorm/addMetadata'
 import { RoadcodeEntity } from '../../../typeorm/entities/roadcode.entity'
 
@@ -16,8 +17,8 @@ export async function updateRoadcodeTable(connection: Connection, data: string) 
     roadname_code: splitData[0],
     roadname: splitData[1],
     roadname_eng: splitData[2],
-    eupmyeondong_number: splitData[3],
-    sido_name: splitData[4],
+    eupmyeondong_serial_number: splitData[3],
+    sido: splitData[4],
     sido_eng: splitData[5],
     sigungu: splitData[6],
     sigungu_eng: splitData[7],
@@ -36,7 +37,7 @@ export async function updateRoadcodeTable(connection: Connection, data: string) 
 
   const findResult = await connection.manager.findOne(RoadcodeEntity, {
     roadname_code: inputData.roadname_code,
-    eupmyeondong_code: inputData.eupmyeondong_code,
+    eupmyeondong_serial_number: inputData.eupmyeondong_serial_number,
   })
 
   if (!findResult) {

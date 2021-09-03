@@ -17,7 +17,7 @@ export async function updateAddinfoTable(connection: Connection, data: string) {
   const inputData: AddInfoModel = {
     manage_number: splitData[0],
     hangjungdong_code: splitData[1],
-    hangjungdong_name: splitData[2],
+    hangjungdong: splitData[2],
     zipcode: splitData[3],
     zipcode_serial_number: splitData[4],
     bulk_delivery_building_name: splitData[5],

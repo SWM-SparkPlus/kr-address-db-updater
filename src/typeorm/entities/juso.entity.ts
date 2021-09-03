@@ -17,10 +17,10 @@ export function getJusoEntityByTableName(tableName: TRoadnameTableName) {
     roadname_code!: string
 
     @Column({ type: 'varchar' })
-    eupmyeondong_number!: string
+    eupmyeondong_serial_number!: string
 
     @Column({ type: 'varchar' })
-    basement!: string | null
+    is_basement!: string | null
 
     @Column({ type: 'smallint' })
     building_primary_number!: number | null
@@ -29,7 +29,7 @@ export function getJusoEntityByTableName(tableName: TRoadnameTableName) {
     building_secondary_number!: number | null
 
     @Column({ type: 'varchar' })
-    basic_area_number!: string | null
+    basic_state_number!: string | null
 
     @Column({ type: 'varchar' })
     change_reason_code!: string | null

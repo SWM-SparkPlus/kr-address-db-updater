@@ -152,7 +152,7 @@ $ npm run setup:import:address
 | 6    | 다량배달처명      | bulk_delivery_building_name | 40   | 문자 |     |                            |
 | 7    | 건축물대장 건물명 | master_building_name        | 40   | 문자 |     |                            |
 | 8    | 시군구 건물명     | sigungu_building_name       | 40   | 문자 |     |                            |
-| 9    | 공동주택여부      | apartment                   | 1    | 문자 |     | 0: 비공동주택, 1: 공동주택 |
+| 9    | 공동주택여부      | is_apt                      | 1    | 문자 |     | 0: 비공동주택, 1: 공동주택 |
 
 ### 관리번호 인덱스 테이블
 

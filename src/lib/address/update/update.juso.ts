@@ -18,11 +18,11 @@ export async function updateJusoTable(connection: Connection, data: string) {
   const inputData: JusoModel = {
     manage_number: splitData[0],
     roadname_code: splitData[1],
-    eupmyeondong_number: splitData[2],
-    basement: splitData[3],
+    eupmyeondong_serial_number: splitData[2],
+    is_basement: splitData[3],
     building_primary_number: +splitData[4],
     building_secondary_number: +splitData[5],
-    basic_area_number: splitData[6],
+    basic_state_number: splitData[6],
     change_reason_code: splitData[7],
     notice_date: splitData[8],
     previous_roadname_address: splitData[9],
@@ -53,7 +53,7 @@ export async function updateJusoTable(connection: Connection, data: string) {
       )
     }
 
-    const sidoEngName = SidoObject[findByRoadcode?.sido_name as TSido]
+    const sidoEngName = SidoObject[findByRoadcode?.sido as TSido]
     tableName = `roadname_address_${sidoEngName}`
 
     if (changeReasonCode !== '63')
