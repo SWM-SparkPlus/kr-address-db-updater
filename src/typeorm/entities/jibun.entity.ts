@@ -13,7 +13,7 @@ export function getJibunEntityByTableName(tableName: TJibunTableName) {
     @PrimaryColumn({ type: 'varchar' })
     manage_number!: string
 
-    @Column({ type: 'smallint' })
+    @PrimaryColumn({ type: 'smallint' })
     serial_number!: number
 
     @Column({ type: 'varchar' })

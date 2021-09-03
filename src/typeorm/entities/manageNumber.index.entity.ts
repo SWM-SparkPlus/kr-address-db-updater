@@ -7,7 +7,7 @@ import { TIndexTableName } from '../../types/sido.collections'
  * @param tableName 실제 테이블 이름
  * @returns 테이블 이름이 적용된 TypeORM Entity
  */
-export function getManageNumberIndexTableName(tableName: TIndexTableName) {
+export function getIndexTableByTableName(tableName: TIndexTableName) {
   @Entity({ name: tableName, synchronize: false })
   class ManageNumberIndexEntity {
     @PrimaryColumn({ type: 'varchar' })
