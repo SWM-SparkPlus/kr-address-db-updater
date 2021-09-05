@@ -1,12 +1,7 @@
-import { WriteStream } from 'fs'
 import https from 'https'
-import { logger } from './logger'
 import Zip, { IZipEntry } from 'adm-zip'
-
-export type TDownloadFileOption = {
-  url: string
-  writeStream: WriteStream
-}
+import { logger } from './logger'
+import { TDownloadFileOption } from '../types/option.type'
 
 /**
  * 도로명주소 홈페이지 개발자 센터로부터 데이터를 다운받아 압축파일 엔트리를 반환하는 함수
