@@ -163,6 +163,27 @@ $ npm run setup:import:address
 | 1    | 관리번호   | 25   | 문자 | PK  | FK     |
 | 2    | 테이블이름 | 30   | 문자 |     | 참고용 |
 
+### 통합주소 테이블
+
+테이블명: integrated_address_SIDO
+
+Spark+에서 주소검색, 우편번호 맵핑 등에 사용하기 위한 데이터만 뽑은 테이블입니다.
+
+| 순번 | 컬럼명     | 실제컬럼명                | 크기 | 형식 | PK  | 비고                                  |
+| ---- | ---------- | ------------------------- | ---- | ---- | --- | ------------------------------------- |
+| 1    | 관리번호   | manage_number             | 25   | 문자 | PK  | FK                                    |
+| 2    | 도로명코드 | roadname_code             | 12   | 문자 |     | 참고용                                |
+| 3    | 우편번호   | zipcode                   | 5    | 문자 |     | 우편번호 맵핑용                       |
+| 4    | 시도명     | sido                      | 20   | 문자 |     | 도로명주소 생성용                     |
+| 5    | 시군구명   | sigungu                   | 20   | 문자 |     | 도로명주소 생성용                     |
+| 6    | 읍면동명   | eupmyeondong              | 40   | 문자 |     | 도로명주소 생성용. 법정읍면동과 동일. |
+| 7    | 법정리명   | bupjungli                 | 20   | 문자 |     | 도로명주소 생성용                     |
+| 8    | 도로명     | roadname                  | 80   | 문자 |     | 도로명주소 생성용                     |
+| 9    | 지하여부   | is_basement               | 1    | 문자 |     | 도로명주소 생성용                     |
+| 10   | 건물본번   | building_primary_number   | 5    | 숫자 |     | 도로명주소 생성용                     |
+| 11   | 건물부번   | building_secondary_number | 5    | 숫자 |     | 도로명주소 생성용                     |
+| 12   | 법정동코드 | bupjungdong_code          | 10   | 문자 |     | 도로명주소 생성용                     |
+
 ## LICENCE
 
 [MIT](https://github.com/SWM-SparkPlus/db-updater/blob/master/LICENSE)
