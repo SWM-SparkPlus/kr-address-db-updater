@@ -12,10 +12,10 @@ export class RoadcodeEntity {
   roadname_eng!: string
 
   @PrimaryColumn({ type: 'varchar' })
-  eupmyeondong_number!: string
+  eupmyeondong_serial_number!: string
 
   @Column({ type: 'varchar' })
-  sido_name!: string
+  sido!: string
 
   @Column({ type: 'varchar' })
   sido_eng!: string

@@ -1,7 +1,7 @@
 export class AddInfoModel {
   manage_number!: string
   hangjungdong_code!: string | null
-  hangjungdong_name!: string | null
+  hangjungdong!: string | null
   zipcode!: string | null
   zipcode_serial_number!: string | null
   bulk_delivery_building_name!: string | null

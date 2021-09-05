@@ -180,3 +180,9 @@ export type TRoadnameTableSchema = roadname_address_busan &
   roadname_address_ulsan
 
 export type TIntegratedTableSchema = TAddInfoTableSchema | TJibunTableSchema | TRoadnameTableSchema
+
+export enum EIndexTables {
+  AdditionalInfo = 'addinfo_manage_number_index',
+  JibunAddress = 'jibun_manage_number_index',
+  RoadnameAddress = 'road_manage_number_index',
+}
