@@ -2,7 +2,6 @@ import path from 'path'
 import { readdirSync } from 'fs'
 import { importToDb } from './importFile.address'
 import { logger } from '../logger'
-import { EDatabaseImport } from '../../types/import.type'
 
 const files = readdirSync(path.resolve(__dirname) + '/../../../resources/total')
 

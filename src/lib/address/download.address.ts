@@ -34,7 +34,7 @@ async function downloadAddressFilesOnly(downloadFlag: string) {
 
       logger.info(`[Preparation] Start on ${date}, download based on ${yesterday}`)
     } else if (downloadFlag === '--total' || downloadFlag === '-t') {
-      const previousMonth = dayjs(date.setMonth(date.getMonth() - 2)).format('YYYYMM')
+      const previousMonth = dayjs(date.setMonth(date.getMonth() - 1)).format('YYYYMM')
       url = encodeURI(
         `https://www.juso.go.kr/dn.do?reqType=ALLMTCHG&regYmd=${previousMonth.slice(
           0,

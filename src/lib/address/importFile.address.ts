@@ -1,5 +1,4 @@
 import { spawn } from 'child_process'
-import { EDatabaseImport } from '../../types/import.type'
 import { logger } from '../logger'
 import { scriptDir } from '../path'
 
@@ -27,14 +26,16 @@ export const importToDb = (tableName: string) => {
       targetIndexTableName = 'juso_manage_number_index'
     }
 
-    const createIndexEvent = spawn(`sh`, [
-      `${scriptDir}/create_index.sh`,
-      targetIndexTableName,
-      tableName,
-    ]).setMaxListeners(0)
+    if (targetIndexTableName) {
+      const createIndexEvent = spawn(`sh`, [
+        `${scriptDir}/create_index.sh`,
+        targetIndexTableName,
+        tableName,
+      ]).setMaxListeners(0)
 
-    createIndexEvent.on('close', () => {
-      logger.info(`[CreateIndexComplete] Complete creating index table with ${tableName}`)
-    })
+      createIndexEvent.on('close', () => {
+        logger.info(`[CreateIndexComplete] Complete creating index table with ${tableName}`)
+      })
+    }
   })
 }

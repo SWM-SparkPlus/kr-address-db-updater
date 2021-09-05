@@ -1,12 +1,9 @@
-import { Connection, getRepository } from 'typeorm'
-import { AddInfoModel } from '../../../models/addInfo.model'
+import { Connection } from 'typeorm'
 import { JibunModel } from '../../../models/jibun.model'
 import { addMetadata } from '../../../typeorm/addMetadata'
-import { getAddinfoEntityByTableName } from '../../../typeorm/entities/addinfo.entity'
 import { getJibunEntityByTableName } from '../../../typeorm/entities/jibun.entity'
 import { getIndexTableByTableName } from '../../../typeorm/entities/manageNumber.index.entity'
 import { SidoObject, TJibunTableName, TSido } from '../../../types/sido.collections'
-import { zipcodeDecoder } from '../../zipcode/zipcode.decoder'
 
 /**
  * 지번주소 테이블 업데이트 함수
@@ -44,7 +41,7 @@ export async function updateJibunTable(connection: Connection, data: string) {
   // 부가정보 인덱스가 존재하지 않아 테이블 특정이 어려울 경우
   if (!findJibunIndex) {
     const sidoEngName = SidoObject[inputData.sido as TSido]
-    tableName = `additional_info_${sidoEngName}` as TJibunTableName
+    tableName = `jibun_address_${sidoEngName}` as TJibunTableName
 
     // 폐지가 아닐 경우 인덱스 테이블에 추가
     if (changeReasonCode !== '63')
@@ -61,6 +58,7 @@ export async function updateJibunTable(connection: Connection, data: string) {
 
   const existingData = await connection.manager.findOne(jibunTableEntity, {
     manage_number: inputData.manage_number,
+    serial_number: inputData.serial_number,
   })
 
   // if (changeReasonCode === '63') {

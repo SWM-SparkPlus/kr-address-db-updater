@@ -39,8 +39,7 @@ const roadcodeFinishEvent = new EventEmitter()
           rl.on('line', data => {
             updateJusoTable(connection, data)
           })
-        }
-        if (entry.includes('JIBUN')) {
+        } else if (entry.includes('JIBUN')) {
           rl.on('line', data => {
             updateJibunTable(connection, data)
           })
