@@ -764,12 +764,12 @@ model integrated_address_seoul {
   zipcode             String  @db.VarChar(5)
   sido                String  @db.VarChar(20)
   sigungu             String  @db.VarChar(20)
-  eupmyeondong        String  @db.VarChar(20)
-  bupjungli           String  @db.VarChar(20)
+  eupmyeondong        String?  @db.VarChar(20)
+  bupjungli           String?  @db.VarChar(20)
   roadname            String  @db.VarChar(80)
   is_basement         String  @db.VarChar(1)
-  building_primary_number Int  @db.SmallInt
-  building_secondary_number Int @db.SmallInt
+  building_primary_number Int?  @db.SmallInt
+  building_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -779,12 +779,12 @@ model integrated_address_incheon {
   zipcode             String  @db.VarChar(5)
   sido                String  @db.VarChar(20)
   sigungu             String  @db.VarChar(20)
-  eupmyeondong        String  @db.VarChar(20)
-  bupjungli           String  @db.VarChar(20)
+  eupmyeondong        String?  @db.VarChar(20)
+  bupjungli           String?  @db.VarChar(20)
   roadname            String  @db.VarChar(80)
   is_basement         String  @db.VarChar(1)
-  building_primary_number Int  @db.SmallInt
-  building_secondary_number Int @db.SmallInt
+  building_primary_number Int?  @db.SmallInt
+  building_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -794,12 +794,12 @@ model integrated_address_gyeonggi {
   zipcode             String  @db.VarChar(5)
   sido                String  @db.VarChar(20)
   sigungu             String  @db.VarChar(20)
-  eupmyeondong        String  @db.VarChar(20)
-  bupjungli           String  @db.VarChar(20)
+  eupmyeondong        String?  @db.VarChar(20)
+  bupjungli           String?  @db.VarChar(20)
   roadname            String  @db.VarChar(80)
   is_basement         String  @db.VarChar(1)
-  building_primary_number Int  @db.SmallInt
-  building_secondary_number Int @db.SmallInt
+  building_primary_number Int?  @db.SmallInt
+  building_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -809,12 +809,12 @@ model integrated_address_gangwon {
   zipcode             String  @db.VarChar(5)
   sido                String  @db.VarChar(20)
   sigungu             String  @db.VarChar(20)
-  eupmyeondong        String  @db.VarChar(20)
-  bupjungli           String  @db.VarChar(20)
+  eupmyeondong        String?  @db.VarChar(20)
+  bupjungli           String?  @db.VarChar(20)
   roadname            String  @db.VarChar(80)
   is_basement         String  @db.VarChar(1)
-  building_primary_number Int  @db.SmallInt
-  building_secondary_number Int @db.SmallInt
+  building_primary_number Int?  @db.SmallInt
+  building_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -824,12 +824,12 @@ model integrated_address_chungnam {
   zipcode             String  @db.VarChar(5)
   sido                String  @db.VarChar(20)
   sigungu             String  @db.VarChar(20)
-  eupmyeondong        String  @db.VarChar(20)
-  bupjungli           String  @db.VarChar(20)
+  eupmyeondong        String?  @db.VarChar(20)
+  bupjungli           String?  @db.VarChar(20)
   roadname            String  @db.VarChar(80)
   is_basement         String  @db.VarChar(1)
-  building_primary_number Int  @db.SmallInt
-  building_secondary_number Int @db.SmallInt
+  building_primary_number Int?  @db.SmallInt
+  building_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -839,12 +839,12 @@ model integrated_address_chungbuk {
   zipcode             String  @db.VarChar(5)
   sido                String  @db.VarChar(20)
   sigungu             String  @db.VarChar(20)
-  eupmyeondong        String  @db.VarChar(20)
-  bupjungli           String  @db.VarChar(20)
+  eupmyeondong        String?  @db.VarChar(20)
+  bupjungli           String?  @db.VarChar(20)
   roadname            String  @db.VarChar(80)
   is_basement         String  @db.VarChar(1)
-  building_primary_number Int  @db.SmallInt
-  building_secondary_number Int @db.SmallInt
+  building_primary_number Int?  @db.SmallInt
+  building_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -854,12 +854,12 @@ model integrated_address_daejeon {
   zipcode             String  @db.VarChar(5)
   sido                String  @db.VarChar(20)
   sigungu             String  @db.VarChar(20)
-  eupmyeondong        String  @db.VarChar(20)
-  bupjungli           String  @db.VarChar(20)
+  eupmyeondong        String?  @db.VarChar(20)
+  bupjungli           String?  @db.VarChar(20)
   roadname            String  @db.VarChar(80)
   is_basement         String  @db.VarChar(1)
-  building_primary_number Int  @db.SmallInt
-  building_secondary_number Int @db.SmallInt
+  building_primary_number Int?  @db.SmallInt
+  building_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -869,12 +869,12 @@ model integrated_address_jeonnam {
   zipcode             String  @db.VarChar(5)
   sido                String  @db.VarChar(20)
   sigungu             String  @db.VarChar(20)
-  eupmyeondong        String  @db.VarChar(20)
-  bupjungli           String  @db.VarChar(20)
+  eupmyeondong        String?  @db.VarChar(20)
+  bupjungli           String?  @db.VarChar(20)
   roadname            String  @db.VarChar(80)
   is_basement         String  @db.VarChar(1)
-  building_primary_number Int  @db.SmallInt
-  building_secondary_number Int @db.SmallInt
+  building_primary_number Int?  @db.SmallInt
+  building_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -884,12 +884,12 @@ model integrated_address_jeonbuk {
   zipcode             String  @db.VarChar(5)
   sido                String  @db.VarChar(20)
   sigungu             String  @db.VarChar(20)
-  eupmyeondong        String  @db.VarChar(20)
-  bupjungli           String  @db.VarChar(20)
+  eupmyeondong        String?  @db.VarChar(20)
+  bupjungli           String?  @db.VarChar(20)
   roadname            String  @db.VarChar(80)
   is_basement         String  @db.VarChar(1)
-  building_primary_number Int  @db.SmallInt
-  building_secondary_number Int @db.SmallInt
+  building_primary_number Int?  @db.SmallInt
+  building_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -899,12 +899,12 @@ model integrated_address_gwangju {
   zipcode             String  @db.VarChar(5)
   sido                String  @db.VarChar(20)
   sigungu             String  @db.VarChar(20)
-  eupmyeondong        String  @db.VarChar(20)
-  bupjungli           String  @db.VarChar(20)
+  eupmyeondong        String?  @db.VarChar(20)
+  bupjungli           String?  @db.VarChar(20)
   roadname            String  @db.VarChar(80)
   is_basement         String  @db.VarChar(1)
-  building_primary_number Int  @db.SmallInt
-  building_secondary_number Int @db.SmallInt
+  building_primary_number Int?  @db.SmallInt
+  building_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -914,12 +914,12 @@ model integrated_address_sejong {
   zipcode             String  @db.VarChar(5)
   sido                String  @db.VarChar(20)
   sigungu             String  @db.VarChar(20)
-  eupmyeondong        String  @db.VarChar(20)
-  bupjungli           String  @db.VarChar(20)
+  eupmyeondong        String?  @db.VarChar(20)
+  bupjungli           String?  @db.VarChar(20)
   roadname            String  @db.VarChar(80)
   is_basement         String  @db.VarChar(1)
-  building_primary_number Int  @db.SmallInt
-  building_secondary_number Int @db.SmallInt
+  building_primary_number Int?  @db.SmallInt
+  building_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -929,12 +929,12 @@ model integrated_address_gyeongnam {
   zipcode             String  @db.VarChar(5)
   sido                String  @db.VarChar(20)
   sigungu             String  @db.VarChar(20)
-  eupmyeondong        String  @db.VarChar(20)
-  bupjungli           String  @db.VarChar(20)
+  eupmyeondong        String?  @db.VarChar(20)
+  bupjungli           String?  @db.VarChar(20)
   roadname            String  @db.VarChar(80)
   is_basement         String  @db.VarChar(1)
-  building_primary_number Int  @db.SmallInt
-  building_secondary_number Int @db.SmallInt
+  building_primary_number Int?  @db.SmallInt
+  building_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -944,12 +944,12 @@ model integrated_address_gyeongbuk {
   zipcode             String  @db.VarChar(5)
   sido                String  @db.VarChar(20)
   sigungu             String  @db.VarChar(20)
-  eupmyeondong        String  @db.VarChar(20)
-  bupjungli           String  @db.VarChar(20)
+  eupmyeondong        String?  @db.VarChar(20)
+  bupjungli           String?  @db.VarChar(20)
   roadname            String  @db.VarChar(80)
   is_basement         String  @db.VarChar(1)
-  building_primary_number Int  @db.SmallInt
-  building_secondary_number Int @db.SmallInt
+  building_primary_number Int?  @db.SmallInt
+  building_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -959,12 +959,12 @@ model integrated_address_daegu {
   zipcode             String  @db.VarChar(5)
   sido                String  @db.VarChar(20)
   sigungu             String  @db.VarChar(20)
-  eupmyeondong        String  @db.VarChar(20)
-  bupjungli           String  @db.VarChar(20)
+  eupmyeondong        String?  @db.VarChar(20)
+  bupjungli           String?  @db.VarChar(20)
   roadname            String  @db.VarChar(80)
   is_basement         String  @db.VarChar(1)
-  building_primary_number Int  @db.SmallInt
-  building_secondary_number Int @db.SmallInt
+  building_primary_number Int?  @db.SmallInt
+  building_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -974,12 +974,12 @@ model integrated_address_busan {
   zipcode             String  @db.VarChar(5)
   sido                String  @db.VarChar(20)
   sigungu             String  @db.VarChar(20)
-  eupmyeondong        String  @db.VarChar(20)
-  bupjungli           String  @db.VarChar(20)
+  eupmyeondong        String?  @db.VarChar(20)
+  bupjungli           String?  @db.VarChar(20)
   roadname            String  @db.VarChar(80)
   is_basement         String  @db.VarChar(1)
-  building_primary_number Int  @db.SmallInt
-  building_secondary_number Int @db.SmallInt
+  building_primary_number Int?  @db.SmallInt
+  building_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -989,12 +989,12 @@ model integrated_address_ulsan {
   zipcode             String  @db.VarChar(5)
   sido                String  @db.VarChar(20)
   sigungu             String  @db.VarChar(20)
-  eupmyeondong        String  @db.VarChar(20)
-  bupjungli           String  @db.VarChar(20)
+  eupmyeondong        String?  @db.VarChar(20)
+  bupjungli           String?  @db.VarChar(20)
   roadname            String  @db.VarChar(80)
   is_basement         String  @db.VarChar(1)
-  building_primary_number Int  @db.SmallInt
-  building_secondary_number Int @db.SmallInt
+  building_primary_number Int?  @db.SmallInt
+  building_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -1004,11 +1004,11 @@ model integrated_address_jeju {
   zipcode             String  @db.VarChar(5)
   sido                String  @db.VarChar(20)
   sigungu             String  @db.VarChar(20)
-  eupmyeondong        String  @db.VarChar(20)
-  bupjungli           String  @db.VarChar(20)
+  eupmyeondong        String?  @db.VarChar(20)
+  bupjungli           String?  @db.VarChar(20)
   roadname            String  @db.VarChar(80)
   is_basement         String  @db.VarChar(1)
-  building_primary_number Int  @db.SmallInt
-  building_secondary_number Int @db.SmallInt
+  building_primary_number Int?  @db.SmallInt
+  building_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
