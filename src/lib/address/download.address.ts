@@ -7,7 +7,11 @@ import { writeAddressFile } from './write.address'
 import { downloadPathHandler } from '../path/handler.path'
 import { TDownloadFileOption } from '../../types/option.type'
 
-export async function downloadAndWriteAddressFiles(targetDate: string, doImport?: boolean) {
+export async function downloadAndWriteAddressFiles(
+  targetDate: string,
+  doImport?: boolean,
+  doDailyUpdate?: boolean
+) {
   try {
     downloadPathHandler()
 
@@ -48,6 +52,7 @@ export async function downloadAndWriteAddressFiles(targetDate: string, doImport?
             entryOfZip: entry,
             writeDir: downloadDir,
             doImport: doImport ?? false,
+            doDailyUpdate: doDailyUpdate ?? false,
           })
         })
       }

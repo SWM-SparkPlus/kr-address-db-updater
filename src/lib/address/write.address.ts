@@ -8,15 +8,7 @@ import { SidoObject, TSido } from '../../types/sido.collections'
 import { importToDb } from './importFile.address'
 import { logger } from '../logger'
 import { updateAccumulatedDailyAddress } from './update.acc.address'
-
-export const encoderAndWriteEvent = new EventEmitter().setMaxListeners(0)
-encoderAndWriteEvent.on('doImport', (tableName: string, target: EDatabaseImport) => {
-  importToDb(tableName)
-})
-
-encoderAndWriteEvent.on('doDailyUpdate', (tableName: string, target: EDatabaseImport) => {
-  updateAccumulatedDailyAddress(tableName)
-})
+import { afterWriteEvent } from './address.event'
 
 /**
  * 주소 데이터의 EUC-KR encoded buffer를 받아 UTF8로 인코딩하고 파일로 쓰기를 실행하는 함수
@@ -80,13 +72,13 @@ export const writeAddressFile = ({
     // 쓰기가 끝나면 import 실행
     if (doImport) {
       readableContentStream.on('close', () => {
-        encoderAndWriteEvent.emit('doImport', tableName, EDatabaseImport.Address)
+        afterWriteEvent.emit('doImport', tableName, EDatabaseImport.Address)
       })
     }
 
     if (doDailyUpdate) {
       readableContentStream.on('close', () => {
-        encoderAndWriteEvent.emit('doDailyUpdate', tableName)
+        afterWriteEvent.emit('doDailyUpdate', tableName)
       })
     }
   } else if (txtRegex.test(ext) && rawFileName.includes('AlterD.JUSUMT')) {
