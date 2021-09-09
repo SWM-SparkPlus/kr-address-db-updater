@@ -4,13 +4,8 @@ import iconv from 'iconv-lite'
 import { Readable } from 'stream'
 import { EDatabaseImport } from '../../types/import.type'
 import { TWriteAndImportOption } from '../../types/option.type'
-import { importToDb } from '../address/importFile.address'
+import { afterWriteEvent } from '../address/address.event'
 import { logger } from '../logger'
-
-export const encoderAndWriteEvent = new EventEmitter().setMaxListeners(100)
-encoderAndWriteEvent.on('finish', (tableName: string) => {
-  importToDb(tableName)
-})
 
 /**
  * 위치정보요약 EUC-KR encoded buffer를 받아 UTF8로 인코딩하고 파일로 쓰기를 실행하는 함수
@@ -47,7 +42,7 @@ export const writePositionSummaryAndImport = ({
     // 쓰기가 끝나면 import 실행
     doImport
       ? readableContentStream.on('close', () => {
-          encoderAndWriteEvent.emit('finish', filenameExceptExt, EDatabaseImport.Address)
+          afterWriteEvent.emit('doImport', filenameExceptExt, EDatabaseImport.Address)
         })
       : null
   } else if (txtRegex.test(ext) && entryName.includes('AlterD.JUSUMT')) {

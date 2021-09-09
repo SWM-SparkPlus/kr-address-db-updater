@@ -4,13 +4,6 @@ import { logger } from '../logger'
 import { downloadAndWriteAddressFiles } from './download.address'
 import { updateDailyAddress } from './updateDaily.address'
 
-const fileDownloadListener = new EventEmitter()
-  .setMaxListeners(31)
-  .on('finish', async (date: string) => {
-    logger.info(`[DailyUpdateStartEvent] Update start on date ${date}`)
-    await updateDailyAddress(date)
-  })
-
 export async function updateAccumulatedDailyAddress(entry: string) {
   try {
     // 오늘을 기준으로 업데이트 해야할 기간 지정.

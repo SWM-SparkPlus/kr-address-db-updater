@@ -5,13 +5,8 @@ import iconv from 'iconv-lite'
 import { EDatabaseImport } from '../../types/import.type'
 import { TWriteAndImportOption } from '../../types/option.type'
 import { SidoObject, TSido } from '../../types/sido.collections'
-import { importToDb } from '../address/importFile.address'
 import { logger } from '../logger'
-
-export const writeEvent = new EventEmitter().setMaxListeners(100)
-writeEvent.on('finish', (tableName: string) => {
-  importToDb(tableName)
-})
+import { afterWriteEvent } from '../address/address.event'
 
 /**
  * 우편번호 EUC-KR encoded buffer를 받아 UTF8로 인코딩하고 파일로 쓰기를 실행하는 함수
@@ -50,7 +45,7 @@ export const zipcodeFileWriterAndImport = ({
     // 쓰기가 끝나면 import 실행
     doImport
       ? readableContentStream.on('close', () => {
-          writeEvent.emit('finish', tableName, EDatabaseImport.Zipcode)
+          afterWriteEvent.emit('doImport', tableName, EDatabaseImport.Zipcode)
         })
       : null
   }
