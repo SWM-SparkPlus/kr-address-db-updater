@@ -10,9 +10,4 @@ export const ormConfig: MysqlConnectionOptions = {
   database: process.env.MYSQL_DATABASE,
   synchronize: false,
   logging: ['query', 'error'],
-  entities: ['src/typeorm/entities/**/*{.ts, .js}'],
-  maxQueryExecutionTime: 3000,
-  extra: {
-    connectionLimit: 10,
-  },
 }
