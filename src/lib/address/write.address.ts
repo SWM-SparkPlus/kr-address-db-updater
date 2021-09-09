@@ -7,10 +7,15 @@ import { TWriteAndImportOption } from '../../types/option.type'
 import { SidoObject, TSido } from '../../types/sido.collections'
 import { importToDb } from './importFile.address'
 import { logger } from '../logger'
+import { updateAccumulatedDailyAddress } from './update.acc.address'
 
-export const encoderAndWriteEvent = new EventEmitter().setMaxListeners(100)
-encoderAndWriteEvent.on('finish', (tableName: string, target: EDatabaseImport) => {
+export const encoderAndWriteEvent = new EventEmitter().setMaxListeners(0)
+encoderAndWriteEvent.on('doImport', (tableName: string, target: EDatabaseImport) => {
   importToDb(tableName)
+})
+
+encoderAndWriteEvent.on('doDailyUpdate', (tableName: string, target: EDatabaseImport) => {
+  updateAccumulatedDailyAddress(tableName)
 })
 
 /**
@@ -20,11 +25,12 @@ encoderAndWriteEvent.on('finish', (tableName: string, target: EDatabaseImport) =
  * @param entryOfZip Zip 파일의 엔트리
  * @param writeDir 인코딩된 데이터를 쓸 디렉토리 경로
  */
-export const writeAddressFileAndImport = ({
+export const writeAddressFile = ({
   data,
   entryOfZip,
   writeDir,
   doImport,
+  doDailyUpdate,
 }: TWriteAndImportOption) => {
   // 파일명 우선 인코딩
   const rawFileName = entryOfZip.name
@@ -54,9 +60,9 @@ export const writeAddressFileAndImport = ({
       tableName = 'roadname_code'
     } else {
       // 부가정보, 도로명주소, 지번주소
-      if (encodedFilename.includes('주소_')) {
+      if (encodedFilename.includes('주소')) {
         tablePrefix = 'roadname_address'
-      } else if (encodedFilename.includes('지번_')) {
+      } else if (encodedFilename.includes('지번')) {
         tablePrefix = 'jibun_address'
       } else if (encodedFilename.includes('부가정보')) {
         tablePrefix = 'additional_info'
@@ -72,11 +78,17 @@ export const writeAddressFileAndImport = ({
     logger.info(`[FileWrite] Write ${fileWriteStream.path}`)
 
     // 쓰기가 끝나면 import 실행
-    doImport
-      ? readableContentStream.on('close', () => {
-          encoderAndWriteEvent.emit('finish', tableName, EDatabaseImport.Address)
-        })
-      : null
+    if (doImport) {
+      readableContentStream.on('close', () => {
+        encoderAndWriteEvent.emit('doImport', tableName, EDatabaseImport.Address)
+      })
+    }
+
+    if (doDailyUpdate) {
+      readableContentStream.on('close', () => {
+        encoderAndWriteEvent.emit('doDailyUpdate', tableName)
+      })
+    }
   } else if (txtRegex.test(ext) && rawFileName.includes('AlterD.JUSUMT')) {
     // 일변동 데이터가 없을 경우 진행하지 않음
     if (data.toString() === 'No data') {

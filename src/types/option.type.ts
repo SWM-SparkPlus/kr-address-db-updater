@@ -6,6 +6,7 @@ export type TWriteAndImportOption = {
   entryOfZip: AdmZip.IZipEntry
   writeDir: string
   doImport: boolean
+  doDailyUpdate: boolean
 }
 
 export type TDownloadFileOption = {
