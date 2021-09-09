@@ -3,7 +3,7 @@ import { rmSync, createWriteStream } from 'fs'
 import './lib/env'
 import { logger } from './lib/logger'
 import { downloadFileAndGetEntries } from './lib/downloadAndGetEntries'
-import { writeAddressFileAndImport } from './lib/address/write.address'
+import { writeAddressFile } from './lib/address/write.address'
 import { totalDir } from './lib/path'
 import { downloadPathHandler } from './lib/path/handler.path'
 import { TDownloadFileOption } from './types/option.type'
@@ -49,7 +49,7 @@ const main = async () => {
       entry.getDataAsync((data, err) => {
         if (err) throw err
 
-        writeAddressFileAndImport({
+        writeAddressFile({
           data,
           entryOfZip: entry,
           writeDir: downloadDir,
