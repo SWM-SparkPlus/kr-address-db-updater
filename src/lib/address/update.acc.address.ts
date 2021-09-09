@@ -1,5 +1,4 @@
 import dayjs from 'dayjs'
-import { EventEmitter } from 'stream'
 import { logger } from '../logger'
 import { downloadAndWriteAddressFiles } from './download.address'
 import { updateDailyAddress } from './updateDaily.address'

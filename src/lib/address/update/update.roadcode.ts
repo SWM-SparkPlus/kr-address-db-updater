@@ -1,5 +1,4 @@
 import { Connection } from 'typeorm'
-import { RoadcodeModel } from '../../../models/roadcode.model'
 import { addMetadata } from '../../../typeorm/addMetadata'
 import { RoadcodeEntity } from '../../../typeorm/entities/roadcode.entity'
 

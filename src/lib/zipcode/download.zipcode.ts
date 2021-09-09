@@ -36,6 +36,7 @@ async function downloadZipcodeFilesAndWrite() {
         entryOfZip: entry,
         writeDir: totalDir,
         doImport: false,
+        doDailyUpdate: false,
       })
     })
   })
