@@ -1,14 +1,9 @@
 import { createReadStream, readdirSync } from 'fs'
 import { dailyDir } from '../path'
 import { createInterface } from 'readline'
-import { logger } from '../logger'
 import { getDbConnection } from '../../typeorm/connection'
-import { EventEmitter } from 'stream'
-import { updateAddinfoTable } from './update/update.addinfo'
-import { Connection } from 'typeorm'
-import { updateJusoTable } from './update/update.juso'
-import { updateJibunTable } from './update/update.jibun'
 import { updateRoadcodeTable } from './update/update.roadcode'
+import { roadcodeUpdateEvent } from './address.event'
 
 const entries = readdirSync(dailyDir)
 
@@ -21,41 +16,13 @@ export async function updateDailyAddress(date: string) {
     crlfDelay: Infinity,
   })
 
+  // 도로명코드 한줄마다 업데이트 실행
   rl.on('line', async data => {
     await updateRoadcodeTable(connection, data)
   })
 
   // 종료시 같은 일자의 테이블도 업데이트
   rl.on('close', () => {
-    roadcodeFinishEvent.emit('finish', date)
+    roadcodeUpdateEvent.emit('doAfterRoadcodeUpdate', date)
   })
 }
-
-// try {
-//   ;(async () => {
-//     const connection = await getDbConnection()
-
-//     for (const entry of entries) {
-//       const rl = createInterface({
-//         input: createReadStream(dailyDir + '/' + entry),
-//         crlfDelay: Infinity,
-//       })
-
-//       // 도로명코드 우선 처리
-//       if (entry.includes('ROAD')) {
-//         // 도로명코드와 동일한 일자에 해당하는 일일 업데이트 이벤트 발행
-//         rl.on('line', async data => {
-//           await updateRoadcodeTable(connection, data)
-//         })
-
-//         // 처리한 도로명코드 일일 변동분과 동일한 일자의 파일들 업데이트 실행
-//         rl.on('close', () => {
-//           roadcodeFinishEvent.emit('finish', entry)
-//         })
-//       }
-//     }
-//   })()
-// } catch (err) {
-//   logger.error(err)
-//   console.error(err)
-// }

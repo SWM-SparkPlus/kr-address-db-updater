@@ -1,13 +1,10 @@
-import EventEmitter from 'events'
 import iconv from 'iconv-lite'
 import { createWriteStream } from 'fs'
 import { Readable } from 'stream'
 import { EDatabaseImport } from '../../types/import.type'
 import { TWriteAndImportOption } from '../../types/option.type'
 import { SidoObject, TSido } from '../../types/sido.collections'
-import { importToDb } from './importFile.address'
 import { logger } from '../logger'
-import { updateAccumulatedDailyAddress } from './update.acc.address'
 import { afterWriteEvent } from './address.event'
 
 /**
