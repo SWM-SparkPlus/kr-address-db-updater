@@ -9,6 +9,7 @@
     "setup:import:address": "npm run prisma:init && ts-node src/main.ts import address",
     "setup:integrated:address": "npm run prisma:init && ts-node src/lib/address/create.address.integration.ts",
     "update:address:daily": "npm run download:address:daily && ts-node src/main.ts update address daily",
+    "update:address:acc": "ts-node src/main.ts update address accumulation",
     "prisma:init": "npx prisma db push && npx prisma generate",
     "prepare": "husky install"
   },
