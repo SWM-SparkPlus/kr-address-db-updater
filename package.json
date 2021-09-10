@@ -1,15 +1,14 @@
 {
   "private": true,
   "scripts": {
-    "download:address:daily": "ts-node src/lib/address/download.address.ts",
-    "download:address:total": "ts-node src/lib/address/download.address.ts",
-    "download:summary:total": "ts-node src/lib/positionSummary/download.position.summary.ts -t",
-    "download:summary:monthly": "ts-node src/lib/positionSummary/download.position.summary.ts -m",
-    "download:zipcode:total": "ts-node src/lib/zipcode/download.zipcode.ts",
-    "setup:all": "npm run prisma:init && ts-node src/setupAll.ts",
-    "setup:import:address": "npm run prisma:init && ts-node src/lib/address/doImportFile.address.ts",
+    "download:address:daily": "ts-node src/main.ts download address daily",
+    "download:address:total": "ts-node src/main.ts download address total",
+    "download:summary:total": "ts-node src/main.ts download position_summary total",
+    "download:summary:monthly": "ts-node src/main.ts download position_summary monthly",
+    "download:zipcode:total": "ts-node src/main.ts download zipcode",
+    "setup:import:address": "npm run prisma:init && ts-node src/main.ts import address",
     "setup:integrated:address": "npm run prisma:init && ts-node src/lib/address/create.address.integration.ts",
-    "update:address:daily": "npm run download:address:daily && ts-node src/lib/address/updateDaily.address.ts",
+    "update:address:daily": "npm run download:address:daily && ts-node src/main.ts update address daily",
     "prisma:init": "npx prisma db push && npx prisma generate",
     "prepare": "husky install"
   },

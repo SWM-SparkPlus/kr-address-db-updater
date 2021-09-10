@@ -13,7 +13,7 @@ async function main() {
   // (1) src/main.ts
   // (2) [download][update][import]
   // (3) [address][zipcode][position_summary]
-  // (4) [total][daily]
+  // (4) [total][daily][monthly]
   const [task, target, range] = process.argv.slice(2)
 
   if (task === 'download') {
@@ -31,7 +31,7 @@ async function main() {
     } else if (target === 'zipcode') {
       downloadZipcodeFilesAndWrite()
     } else if (target === 'position_summary') {
-      downloadPositionSummary('-t')
+      downloadPositionSummary(range)
     } else {
       logger.warn(
         `[UnknownArgumentError] Executing main.ts with arguments ${task} ${target} ${range}`
@@ -49,11 +49,11 @@ async function main() {
     }
   } else if (task === 'update') {
     if (target === 'address') {
-      if (range === 'daily' || range === 'D') {
+      if (range === 'daily') {
         const targetDate = dayjs(new Date()).subtract(1, 'day').format('YYYYMMDD')
         await downloadAndWriteAddressFiles(targetDate)
         await updateDailyAddress(targetDate)
-      } else if (range === 'accumulation' || range === 'A') {
+      } else if (range === 'accumulation') {
         updateAccumulatedDailyAddress('temp')
       } else {
         logger.warn(

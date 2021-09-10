@@ -30,14 +30,14 @@ export async function downloadPositionSummary(
   logger.info(`[Preparation] Start on ${date}, download based on ${previousMonth}`)
 
   // 매개변수에 따라 다르게 처리
-  if (downloadFlag === '-t') {
+  if (downloadFlag === 'total') {
     logger.info(`[DownloadTotalPositionSummaryStart]`)
 
     url = encodeURI(
       `https://www.juso.go.kr/dn.do?boardId=GEODATA&regYmd=${year}&num=63&fileNo=90652&stdde=${previousMonth}&fileName=${previousMonth}_위치정보요약DB_전체분.zip&realFileName=ENTRC_DB_${yymm}.zip&logging=Y&indutyCd=999&purpsCd=999&indutyRm=수집종료&purpsRm=수집종료`
     )
     downloadDir = totalDir
-  } else if (downloadFlag === '-m') {
+  } else if (downloadFlag === 'monthly') {
     logger.info(`[DownloadPositionSummaryMonthlyUpdateStart]`)
 
     url = encodeURI(
