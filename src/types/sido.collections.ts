@@ -77,24 +77,43 @@ export enum EIndexTables {
   RoadnameAddress = 'road_manage_number_index',
 }
 
-type BupjungSidoCode = { [key in TSido]: number }
+export type TBupjungcode =
+  | '11'
+  | '26'
+  | '27'
+  | '28'
+  | '29'
+  | '30'
+  | '31'
+  | '36'
+  | '41'
+  | '42'
+  | '43'
+  | '44'
+  | '45'
+  | '46'
+  | '47'
+  | '48'
+  | '50'
 
-export const BupjungSidoCodeMap: BupjungSidoCode = {
-  서울특별시: 11,
-  부산광역시: 26,
-  대구광역시: 27,
-  인천광역시: 28,
-  광주광역시: 29,
-  대전광역시: 30,
-  울산광역시: 31,
-  세종특별자치시: 36,
-  경기도: 41,
-  강원도: 42,
-  충청북도: 43,
-  충청남도: 44,
-  전라북도: 45,
-  전라남도: 46,
-  경상북도: 47,
-  경상남도: 48,
-  제주특별자치도: 50,
+type TBupjungCodeMap = { [key in TBupjungcode]: TSido }
+
+export const BupjungSidoCodeMap: TBupjungCodeMap = {
+  '11': '서울특별시',
+  '26': '부산광역시',
+  '27': '대구광역시',
+  '28': '인천광역시',
+  '29': '광주광역시',
+  '30': '대전광역시',
+  '31': '울산광역시',
+  '36': '세종특별자치시',
+  '41': '경기도',
+  '42': '강원도',
+  '43': '충청북도',
+  '44': '충청남도',
+  '45': '전라북도',
+  '46': '전라남도',
+  '47': '경상북도',
+  '48': '경상남도',
+  '50': '제주특별자치도',
 }
