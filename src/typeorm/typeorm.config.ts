@@ -10,4 +10,7 @@ export const ormConfig: MysqlConnectionOptions = {
   database: process.env.MYSQL_DATABASE,
   synchronize: false,
   logging: ['query', 'error'],
+  extra: {
+    connectionLimit: 150,
+  },
 }
