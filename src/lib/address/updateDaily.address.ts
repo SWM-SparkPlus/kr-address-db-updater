@@ -23,6 +23,6 @@ export async function updateDailyAddress(date: string) {
 
   // 종료시 같은 일자의 테이블도 업데이트
   rl.on('close', () => {
-    roadcodeUpdateEvent.emit('doAfterRoadcodeUpdate', date)
+    roadcodeUpdateEvent.emit('doAfterRoadcodeUpdate', connection, date)
   })
 }
