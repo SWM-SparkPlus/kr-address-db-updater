@@ -30,6 +30,7 @@ const logger = createLogger({
       dirname: `${logDir}/info`,
       filename: `%DATE%.log`,
       maxFiles: 30, // 30 Days saved
+      maxSize: 2097152, // 2MB
       json: true,
       zippedArchive: true,
     }),
@@ -40,6 +41,7 @@ const logger = createLogger({
       dirname: `${logDir}/error`,
       filename: `%DATE%.error.log`,
       maxFiles: 30, // 30 Days saved
+      maxSize: 2097152, // 2MB
       handleExceptions: true,
       json: true,
       zippedArchive: true,
