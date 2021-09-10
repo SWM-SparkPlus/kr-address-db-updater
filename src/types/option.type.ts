@@ -13,3 +13,9 @@ export type TDownloadFileOption = {
   url: string
   writeStream: WriteStream
 }
+
+export type TDownloadActionOption = {
+  targetDate: string
+  doImport?: boolean
+  doDailyUpdate?: boolean
+}
