@@ -1,8 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "download:address:daily": "ts-node src/lib/address/download.address.ts --daily",
-    "download:address:total": "ts-node src/lib/address/download.address.ts --total",
+    "download:address:daily": "ts-node src/lib/address/download.address.ts",
+    "download:address:total": "ts-node src/lib/address/download.address.ts",
     "download:summary:total": "ts-node src/lib/positionSummary/download.position.summary.ts -t",
     "download:summary:monthly": "ts-node src/lib/positionSummary/download.position.summary.ts -m",
     "download:zipcode:total": "ts-node src/lib/zipcode/download.zipcode.ts",
