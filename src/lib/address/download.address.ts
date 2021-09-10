@@ -60,6 +60,6 @@ export async function downloadAndWriteAddressFiles(
 
     rmSync(writeStream.path)
   } catch (err) {
-    logger.warn(`[DownloadAddressError] ${err}`)
+    logger.error(err)
   }
 }

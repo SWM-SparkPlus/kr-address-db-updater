@@ -12,7 +12,7 @@ import { writePositionSummaryAndImport } from './write.position.summary'
  *
  * @param downloadFlag 다운로드 형태. total(전체분), monthly(월간 변동분) 택 1
  */
-async function downloadPositionSummary(
+export async function downloadPositionSummary(
   downloadFlag: string,
   doImport?: boolean,
   doDailyUpdate?: boolean
@@ -63,9 +63,3 @@ async function downloadPositionSummary(
 
   rmSync(writeStream.path)
 }
-
-const { argv } = process
-downloadPositionSummary(argv[2]).catch(err => {
-  logger.error(`[UnexpectedError] ${err}`)
-  process.exit(1)
-})

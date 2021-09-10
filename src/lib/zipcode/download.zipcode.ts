@@ -14,11 +14,11 @@ import { zipcodeFileWriterAndImport } from './write.zipcode'
  * 2. 압축 파일의 엔트리를 영문명으로 변경하고 파일 쓰기 실행
  * 3. 파일 쓰기가 끝나면 import flag에 따라 import 수행
  */
-async function downloadZipcodeFilesAndWrite() {
+export async function downloadZipcodeFilesAndWrite() {
   downloadPathHandler()
 
   const date = new Date()
-  const previousMonth = dayjs(date.setMonth(date.getMonth() - 2)).format('YYYYMM')
+  const previousMonth = dayjs(date.setMonth(date.getMonth() - 1)).format('YYYYMM')
   logger.info(`[Preparation] Start on ${date}, download based on ${previousMonth}`)
 
   const url = 'https://www.epost.go.kr/search/areacd/zipcode_DB.zip'
@@ -43,7 +43,3 @@ async function downloadZipcodeFilesAndWrite() {
 
   rmSync(filePath)
 }
-
-downloadZipcodeFilesAndWrite().catch(err => {
-  logger.error(`[DownloadZipcodeFilesError] ${err}`)
-})
