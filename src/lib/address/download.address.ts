@@ -5,13 +5,13 @@ import { logger } from '../logger'
 import { dailyDir, totalDir } from '../path'
 import { writeAddressFile } from './write.address'
 import { downloadPathHandler } from '../path/handler.path'
-import { TDownloadFileOption } from '../../types/option.type'
+import { TDownloadActionOption, TDownloadFileOption } from '../../types/option.type'
 
-export async function downloadAndWriteAddressFiles(
-  targetDate: string,
-  doImport?: boolean,
-  doDailyUpdate?: boolean
-) {
+export async function downloadAndWriteAddressFiles({
+  targetDate,
+  doImport,
+  doDailyUpdate,
+}: TDownloadActionOption) {
   try {
     downloadPathHandler()
 

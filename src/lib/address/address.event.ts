@@ -24,9 +24,8 @@ export const fileDownloadEvent = new EventEmitter()
 
 export const roadcodeUpdateEvent = new EventEmitter().on(
   'doAfterRoadcodeUpdate',
-  async (date: string) => {
+  async (connection: Connection, date: string) => {
     try {
-      const connection: Connection = await getDbConnection()
       // 일자가 동일하고 도로명코드가 아닌 데이터 핕터링
       const sameDateEntries = entries.filter(
         entry => entry.includes(date) && !entry.includes('ROAD')
@@ -64,6 +63,6 @@ export const afterWriteEvent = new EventEmitter()
   .on('doImport', (tableName: string, target: EDatabaseImport) => {
     importToDb(tableName)
   })
-  .on('doDailyUpdate', (tableName: string, target: EDatabaseImport) => {
-    updateAccumulatedDailyAddress(tableName)
+  .on('doDailyUpdate', (date: string, target: EDatabaseImport) => {
+    updateDailyAddress(date)
   })

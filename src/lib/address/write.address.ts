@@ -72,12 +72,6 @@ export const writeAddressFile = ({
         afterWriteEvent.emit('doImport', tableName, EDatabaseImport.Address)
       })
     }
-
-    if (doDailyUpdate) {
-      readableContentStream.on('close', () => {
-        afterWriteEvent.emit('doDailyUpdate', tableName)
-      })
-    }
   } else if (txtRegex.test(ext) && rawFileName.includes('AlterD.JUSUMT')) {
     // 일변동 데이터가 없을 경우 진행하지 않음
     if (data.toString() === 'No data') {
@@ -87,6 +81,14 @@ export const writeAddressFile = ({
     const readableContentStream = Readable.from(iconv.decode(data, 'euc-kr'))
     const fileWriteStream = createWriteStream(`${writeDir}/${rawFileName}`)
     readableContentStream.pipe(fileWriteStream)
+
+    const updateDate = dotSplitFilename[2]
+
+    if (doDailyUpdate) {
+      readableContentStream.on('close', () => {
+        afterWriteEvent.emit('doDailyUpdate', updateDate)
+      })
+    }
 
     logger.info(`[FileWrite] Write ${fileWriteStream.path}`)
   }
