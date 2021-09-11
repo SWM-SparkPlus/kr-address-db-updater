@@ -4,11 +4,13 @@ import { createInterface } from 'readline'
 import { getDbConnection } from '../../typeorm/connection'
 import { updateRoadcodeTable } from './update/update.roadcode'
 import { roadcodeUpdateEvent } from './address.event'
+import { getMysqlConnection } from '../mysqlConnection'
 
 const entries = readdirSync(dailyDir)
 
 export async function updateDailyAddress(date: string) {
-  const connection = await getDbConnection()
+  const connection = await getMysqlConnection()
+  // const connection = await getDbConnection()
   const [roadcodeFile] = entries.filter(entry => entry.includes(date) && entry.includes('ROAD'))
 
   const rl = createInterface({

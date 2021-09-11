@@ -1,5 +1,12 @@
+import PoolConnection from 'mysql2/typings/mysql/lib/PoolConnection'
 import { Connection } from 'typeorm'
-import { SidoObject, TSido } from '../../../types/sido.collections'
+import {
+  BupjungSidoCodeMap,
+  SidoObject,
+  TBupjungcode,
+  TSido,
+} from '../../../types/sido.collections'
+import { logger } from '../../logger'
 
 /**
  * 지번주소 테이블 업데이트 함수
@@ -7,15 +14,35 @@ import { SidoObject, TSido } from '../../../types/sido.collections'
  * @param connection TypeORM connection
  * @param data 파이프(|)로 나누어진 문자열 라인
  */
-export async function updateJibunTable(connection: Connection, data: string) {
+export async function updateJibunTable(connection: PoolConnection, data: string) {
   if (data === 'No Data') return
 
-  const splitData = data.split('|')
-  const [manage_number, serial_number, , sido, , , , , , , , changeReasonCode] = splitData
-  const sidoEngName = SidoObject[sido as TSido]
+  const splitData = data.split('|').map(s => s.replace(`'`, `"`))
+  const [
+    manage_number,
+    serial_number,
+    bupjungdong_code,
+    sido,
+    sigungu,
+    bupjungeupmyeondong,
+    bupjungli,
+    is_mountain,
+    jibun_primary_number,
+    jibun_secondary_number,
+    is_representation,
+    change_reason_code,
+  ] = splitData
+  const sidoEngName = sido
+    ? SidoObject[sido as TSido]
+    : SidoObject[BupjungSidoCodeMap[manage_number.slice(0, 2) as TBupjungcode]]
   const sql =
-    changeReasonCode === '63'
+    change_reason_code === '63'
       ? `DELETE FROM jibun_address_${sidoEngName} WHERE manage_number = '${manage_number}' AND serial_number = '${serial_number}'`
-      : `REPLACE INTO jibun_address_${sidoEngName} VALUES ('${splitData.slice(0, 11).join("','")}')`
-  connection.manager.query(sql)
+      : `REPLACE INTO jibun_address_${sidoEngName} VALUES ('${manage_number}', '${serial_number}', '${bupjungdong_code}', '${sido}', '${sigungu}', '${bupjungeupmyeondong}', '${bupjungli}', '${is_mountain}', '${jibun_primary_number}', '${jibun_secondary_number}', '${is_representation}')`
+
+  try {
+    connection.query(sql).on('end', () => connection.release())
+  } catch (err) {
+    logger.error(`[UPDATE_JUSO_ERROR] ${err}`)
+  }
 }
