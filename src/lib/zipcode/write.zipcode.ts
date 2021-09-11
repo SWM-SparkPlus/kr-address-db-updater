@@ -40,7 +40,7 @@ export const zipcodeFileWriterAndImport = ({
     const fileWriteStream = createWriteStream(`${writeDir}/${tableName}.txt`)
     readableContentStream.pipe(fileWriteStream)
 
-    logger.info(`[FileWrite] Write ${fileWriteStream.path}`)
+    logger.info(`[FILE_WRITE] ${fileWriteStream.path}`)
 
     // 쓰기가 끝나면 import 실행
     doImport

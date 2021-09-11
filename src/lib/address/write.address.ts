@@ -64,7 +64,7 @@ export const writeAddressFile = ({
     const fileWriteStream = createWriteStream(`${writeDir}/${tableName}.txt`)
     readableContentStream.pipe(fileWriteStream)
 
-    logger.info(`[FileWrite] Write ${fileWriteStream.path}`)
+    logger.info(`[FILE_WRITE] Write ${fileWriteStream.path}`)
 
     // 쓰기가 끝나면 import 실행
     if (doImport) {
@@ -90,6 +90,6 @@ export const writeAddressFile = ({
       })
     }
 
-    logger.info(`[FileWrite] Write ${fileWriteStream.path}`)
+    logger.info(`[FILE_WRITE] Write ${fileWriteStream.path}`)
   }
 }

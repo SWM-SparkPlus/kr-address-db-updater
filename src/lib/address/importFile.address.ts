@@ -8,14 +8,14 @@ import { scriptDir } from '../path'
  * @param tableName 입력할 테이블명. 테이블 명이면서 파일 이름이어야 함.
  */
 export const importToDb = (tableName: string) => {
-  logger.info(`[ImportStarts] Import starts with table name: ${tableName}`)
+  logger.info(`[IMPORT_START] Import starts with table name: ${tableName}`)
 
   const importScript = spawn(`sh`, [
     `${scriptDir}/import_total_data.sh`,
     tableName,
   ]).setMaxListeners(0)
   importScript.on('close', () => {
-    logger.info(`[ImportComplete] Complete importing on table: ${tableName}`)
+    logger.info(`[IMPORT_COMPLETE] Complete importing on table: ${tableName}`)
 
     let targetIndexTableName = ''
     if (tableName.includes('additional_info')) {
@@ -34,7 +34,7 @@ export const importToDb = (tableName: string) => {
       ]).setMaxListeners(0)
 
       createIndexEvent.on('close', () => {
-        logger.info(`[CreateIndexComplete] Complete creating index table with ${tableName}`)
+        logger.info(`[CREATE_INDEX_COMPLETE] Job done on ${tableName}`)
       })
     }
   })

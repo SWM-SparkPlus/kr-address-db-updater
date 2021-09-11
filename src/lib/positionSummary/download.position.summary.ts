@@ -27,18 +27,18 @@ export async function downloadPositionSummary(
   const year = previousMonth.slice(0, 4)
   const yymm = year.slice(2, 4) + previousMonth.slice(4, 6)
 
-  logger.info(`[Preparation] Start on ${date}, download based on ${previousMonth}`)
+  logger.info(`[PREPARATION] Start on ${date}, download based on ${previousMonth}`)
 
   // 매개변수에 따라 다르게 처리
   if (downloadFlag === 'total') {
-    logger.info(`[DownloadTotalPositionSummaryStart]`)
+    logger.info(`[DOWNLOAD_TOTAL_POSITION_SUMMARY_START]`)
 
     url = encodeURI(
       `https://www.juso.go.kr/dn.do?boardId=GEODATA&regYmd=${year}&num=63&fileNo=90652&stdde=${previousMonth}&fileName=${previousMonth}_위치정보요약DB_전체분.zip&realFileName=ENTRC_DB_${yymm}.zip&logging=Y&indutyCd=999&purpsCd=999&indutyRm=수집종료&purpsRm=수집종료`
     )
     downloadDir = totalDir
   } else if (downloadFlag === 'monthly') {
-    logger.info(`[DownloadPositionSummaryMonthlyUpdateStart]`)
+    logger.info(`[DOWNLOAD_POSITION_SUMMARY_MONTHLY_UPDATE_START]`)
 
     url = encodeURI(
       `https://www.juso.go.kr/dn.do?boardId=GEOMOD&regYmd=${year}&num=48&fileNo=90653&stdde=${previousMonth}&fileName=${previousMonth}_위치정보요약DB_변동분.zip&realFileName=ENTRC_DB_MOD_${yymm}.zip&logging=Y&indutyCd=999&purpsCd=999&indutyRm=수집종료&purpsRm=수집종료`

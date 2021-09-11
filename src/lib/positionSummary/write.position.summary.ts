@@ -37,7 +37,7 @@ export const writePositionSummaryAndImport = ({
     const fileWriteStream = createWriteStream(`${writeDir}/${filenameExceptExt}.txt`)
     readableContentStream.pipe(fileWriteStream)
 
-    logger.info(`[FileWrite] Write ${fileWriteStream.path}`)
+    logger.info(`[FILE_WRITE] ${fileWriteStream.path}`)
 
     // 쓰기가 끝나면 import 실행
     doImport
@@ -53,6 +53,6 @@ export const writePositionSummaryAndImport = ({
     const fileWriteStream = createWriteStream(`${writeDir}/${entryName}`)
     readableContentStream.pipe(fileWriteStream)
 
-    logger.info(`[FileWrite] Write ${fileWriteStream.path}`)
+    logger.info(`[FILE_WRITE] ${fileWriteStream.path}`)
   }
 }

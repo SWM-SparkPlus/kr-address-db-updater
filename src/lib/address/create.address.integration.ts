@@ -4,18 +4,18 @@ import { logger } from '../logger'
 import { scriptDir } from '../path'
 
 export function createIntegratedTable(sido: TSidoEng) {
-  logger.info(`[CreateIntegratedTable] Start creating integrated table with ${sido}.`)
+  logger.info(`[CREATE_INTEGRATED_TABLE] Start creating integrated table with ${sido}.`)
 
   spawn('sh', [`${scriptDir}/create_integrated_table.sh`, sido])
     .on('error', (message: string) => {
-      logger.info(`[CreateIntegratedTableError] Error on task ${sido}: ${message}`)
+      logger.error(`[CREATE_INTEGRATED_TABLE_ERROR] ${sido}: ${message}`)
       process.exit(1)
     })
     .on('message', (message: string) => {
-      logger.info(`[CreateIntegratedTable] Task ${sido}: ${message}`)
+      logger.info(`[CREATE_INTEGRATED_TABLE] Task ${sido}: ${message}`)
     })
     .on('close', () => {
-      logger.info(`[CreateIntegratedTable] Completed creating integrated table with ${sido}.`)
+      logger.info(`[CREATE_INTEGRATED_TABLE] Completed creating integrated table with ${sido}.`)
     })
 }
 

@@ -18,7 +18,7 @@ console.warn(
 const date = new Date()
 const previousMonth = dayjs(date.setMonth(date.getMonth() - 1)).format('YYYYMM')
 
-logger.info(`[DownloadInfo] This job will download total data based on date '${previousMonth}'`)
+logger.info(`[SETUP_ALL] This job will download total data based on date '${previousMonth}'`)
 
 // 요청주소. 최신 주소 DB
 const url = encodeURI(
@@ -54,6 +54,7 @@ const main = async () => {
           entryOfZip: entry,
           writeDir: downloadDir,
           doImport: true,
+          doDailyUpdate: false,
         })
       })
     })
@@ -66,5 +67,5 @@ const main = async () => {
 }
 
 main().catch(e => {
-  logger.error(`[SetupDatabaseError] ${e}`)
+  logger.error(`[SETUP_ALL_ERROR] ${e}`)
 })

@@ -16,8 +16,7 @@ export async function downloadAndWriteAddressFiles({
     downloadPathHandler()
 
     if (!dayjs(targetDate).isValid()) {
-      logger.error(`[DownloadAddressError] Input date "${targetDate}" is invalid`)
-      return process.exit(1)
+      throw new Error(`Input date ${targetDate} is invalid`)
     }
 
     const downloadFlag = targetDate.length === 8 ? 'Daily' : 'Total'
@@ -39,9 +38,11 @@ export async function downloadAndWriteAddressFiles({
       downloadDir = totalDir
     }
 
-    logger.info(`[${downloadFlag}AddressFileDownloadStarts] Downloads start with ${targetDate}`)
+    logger.info(
+      `[${downloadFlag.toUpperCase()}_ADDRESS_FILE_DOWNLOAD_START] Date with ${targetDate}`
+    )
 
-    const writeStream = createWriteStream(`${downloadDir}/address_file_DB.zip`)
+    const writeStream = createWriteStream(`${downloadDir}/${targetDate}_address_file_DB.zip`)
     ;(await downloadFileAndGetEntries({ url, writeStream } as TDownloadFileOption)).forEach(
       entry => {
         entry.getDataAsync((data, err) => {
@@ -60,6 +61,6 @@ export async function downloadAndWriteAddressFiles({
 
     rmSync(writeStream.path)
   } catch (err) {
-    logger.error(err)
+    logger.error(`[DOWNLOAD_ERROR] ${err}`)
   }
 }
