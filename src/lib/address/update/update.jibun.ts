@@ -7,6 +7,7 @@ import {
   TSido,
 } from '../../../types/sido.collections'
 import { logger } from '../../logger'
+import { queryWithDbcp } from '../../mysqlConnection'
 
 /**
  * 지번주소 테이블 업데이트 함수
@@ -41,7 +42,7 @@ export async function updateJibunTable(connection: PoolConnection, data: string)
       : `REPLACE INTO jibun_address_${sidoEngName} VALUES ('${manage_number}', '${serial_number}', '${bupjungdong_code}', '${sido}', '${sigungu}', '${bupjungeupmyeondong}', '${bupjungli}', '${is_mountain}', '${jibun_primary_number}', '${jibun_secondary_number}', '${is_representation}')`
 
   try {
-    connection.query(sql).on('end', () => connection.release())
+    await queryWithDbcp(connection, sql)
   } catch (err) {
     logger.error(`[UPDATE_JUSO_ERROR] ${err}`)
   }

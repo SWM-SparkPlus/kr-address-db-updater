@@ -1,6 +1,7 @@
 import PoolConnection from 'mysql2/typings/mysql/lib/PoolConnection'
 import { Connection } from 'typeorm'
 import { logger } from '../../logger'
+import { queryWithDbcp } from '../../mysqlConnection'
 import { zipcodeDecoder } from '../../zipcode/zipcode.decoder'
 
 /**
@@ -30,7 +31,7 @@ export async function updateAddinfoTable(connection: PoolConnection, data: strin
       : `REPLACE INTO additional_info_${sidoEngName} VALUES ('${manage_number}', '${hangjungdong_code}', '${hangjungdong}', '${zipcode}', '${zipcode_serial_number}', '${bulk_delivery_building_name}', '${master_building_name}', '${sigungu_building_name}', '${is_apt}')`
 
   try {
-    connection.query(sql).on('end', () => connection.release())
+    await queryWithDbcp(connection, sql)
   } catch (err) {
     logger.error(`[UPDATE_ADDINFO_ERROR] ${err}`)
   }
