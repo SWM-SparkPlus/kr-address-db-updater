@@ -2,6 +2,7 @@ import PoolConnection from 'mysql2/typings/mysql/lib/PoolConnection'
 import { Connection } from 'typeorm'
 import { BupjungSidoCodeMap, SidoObject, TBupjungcode } from '../../../types/sido.collections'
 import { logger } from '../../logger'
+import { queryWithDbcp } from '../../mysqlConnection'
 import { zipcodeDecoder } from '../../zipcode/zipcode.decoder'
 
 /**
@@ -38,7 +39,7 @@ export async function updateJusoTable(connection: PoolConnection, data: string) 
       : `REPLACE INTO roadname_address_${sidoEngName} VALUES ('${manage_number}', '${roadname_code}', '${eupmyeondong_serial_number}', '${is_basement}', '${building_primary_number}', '${building_secondary_number}', '${basic_state_number}', '${change_reason_code}', '${notice_date}', '${previous_roadname_address}', '${has_detail}')`
 
   try {
-    connection.query(sql).on('end', () => connection.release())
+    await queryWithDbcp(connection, sql)
   } catch (err) {
     logger.error(`[UPDATE_JUSO_ERROR] ${err}`)
   }
