@@ -1,5 +1,6 @@
 import EventEmitter from 'events'
 import { createReadStream, readdirSync } from 'fs'
+import PoolConnection from 'mysql2/typings/mysql/lib/PoolConnection'
 import { createInterface } from 'readline'
 import { Connection } from 'typeorm'
 import { getDbConnection } from '../../typeorm/connection'
@@ -24,7 +25,7 @@ export const fileDownloadEvent = new EventEmitter()
 
 export const roadcodeUpdateEvent = new EventEmitter().on(
   'doAfterRoadcodeUpdate',
-  async (connection: Connection, date: string) => {
+  async (connection: PoolConnection, date: string) => {
     try {
       // 일자가 동일하고 도로명코드가 아닌 데이터 핕터링
       const sameDateEntries = entries.filter(

@@ -1055,7 +1055,7 @@ multimatch@^4.0.0:
 
 mysql2@^2.3.0:
   version "2.3.0"
-  resolved "https://registry.npmjs.org/mysql2/-/mysql2-2.3.0.tgz"
+  resolved "https://registry.yarnpkg.com/mysql2/-/mysql2-2.3.0.tgz#600f5cc27e397dfb77b59eac93666434f88e8079"
   integrity sha512-0t5Ivps5Tdy5YHk5NdKwQhe/4Qyn2pload+S+UooDBvsqngtzujG1BaTWBihQLfeKO3t3122/GtusBtmHEHqww==
   dependencies:
     denque "^1.4.1"

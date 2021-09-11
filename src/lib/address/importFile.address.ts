@@ -14,28 +14,8 @@ export const importToDb = (tableName: string) => {
     `${scriptDir}/import_total_data.sh`,
     tableName,
   ]).setMaxListeners(0)
+
   importScript.on('close', () => {
     logger.info(`[IMPORT_COMPLETE] Complete importing on table: ${tableName}`)
-
-    let targetIndexTableName = ''
-    if (tableName.includes('additional_info')) {
-      targetIndexTableName = 'addinfo_manage_number_index'
-    } else if (tableName.includes('jibun_address')) {
-      targetIndexTableName = 'jibun_manage_number_index'
-    } else if (tableName.includes('roadname_address')) {
-      targetIndexTableName = 'juso_manage_number_index'
-    }
-
-    if (targetIndexTableName) {
-      const createIndexEvent = spawn(`sh`, [
-        `${scriptDir}/create_index.sh`,
-        targetIndexTableName,
-        tableName,
-      ]).setMaxListeners(0)
-
-      createIndexEvent.on('close', () => {
-        logger.info(`[CREATE_INDEX_COMPLETE] Job done on ${tableName}`)
-      })
-    }
   })
 }
