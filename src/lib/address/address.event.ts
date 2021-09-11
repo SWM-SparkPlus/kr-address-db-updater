@@ -18,7 +18,7 @@ const entries = readdirSync(dailyDir)
 export const fileDownloadEvent = new EventEmitter()
   .setMaxListeners(31)
   .on('finish', async (date: string) => {
-    logger.info(`[DailyUpdateStartEvent] Update start on date ${date}`)
+    logger.info(`[DAILY_UPDATE_START] Update start on date ${date}`)
     await updateDailyAddress(date)
   })
 
@@ -53,7 +53,7 @@ export const roadcodeUpdateEvent = new EventEmitter().on(
         }
       }
     } catch (err) {
-      logger.error(`[QueryAfterRoadcodeError] ${err}`)
+      logger.error(`[QUERY_AFTER_ROADCODE_ERROR] ${err}`)
     }
   }
 )

@@ -19,7 +19,7 @@ export async function downloadZipcodeFilesAndWrite() {
 
   const date = new Date()
   const previousMonth = dayjs(date.setMonth(date.getMonth() - 1)).format('YYYYMM')
-  logger.info(`[Preparation] Start on ${date}, download based on ${previousMonth}`)
+  logger.info(`[PREPARATION] Start on ${date}, download based on ${previousMonth}`)
 
   const url = 'https://www.epost.go.kr/search/areacd/zipcode_DB.zip'
   const filePath = `${totalDir}/zipcode_DB.zip`
