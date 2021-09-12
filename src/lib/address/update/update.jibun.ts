@@ -17,7 +17,7 @@ import { queryWithDbcp } from '../../mysqlConnection'
 export async function updateJibunTable(connection: PoolConnection, data: string) {
   if (data === 'No Data') return
 
-  const splitData = data.split('|').map(s => s.replace(`'`, `"`))
+  const splitData = data.split('|').map(s => s.replace(`'`, `''`))
   const [
     manage_number,
     serial_number,
@@ -32,9 +32,7 @@ export async function updateJibunTable(connection: PoolConnection, data: string)
     is_representation,
     change_reason_code,
   ] = splitData
-  const sidoEngName = sido
-    ? SidoObject[sido as TSido]
-    : SidoObject[BupjungSidoCodeMap[manage_number.slice(0, 2) as TBupjungcode]]
+  const sidoEngName = SidoObject[BupjungSidoCodeMap[manage_number.slice(0, 2) as TBupjungcode]]
   const sql =
     change_reason_code === '63'
       ? `DELETE FROM jibun_address_${sidoEngName} WHERE manage_number = '${manage_number}' AND serial_number = '${serial_number}'`

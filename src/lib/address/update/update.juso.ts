@@ -13,7 +13,7 @@ import { zipcodeDecoder } from '../../zipcode/zipcode.decoder'
 export async function updateJusoTable(connection: PoolConnection, data: string) {
   if (data === 'No Data') return
 
-  const splitData = data.split('|').map(s => s.replace(`'`, `\'`))
+  const splitData = data.split('|').map(s => s.replace(`'`, `''`))
   const [
     manage_number,
     roadname_code,
@@ -28,9 +28,7 @@ export async function updateJusoTable(connection: PoolConnection, data: string) 
     has_detail,
   ] = splitData
 
-  const sidoEngName = basic_state_number
-    ? zipcodeDecoder(basic_state_number)
-    : SidoObject[BupjungSidoCodeMap[roadname_code?.slice(0, 2) as TBupjungcode]]
+  const sidoEngName = SidoObject[BupjungSidoCodeMap[manage_number?.slice(0, 2) as TBupjungcode]]
 
   const sql =
     change_reason_code === '63'
