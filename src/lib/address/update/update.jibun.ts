@@ -1,5 +1,4 @@
 import PoolConnection from 'mysql2/typings/mysql/lib/PoolConnection'
-import { Connection } from 'typeorm'
 import {
   BupjungSidoCodeMap,
   SidoObject,

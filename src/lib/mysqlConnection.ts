@@ -16,7 +16,7 @@ const connectionPool = mysql.createPool({
   connectTimeout: 300,
 })
 
-export async function getMysqlConnection(): Promise<PoolConnection> {
+export async function getMysqlPoolConnection(): Promise<PoolConnection> {
   return new Promise((resolve, reject) => {
     connectionPool.getConnection((err, connection) => {
       if (err) reject(err)

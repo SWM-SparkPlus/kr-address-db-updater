@@ -6,6 +6,7 @@ import { Connection } from 'typeorm'
 import { getDbConnection } from '../../typeorm/connection'
 import { EDatabaseImport } from '../../types/import.type'
 import { logger } from '../logger'
+import { getMysqlPoolConnection } from '../mysqlConnection'
 import { dailyDir } from '../path'
 import { importToDb } from './importFile.address'
 import { updateAccumulatedDailyAddress } from './update.acc.address'
@@ -25,7 +26,7 @@ export const fileDownloadEvent = new EventEmitter()
 
 export const roadcodeUpdateEvent = new EventEmitter().on(
   'doAfterRoadcodeUpdate',
-  async (connection: PoolConnection, date: string) => {
+  (connection: PoolConnection, date: string) => {
     try {
       // 일자가 동일하고 도로명코드가 아닌 데이터 핕터링
       const sameDateEntries = entries.filter(

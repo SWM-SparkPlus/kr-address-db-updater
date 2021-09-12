@@ -1,5 +1,4 @@
 import PoolConnection from 'mysql2/typings/mysql/lib/PoolConnection'
-import { Connection } from 'typeorm'
 import { logger } from '../../logger'
 import { queryWithDbcp } from '../../mysqlConnection'
 import { zipcodeDecoder } from '../../zipcode/zipcode.decoder'
