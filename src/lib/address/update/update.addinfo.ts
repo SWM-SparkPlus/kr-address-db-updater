@@ -1,7 +1,7 @@
 import PoolConnection from 'mysql2/typings/mysql/lib/PoolConnection'
+import { BupjungSidoCodeMap, SidoObject, TBupjungcode } from '../../../types/sido.collections'
 import { logger } from '../../logger'
 import { queryWithDbcp } from '../../mysqlConnection'
-import { zipcodeDecoder } from '../../zipcode/zipcode.decoder'
 
 /**
  * 부가정보 테이블 업데이트 함수
@@ -23,7 +23,7 @@ export async function updateAddinfoTable(connection: PoolConnection, data: strin
     is_apt,
     changeReasonCode,
   ] = splitData
-  const sidoEngName = zipcodeDecoder(zipcode as string)
+  const sidoEngName = SidoObject[BupjungSidoCodeMap[manage_number?.slice(0, 2) as TBupjungcode]]
   const sql =
     changeReasonCode === '63'
       ? `DELETE FROM additional_info_${sidoEngName} WHERE manage_number = '${manage_number}'`
