@@ -1,5 +1,4 @@
 import PoolConnection from 'mysql2/typings/mysql/lib/PoolConnection'
-import { Connection } from 'typeorm'
 import { BupjungSidoCodeMap, SidoObject, TBupjungcode } from '../../../types/sido.collections'
 import { logger } from '../../logger'
 import { queryWithDbcp } from '../../mysqlConnection'
@@ -14,7 +13,7 @@ import { zipcodeDecoder } from '../../zipcode/zipcode.decoder'
 export async function updateJusoTable(connection: PoolConnection, data: string) {
   if (data === 'No Data') return
 
-  const splitData = data.split('|').map(s => s.replace(`'`, `"`))
+  const splitData = data.split('|').map(s => s.replace(`'`, `\'`))
   const [
     manage_number,
     roadname_code,
