@@ -19,8 +19,8 @@ export async function updateDailyAddress(date: string) {
   })
 
   // 도로명코드 한줄마다 업데이트 실행
-  rl.on('line', data => {
-    updateRoadcodeTable(connection, data)
+  rl.on('line', async data => {
+    await updateRoadcodeTable(connection, data)
   })
 
   // 종료시 같은 일자의 테이블도 업데이트
