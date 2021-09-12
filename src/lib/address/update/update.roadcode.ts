@@ -1,5 +1,4 @@
 import PoolConnection from 'mysql2/typings/mysql/lib/PoolConnection'
-import { Connection } from 'typeorm'
 import { queryWithDbcp } from '../../mysqlConnection'
 
 /**
@@ -17,5 +16,5 @@ export async function updateRoadcodeTable(connection: PoolConnection, data: stri
     change_reason === '63'
       ? `DELETE FROM roadname_code WHERE roadname_code = '${roadname_code}' AND eupmyeondong_serial_number = '${eupmyeondong_serial_number}'`
       : `REPLACE INTO roadname_code VALUES ('${splitData.join("','")}')`
-  queryWithDbcp(connection, sql)
+  connection.query(sql)
 }
