@@ -1,10 +1,5 @@
 import PoolConnection from 'mysql2/typings/mysql/lib/PoolConnection'
-import {
-  BupjungSidoCodeMap,
-  SidoObject,
-  TBupjungcode,
-  TSido,
-} from '../../../types/sido.collections'
+import { BupjungSidoCodeMap, SidoObject, TBupjungcode } from '../../../types/sido.collections'
 import { logger } from '../../logger'
 import { queryWithDbcp } from '../../mysqlConnection'
 
@@ -36,11 +31,6 @@ export async function updateJibunTable(connection: PoolConnection, data: string)
   const targetTable = `jibun_address_${sidoEngName}`
   const targetIntegratedTable = `integrated_address_${sidoEngName}`
 
-  // const sql =
-  // change_reason_code === '63'
-  // ? `DELETE FROM ${targetTable} WHERE manage_number = '${manage_number}' AND serial_number = '${serial_number}'`
-  // : `REPLACE INTO ${targetTable} VALUES ('${manage_number}', '${serial_number}', '${bupjungdong_code}', '${sido}', '${sigungu}', '${bupjungeupmyeondong}', '${bupjungli}', '${is_mountain}', '${jibun_primary_number}', '${jibun_secondary_number}', '${is_representation}')`
-
   try {
     const findOneData = await queryWithDbcp(
       connection,
@@ -57,7 +47,7 @@ export async function updateJibunTable(connection: PoolConnection, data: string)
         connection,
         `UPDATE ${targetTable} SET serial_number = '${serial_number}', bupjungdong_code = '${bupjungdong_code}', sido = '${sido}', sigungu = '${sigungu}', bupjungeupmyeondong = '${bupjungeupmyeondong}', bupjungli = '${bupjungli}', is_mountain = '${is_mountain}', jibun_primary_number = '${jibun_primary_number}', jibun_secondary_number = '${jibun_secondary_number}', is_representation = '${is_representation}' WHERE manage_number = '${manage_number}' AND serial_number = '${serial_number}'`
       )
-    } else if (findOneData && change_reason_code === '34') {
+    } else if (findOneData && change_reason_code === '63') {
       queryWithDbcp(
         connection,
         `DELETE FROM ${targetTable} WHERE manage_number = '${manage_number}' AND serial_number = '${serial_number}'`

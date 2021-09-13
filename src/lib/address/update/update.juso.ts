@@ -31,11 +31,6 @@ export async function updateJusoTable(connection: PoolConnection, data: string) 
   const targetTable = `roadname_address_${sidoEngName}`
   const targetIntegratedTable = `integrated_address_${sidoEngName}`
 
-  // const sql =
-  //   change_reason_code === '63'
-  //     ? `DELETE FROM roadname_address_${sidoEngName} WHERE manage_number = '${manage_number}'`
-  //     : `REPLACE INTO roadname_address_${sidoEngName} VALUES ('${manage_number}', '${roadname_code}', '${eupmyeondong_serial_number}', '${is_basement}', '${building_primary_number}', '${building_secondary_number}', '${basic_state_number}', '${change_reason_code}', '${notice_date}', '${previous_roadname_address}', '${has_detail}')`
-
   try {
     const findOneData = await queryWithDbcp(
       connection,
@@ -52,7 +47,7 @@ export async function updateJusoTable(connection: PoolConnection, data: string) 
         connection,
         `UPDATE ${targetTable} SET roadname_code = '${roadname_code}', eupmyeondong_serial_number = '${eupmyeondong_serial_number}', is_basement = '${is_basement}', building_primary_number = '${building_primary_number}', building_secondary_number = '${building_secondary_number}', basic_state_number = '${basic_state_number}', change_reason_code = '${change_reason_code}', notice_date = '${notice_date}', previous_roadname_address = '${previous_roadname_address}', has_detail = '${has_detail}' WHERE manage_number = '${manage_number}'`
       )
-    } else if (findOneData && change_reason_code === '34') {
+    } else if (findOneData && change_reason_code === '63') {
       queryWithDbcp(
         connection,
         `DELETE FROM ${targetTable} WHERE manage_number = '${manage_number}'`

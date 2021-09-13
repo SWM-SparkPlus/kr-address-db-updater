@@ -1,8 +1,6 @@
-import EventEmitter from 'events'
 import { createWriteStream } from 'fs'
 import { Readable } from 'stream'
 import iconv from 'iconv-lite'
-import { EDatabaseImport } from '../../types/import.type'
 import { TWriteAndImportOption } from '../../types/option.type'
 import { SidoObject, TSido } from '../../types/sido.collections'
 import { logger } from '../logger'
@@ -45,7 +43,7 @@ export const zipcodeFileWriterAndImport = ({
     // 쓰기가 끝나면 import 실행
     doImport
       ? readableContentStream.on('close', () => {
-          afterWriteEvent.emit('doImport', tableName, EDatabaseImport.Zipcode)
+          afterWriteEvent.emit('doImport', tableName)
         })
       : null
   }

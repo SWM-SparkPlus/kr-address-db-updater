@@ -2,7 +2,6 @@ import https from 'https'
 import Zip, { IZipEntry } from 'adm-zip'
 import { logger } from './logger'
 import { TDownloadFileOption } from '../types/option.type'
-import { readSync, rmSync, statSync } from 'fs'
 
 /**
  * 도로명주소 홈페이지 개발자 센터로부터 데이터를 다운받아 압축파일 엔트리를 반환하는 함수

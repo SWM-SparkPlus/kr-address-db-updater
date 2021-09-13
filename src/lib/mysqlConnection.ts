@@ -1,9 +1,7 @@
 import mysql from 'mysql2'
-import dotenv from 'dotenv'
 import PoolConnection from 'mysql2/typings/mysql/lib/PoolConnection'
 import { logger } from './logger'
-
-dotenv.config()
+import './env'
 
 const connectionPool = mysql.createPool({
   host: process.env.MYSQL_HOST,
@@ -28,19 +26,16 @@ export async function getMysqlPoolConnection(): Promise<PoolConnection> {
 
 export async function queryWithDbcp(connection: PoolConnection, sql: string): Promise<any> {
   return new Promise((resolve, reject) => {
+    logger.info(`[MYSQL_QUERY_START] ${sql}`)
     connection.query(sql, (err, result, fields) => {
-      logger.info(`[MYSQL_QUERY_START] ${sql}`)
-
       if (err) {
         logger.error(`[MYSQL_QUERY_ERROR] ${err} running ${sql}`)
         reject(err)
       }
 
-      if (result) {
-        logger.info(`[MYSQL_QUERY_ENDS] ${sql}`)
-        connection.release()
-        resolve({ result, fields })
-      }
+      connection.release()
+      logger.info(`[MYSQL_QUERY_ENDS] ${sql}`)
+      resolve({ result, fields })
     })
   })
 }

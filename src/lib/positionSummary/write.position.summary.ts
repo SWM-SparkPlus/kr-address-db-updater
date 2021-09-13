@@ -1,8 +1,6 @@
-import EventEmitter from 'events'
 import { createWriteStream } from 'fs'
 import iconv from 'iconv-lite'
 import { Readable } from 'stream'
-import { EDatabaseImport } from '../../types/import.type'
 import { TWriteAndImportOption } from '../../types/option.type'
 import { afterWriteEvent } from '../address/address.event'
 import { logger } from '../logger'
@@ -42,7 +40,7 @@ export const writePositionSummaryAndImport = ({
     // 쓰기가 끝나면 import 실행
     doImport
       ? readableContentStream.on('close', () => {
-          afterWriteEvent.emit('doImport', filenameExceptExt, EDatabaseImport.Address)
+          afterWriteEvent.emit('doImport', filenameExceptExt)
         })
       : null
   } else if (txtRegex.test(ext) && entryName.includes('AlterD.JUSUMT')) {
