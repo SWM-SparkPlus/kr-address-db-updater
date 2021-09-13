@@ -34,7 +34,7 @@ $ cat .env.example > .env
 ###
 
 $ npm install
-시
+
 ###
 # 4. 주소 데이터베이스 전체분 다운로드(약 2분 소요)
 ###
@@ -53,13 +53,28 @@ $ docker-compose up -d
 
 $ npm run setup:import:address
 
+###
+#  7. 누적 변동분을 업데이트 합니다.
+###
+
+$ npm run update:address:acc
+
+###
+#  추가. 일일 변동분을 업데이트 합니다.
+###
+
+$ npm run update:address:daily
+
 ```
 
 ## 특징
 
 1. 국내 최초의 한국 주소체계 데이터베이스 자동화 구축 및 최신화 시스템
-2. AMD64 아키텍처 기반 UNIX 서버 최적화 (2 Core 4 Thread vCPU기준 3분 내 구축 가능)
-3. 오전 8시 데이터베이스 최신화 업데이트 동작
+2. AMD64 아키텍처 기반 UNIX 서버 최적화(4 Core CPU 기준)
+
+- 전체구축: 10분 내 구축
+- 누적 업데이트: 10분 내 구축
+- 일일 업데이트: 변동분의 데이터 크기에 따라 5초 ~ 1분 소요
 
 ## 아키텍처
 
@@ -153,15 +168,6 @@ $ npm run setup:import:address
 | 7    | 건축물대장 건물명 | master_building_name        | 40   | 문자 |     |                            |
 | 8    | 시군구 건물명     | sigungu_building_name       | 40   | 문자 |     |                            |
 | 9    | 공동주택여부      | is_apt                      | 1    | 문자 |     | 0: 비공동주택, 1: 공동주택 |
-
-### 관리번호 인덱스 테이블
-
-테이블명: TABLE_manage_number_index
-
-| 순번 | 컬럼명     | 실제컬럼명    | 크기 | 형식 | PK  | 비고   |
-| ---- | ---------- | ------------- | ---- | ---- | --- | ------ |
-| 1    | 관리번호   | manage_number | 25   | 문자 | PK  | FK     |
-| 2    | 테이블이름 | tablename     | 30   | 문자 |     | 참고용 |
 
 ### 통합주소 테이블
 
