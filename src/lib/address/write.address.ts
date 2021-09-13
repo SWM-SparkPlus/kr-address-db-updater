@@ -1,7 +1,6 @@
 import iconv from 'iconv-lite'
 import { createWriteStream } from 'fs'
 import { Readable } from 'stream'
-import { EDatabaseImport } from '../../types/import.type'
 import { TWriteAndImportOption } from '../../types/option.type'
 import { SidoObject, TSido } from '../../types/sido.collections'
 import { logger } from '../logger'
@@ -69,7 +68,7 @@ export const writeAddressFile = ({
     // 쓰기가 끝나면 import 실행
     if (doImport) {
       readableContentStream.on('close', () => {
-        afterWriteEvent.emit('doImport', tableName, EDatabaseImport.Address)
+        afterWriteEvent.emit('doImport', tableName)
       })
     }
   } else if (txtRegex.test(ext) && rawFileName.includes('AlterD.JUSUMT')) {

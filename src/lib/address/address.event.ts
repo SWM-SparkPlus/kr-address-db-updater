@@ -2,14 +2,9 @@ import EventEmitter from 'events'
 import { createReadStream, readdirSync } from 'fs'
 import PoolConnection from 'mysql2/typings/mysql/lib/PoolConnection'
 import { createInterface } from 'readline'
-import { Connection } from 'typeorm'
-import { getDbConnection } from '../../typeorm/connection'
-import { EDatabaseImport } from '../../types/import.type'
 import { logger } from '../logger'
-import { getMysqlPoolConnection } from '../mysqlConnection'
 import { dailyDir } from '../path'
 import { importToDb } from './importFile.address'
-import { updateAccumulatedDailyAddress } from './update.acc.address'
 import { updateAddinfoTable } from './update/update.addinfo'
 import { updateJibunTable } from './update/update.jibun'
 import { updateJusoTable } from './update/update.juso'
@@ -62,9 +57,9 @@ export const roadcodeUpdateEvent = new EventEmitter().on(
 
 export const afterWriteEvent = new EventEmitter()
   .setMaxListeners(0)
-  .on('doImport', (tableName: string, target: EDatabaseImport) => {
+  .on('doImport', (tableName: string) => {
     importToDb(tableName)
   })
-  .on('doDailyUpdate', (date: string, target: EDatabaseImport) => {
+  .on('doDailyUpdate', (date: string) => {
     updateDailyAddress(date)
   })
