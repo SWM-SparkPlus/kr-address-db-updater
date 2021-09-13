@@ -743,21 +743,6 @@ model roadname_code {
   @@id([roadname_code, eupmyeondong_serial_number])
 }
 
-model addinfo_manage_number_index {
-  manage_number       String  @id @db.VarChar(25)
-  tablename           String  @db.VarChar(30)
-}
-
-model juso_manage_number_index {
-  manage_number       String  @id @db.VarChar(25)
-  tablename           String  @db.VarChar(30)
-}
-
-model jibun_manage_number_index {
-  manage_number       String  @id @db.VarChar(25)
-  tablename           String  @db.VarChar(30)
-}
-
 model integrated_address_seoul {
   manage_number       String  @id @db.VarChar(25)
   roadname_code       String  @db.VarChar(12)
