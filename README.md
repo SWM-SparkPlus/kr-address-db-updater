@@ -2,6 +2,8 @@
 
 `db-updater`는 혼재된 국내 주소체계 데이터를 안정적이고 효율적으로 제공하기 위해 **국내 주소체계 데이터베이스 구축 및 최신화를 자동화**하는 시스템을 `Node.js`로 구현하는 프로젝트입니다.
 
+[🇱🇷 English Guide](<https://github.com/SWM-SparkPlus/db-updater/wiki/README(eng)>)
+
 ## 빠른 시작
 
 이 프로젝트는 `Node.js`, `Docker` 및 `docker-compose` 의존성으로 가집니다. 의존성이 설치되어있지 않을 경우 실행할 수 없으니 설치가 필요합니다.
