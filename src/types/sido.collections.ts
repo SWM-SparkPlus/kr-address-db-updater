@@ -66,16 +66,6 @@ export type TAddInfoTableName = `additional_info_${ValueOf<TSidoObject>}`
 export type TRoadnameTableName = `roadname_address_${ValueOf<TSidoObject>}`
 export type TJibunTableName = `jibun_address_${ValueOf<TSidoObject>}`
 export type TIntegratedAddressTableName = `integrated_address_${ValueOf<TSidoObject>}`
-export type TIndexTableName =
-  | 'juso_manage_number_index'
-  | 'jibun_manage_number_index'
-  | 'addinfo_manage_number_index'
-
-export enum EIndexTables {
-  AdditionalInfo = 'addinfo_manage_number_index',
-  JibunAddress = 'jibun_manage_number_index',
-  RoadnameAddress = 'road_manage_number_index',
-}
 
 export type TBupjungcode =
   | '11'

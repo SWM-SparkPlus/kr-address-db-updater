@@ -53,14 +53,4 @@ logger.add(
   })
 )
 
-// const stream = {
-//   // write는 app.js에서 morgan 모듈과 함께 사용
-//   write: message => {
-//     logger.info(message.substring(0, message.lastIndexOf('\n')))
-//   },
-//   // writeDetail은 sessionAndTokenLogger.js 에서 HttpRequest logging을 위해 사용
-//   writeDetailInfo: message => logger.info(`${message}`),
-//   writeDetailError: message => logger.error(`${message}`),
-// }
-
 export { logger }
