@@ -56,13 +56,19 @@ $ docker-compose up -d
 $ npm run setup:import:address
 
 ###
-#  7. 누적 변동분을 업데이트 합니다.
+# 7. 누적 변동분을 업데이트 합니다.
 ###
 
 $ npm run update:address:acc
 
 ###
-#  추가. 일일 변동분을 업데이트 합니다.
+# 옵션 1. 통합 테이블을 생성합니다.
+###
+
+$ npm run setup:integrated:address
+
+###
+# 옵션 2. 일일 변동분을 업데이트 합니다.
 ###
 
 $ npm run update:address:daily
