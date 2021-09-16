@@ -56,10 +56,8 @@ async function main() {
   } else if (task === 'update') {
     if (target === 'address') {
       if (range === 'daily') {
-        const today = dayjs(new Date()).format('YYYYMMDD')
-        const targetDate = dayjs(today).subtract(1, 'day').format('YYYYMMDD')
-        await downloadAndWriteAddressFiles({ targetDate })
-        await updateDailyAddress(today)
+        const targetDate = dayjs(new Date()).format('YYYYMMDD')
+        updateDailyAddress(targetDate)
       } else if (range === 'accumulation') {
         updateAccumulatedDailyAddress()
       } else {
@@ -82,4 +80,4 @@ async function main() {
   }
 }
 
-main()
+;(async () => await main())()

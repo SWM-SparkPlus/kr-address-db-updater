@@ -81,13 +81,13 @@ export const writeAddressFile = ({
     const fileWriteStream = createWriteStream(`${writeDir}/${rawFileName}`)
     readableContentStream.pipe(fileWriteStream)
 
-    const updateDate = dotSplitFilename[2]
+    // const updateDate = dotSplitFilename[2]
 
-    if (doDailyUpdate) {
-      readableContentStream.on('close', () => {
-        afterWriteEvent.emit('doDailyUpdate', updateDate)
-      })
-    }
+    // if (doDailyUpdate && rawFileName.includes('MATCHING_ROAD')) {
+    //   readableContentStream.on('close', () => {
+    //     afterWriteEvent.emit('doDailyUpdate', updateDate)
+    //   })
+    // }
 
     logger.info(`[FILE_WRITE] Write ${fileWriteStream.path}`)
   }

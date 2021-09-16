@@ -8,7 +8,7 @@
     "download:zipcode:total": "ts-node src/main.ts download zipcode",
     "setup:import:address": "npm run prisma:init && ts-node src/main.ts import address",
     "setup:integrated:address": "ts-node src/lib/address/create.address.integration.ts",
-    "update:address:daily": "ts-node src/main.ts update address daily",
+    "update:address:daily": "ts-node src/main.ts download address daily && ts-node src/main.ts update address daily",
     "update:address:acc": "ts-node src/main.ts update address accumulation",
     "prisma:init": "npx prisma db push && npx prisma generate",
     "prepare": "husky install"
