@@ -6,6 +6,7 @@ import { doImportFilesToDb } from './lib/address/doImportFile.address'
 import { downloadAndWriteAddressFiles } from './lib/address/download.address'
 import { updateAccumulatedDailyAddress } from './lib/address/update.acc.address'
 import { updateDailyAddress } from './lib/address/updateDaily.address'
+import { downloadPathHandler } from './lib/path/handler.path'
 
 async function main() {
   // process.argv 순서
@@ -15,6 +16,7 @@ async function main() {
   // (3) [address][zipcode][position_summary]
   // (4) [total][daily][monthly][accumulation]
   const [task, target, range] = process.argv.slice(2)
+  downloadPathHandler()
 
   if (task === 'download') {
     if (target === 'address') {

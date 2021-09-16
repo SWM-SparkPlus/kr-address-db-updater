@@ -1,7 +1,7 @@
 import PoolConnection from 'mysql2/typings/mysql/lib/PoolConnection'
 import { BupjungSidoCodeMap, SidoObject, TBupjungcode } from '../../../types/sido.collections'
 import { logger } from '../../logger'
-import { queryWithDbcp } from '../../mysqlConnection'
+import { getMysqlPoolConnection, queryWithDbcp } from '../../mysqlConnection'
 
 /**
  * 부가정보 테이블 업데이트 함수
@@ -10,7 +10,9 @@ import { queryWithDbcp } from '../../mysqlConnection'
  * @param data 파이프(|)로 나누어진 문자열 라인
  */
 export async function updateAddinfoTable(connection: PoolConnection, data: string) {
-  const splitData = data.split('|').map(s => s.replace(`'`, `"`))
+  if (data === 'No Data') return
+
+  const splitData = data.split('|').map(s => s.replace(`'`, `''`))
   const [
     manage_number,
     hangjungdong_code,

@@ -27,7 +27,7 @@ export async function getMysqlPoolConnection(): Promise<PoolConnection> {
 export async function queryWithDbcp(connection: PoolConnection, sql: string): Promise<any> {
   return new Promise((resolve, reject) => {
     logger.info(`[MYSQL_QUERY_START] ${sql}`)
-    connection.query(sql, (err, result, fields) => {
+    connection.query(sql, (err, result) => {
       if (err) {
         logger.error(`[MYSQL_QUERY_ERROR] ${err} running ${sql}`)
         reject(err)
@@ -35,7 +35,7 @@ export async function queryWithDbcp(connection: PoolConnection, sql: string): Pr
 
       connection.release()
       logger.info(`[MYSQL_QUERY_ENDS] ${sql}`)
-      resolve({ result, fields })
+      resolve(result)
     })
   })
 }

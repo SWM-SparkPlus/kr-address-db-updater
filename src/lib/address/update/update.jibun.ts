@@ -1,7 +1,7 @@
 import PoolConnection from 'mysql2/typings/mysql/lib/PoolConnection'
 import { BupjungSidoCodeMap, SidoObject, TBupjungcode } from '../../../types/sido.collections'
 import { logger } from '../../logger'
-import { queryWithDbcp } from '../../mysqlConnection'
+import { getMysqlPoolConnection, queryWithDbcp } from '../../mysqlConnection'
 
 /**
  * 지번주소 테이블 업데이트 함수
