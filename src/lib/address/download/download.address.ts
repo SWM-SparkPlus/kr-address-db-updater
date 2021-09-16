@@ -1,11 +1,11 @@
 import { createWriteStream, rmSync } from 'fs'
 import dayjs from 'dayjs'
-import { downloadFileAndGetEntries } from '../downloadAndGetEntries'
-import { logger } from '../logger'
-import { dailyDir, totalDir } from '../path'
-import { writeAddressFile } from './write.address'
-import { downloadPathHandler } from '../path/handler.path'
-import { TDownloadActionOption, TDownloadFileOption } from '../../types/option.type'
+import { downloadFileAndGetEntries } from '../../downloadAndGetEntries'
+import { logger } from '../../logger'
+import { dailyDir, totalDir } from '../../path'
+import { writeAddressFile } from '../write.address'
+import { downloadPathHandler } from '../../path/handler.path'
+import { TDownloadActionOption, TDownloadFileOption } from '../../../types/option.type'
 
 export async function downloadAndWriteAddressFiles({
   targetDate,

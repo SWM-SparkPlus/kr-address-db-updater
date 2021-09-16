@@ -9,9 +9,9 @@ const connectionPool = mysql.createPool({
   password: process.env.MYSQL_PASSWORD,
   database: process.env.MYSQL_DATABASE,
   waitForConnections: true,
-  connectionLimit: 150,
+  connectionLimit: 1000,
   queueLimit: 0,
-  connectTimeout: 20,
+  connectTimeout: 3000,
 })
 
 export async function getMysqlPoolConnection(): Promise<PoolConnection> {

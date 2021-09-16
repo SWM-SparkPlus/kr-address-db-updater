@@ -4,7 +4,7 @@ import { Readable } from 'stream'
 import { TWriteAndImportOption } from '../../types/option.type'
 import { SidoObject, TSido } from '../../types/sido.collections'
 import { logger } from '../logger'
-import { afterWriteEvent } from './address.event'
+import { afterWriteEvent } from './address.events'
 
 /**
  * 주소 데이터의 EUC-KR encoded buffer를 받아 UTF8로 인코딩하고 파일로 쓰기를 실행하는 함수

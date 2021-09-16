@@ -2,7 +2,7 @@ import { createWriteStream } from 'fs'
 import iconv from 'iconv-lite'
 import { Readable } from 'stream'
 import { TWriteAndImportOption } from '../../types/option.type'
-import { afterWriteEvent } from '../address/address.event'
+import { afterWriteEvent } from '../address/address.events'
 import { logger } from '../logger'
 
 /**

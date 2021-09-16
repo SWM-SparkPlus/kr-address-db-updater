@@ -1,8 +1,8 @@
 import dayjs from 'dayjs'
-import { logger } from '../logger'
+import { logger } from '../../logger'
 import { downloadAndWriteAddressFiles } from './download.address'
 
-export async function updateAccumulatedDailyAddress() {
+export async function downloadAccumulationDailyAddress() {
   // 오늘을 기준으로 업데이트 해야할 기간 지정.
   const yesterday = dayjs(new Date()).subtract(1, 'day').format('YYYYMMDD')
   const yyyymm = yesterday.slice(0, 6)

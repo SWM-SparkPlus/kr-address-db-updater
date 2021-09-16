@@ -1,9 +1,9 @@
 import { createReadStream, readdirSync } from 'fs'
-import { dailyDir } from '../path'
+import { dailyDir } from '../../path'
 import { createInterface } from 'readline'
-import { updateRoadcodeTable } from './update/update.roadcode'
-import { roadcodeUpdateEvent } from './address.event'
-import { getMysqlPoolConnection } from '../mysqlConnection'
+import { updateRoadcodeTable } from './update.roadcode'
+import { roadcodeUpdateEvent } from '../address.events'
+import { getMysqlPoolConnection } from '../../mysqlConnection'
 
 const entries = readdirSync(dailyDir)
 

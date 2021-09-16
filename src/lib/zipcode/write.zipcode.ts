@@ -4,7 +4,7 @@ import iconv from 'iconv-lite'
 import { TWriteAndImportOption } from '../../types/option.type'
 import { SidoObject, TSido } from '../../types/sido.collections'
 import { logger } from '../logger'
-import { afterWriteEvent } from '../address/address.event'
+import { afterWriteEvent } from '../address/address.events'
 
 /**
  * 우편번호 EUC-KR encoded buffer를 받아 UTF8로 인코딩하고 파일로 쓰기를 실행하는 함수

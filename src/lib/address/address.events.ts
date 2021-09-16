@@ -9,7 +9,7 @@ import { importToDb } from './importFile.address'
 import { updateAddinfoTable } from './update/update.addinfo'
 import { updateJibunTable } from './update/update.jibun'
 import { updateJusoTable } from './update/update.juso'
-import { updateDailyAddress } from './updateDaily.address'
+import { updateDailyAddress } from './update/update.daily.address'
 
 downloadPathHandler()
 const entries = readdirSync(dailyDir)
