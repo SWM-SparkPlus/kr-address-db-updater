@@ -20,7 +20,9 @@ Korea addressing system is a traditional hierarchy addressing system, area named
 ## Feature
 
 1. The first Korean addressing system database build automation
-2. Build database within 5 mins on adm64 arch UNIX (i5 10210U, without integrated table for Spark+ system)
+2. **Build database within 5 mins** on x86_64 arch UNIX (Tested with i5 10210U, without integrated table for Spark+ system)
+3. Spend 10 seconds for daily data updates(with 2K ~ 3K rows)
+4. Spend 1 minute for accumulation data updates(15 days accumulation data updates)
 
 ## Quick start
 

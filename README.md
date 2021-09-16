@@ -59,10 +59,10 @@ $ npm run setup:import:address
 # 7. 누적 변동분을 업데이트 합니다.
 ###
 
-$ npm run update:address:acc
+$ npm run setup:address:acc
 
 ###
-# 옵션 1. 통합 테이블을 생성합니다.
+# 옵션 1. Spark+를 활성화하려면 데이터 참조를 위한 통합 테이블을 생성합니다.
 ###
 
 $ npm run setup:integrated:address
@@ -81,8 +81,8 @@ $ npm run update:address:daily
 2. AMD64 아키텍처 기반 UNIX 서버 최적화(4 Core CPU 기준)
 
 - 전체구축: 10분 내 구축
-- 누적 업데이트: 10분 내 구축
-- 일일 업데이트: 변동분의 데이터 크기에 따라 5초 ~ 1분 소요
+- 누적 업데이트: 15일분 데이터 1분 내 모두 업데이트
+- 일일 업데이트: 변동분의 데이터 크기에 따라 10초 내외 소요
 
 ## 아키텍처
 
