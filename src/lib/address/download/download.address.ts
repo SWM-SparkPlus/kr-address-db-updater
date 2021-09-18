@@ -4,7 +4,6 @@ import { downloadFileAndGetEntries } from '../../downloadAndGetEntries'
 import { logger } from '../../logger'
 import { dailyDir, totalDir } from '../../path'
 import { writeAddressFile } from '../write.address'
-import { downloadPathHandler } from '../../path/handler.path'
 import { TDownloadActionOption, TDownloadFileOption } from '../../../types/option.type'
 
 export async function downloadAndWriteAddressFiles({
@@ -13,8 +12,6 @@ export async function downloadAndWriteAddressFiles({
   doDailyUpdate,
 }: TDownloadActionOption) {
   try {
-    downloadPathHandler()
-
     if (!dayjs(targetDate).isValid()) {
       throw new Error(`Input date ${targetDate} is invalid`)
     }

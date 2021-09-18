@@ -2,7 +2,6 @@ import { createWriteStream, rmSync } from 'fs'
 import dayjs from 'dayjs'
 import { downloadFileAndGetEntries } from '../downloadAndGetEntries'
 import { logger } from '../logger'
-import { downloadPathHandler } from '../path/handler.path'
 import { totalDir } from '../path'
 import { TDownloadFileOption } from '../../types/option.type'
 import { zipcodeFileWriterAndImport } from './write.zipcode'
@@ -15,8 +14,6 @@ import { zipcodeFileWriterAndImport } from './write.zipcode'
  * 3. 파일 쓰기가 끝나면 import flag에 따라 import 수행
  */
 export async function downloadZipcodeFilesAndWrite() {
-  downloadPathHandler()
-
   const date = new Date()
   const previousMonth = dayjs(date.setMonth(date.getMonth() - 1)).format('YYYYMM')
   logger.info(`[PREPARATION] Start on ${date}, download based on ${previousMonth}`)

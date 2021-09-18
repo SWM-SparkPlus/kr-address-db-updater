@@ -3,7 +3,6 @@ import { createWriteStream, rmSync } from 'fs'
 import { TDownloadFileOption } from '../../types/option.type'
 import { downloadFileAndGetEntries } from '../downloadAndGetEntries'
 import { logger } from '../logger'
-import { downloadPathHandler } from '../path/handler.path'
 import { monthlyDir, totalDir } from '../path'
 import { writePositionSummaryAndImport } from './write.position.summary'
 
@@ -17,8 +16,6 @@ export async function downloadPositionSummary(
   doImport?: boolean,
   doDailyUpdate?: boolean
 ) {
-  downloadPathHandler()
-
   const date = new Date()
   let url = ''
   let downloadDir = ''

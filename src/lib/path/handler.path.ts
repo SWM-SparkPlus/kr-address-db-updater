@@ -17,3 +17,5 @@ export const downloadPathHandler = () => {
     mkdirSync(dailyDir, { recursive: true })
   }
 }
+
+downloadPathHandler()
