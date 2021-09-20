@@ -38,28 +38,10 @@ $ cat .env.example > .env
 $ npm install
 
 ###
-# 4. 주소 데이터베이스 전체분 다운로드(약 2분 소요)
+# 4. 주소 데이터베이스 전체 및 변동분 다운 - MySQL 컨테이너 생성 - 데이터베이스 스키마 생성 및 구축
 ###
 
-$ npm run download:address:total
-
-###
-# 5. 데이터베이스 서버 실행(docker-compose 사용)
-###
-
-$ docker-compose up -d
-
-###
-# 6. 다운로드받은 파일을 데이터베이스에 import 합니다.
-###
-
-$ npm run setup:import:address
-
-###
-# 7. 누적 변동분을 업데이트 합니다.
-###
-
-$ npm run setup:address:acc
+$ npm run setup:all
 
 ###
 # 옵션 1. Spark+를 활성화하려면 데이터 참조를 위한 통합 테이블을 생성합니다.

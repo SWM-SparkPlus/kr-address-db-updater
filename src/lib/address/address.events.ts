@@ -4,14 +4,12 @@ import { createInterface } from 'readline'
 import { logger } from '../logger'
 import { getMysqlPoolConnection } from '../mysqlConnection'
 import { dailyDir } from '../path'
-import { downloadPathHandler } from '../path/handler.path'
 import { importToDb } from './importFile.address'
 import { updateAddinfoTable } from './update/update.addinfo'
 import { updateJibunTable } from './update/update.jibun'
 import { updateJusoTable } from './update/update.juso'
 import { updateDailyAddress } from './update/update.daily.address'
 
-downloadPathHandler()
 const entries = readdirSync(dailyDir)
 
 export const fileDownloadEvent = new EventEmitter()
