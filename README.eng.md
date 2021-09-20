@@ -49,23 +49,16 @@ $ cat .env.example > .env
 $ npm install
 
 ###
-# 4. Download address based on date (spend 2 mins)
+# 4. Run database file download - create - import - update script
 ###
 
-$ npm run download:address:total
+$ npm run setup:all
 
 ###
-# 5. Run database with volumn(docker-compose)
+# Option 1. Create table for Spark+ plugin
 ###
 
-$ docker-compose up -d
-
-###
-# 6. Import data on database
-###
-
-$ npm run setup:import:address
-```
+$ npm run setup:integrated:address
 
 ## Table schemas
 
@@ -170,3 +163,4 @@ Table for Spark+ plugin used for zipcode mapping, area mapping, address search.
 ## LICENCE
 
 [MIT](https://github.com/SWM-SparkPlus/db-updater/blob/master/LICENSE)
+```
