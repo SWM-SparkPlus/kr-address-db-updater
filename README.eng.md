@@ -60,6 +60,8 @@ $ npm run setup:all
 
 $ npm run setup:integrated:address
 
+```
+
 ## Table schemas
 
 ### Roadname codes
@@ -163,4 +165,7 @@ Table for Spark+ plugin used for zipcode mapping, area mapping, address search.
 ## LICENCE
 
 [MIT](https://github.com/SWM-SparkPlus/db-updater/blob/master/LICENSE)
+
+```
+
 ```
