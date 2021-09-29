@@ -744,7 +744,7 @@ model roadname_code {
 }
 
 model integrated_address_seoul {
-  manage_number       String  @id @db.VarChar(25)
+    manage_number       String  @id @db.VarChar(25)
   roadname_code       String  @db.VarChar(12)
   zipcode             String  @db.VarChar(5)
   sido                String  @db.VarChar(20)
@@ -755,6 +755,8 @@ model integrated_address_seoul {
   is_basement         String  @db.VarChar(1)
   building_primary_number Int?  @db.SmallInt
   building_secondary_number Int? @db.SmallInt
+  jibun_primary_number Int? @db.SmallInt
+  jibun_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -770,6 +772,8 @@ model integrated_address_incheon {
   is_basement         String  @db.VarChar(1)
   building_primary_number Int?  @db.SmallInt
   building_secondary_number Int? @db.SmallInt
+  jibun_primary_number Int? @db.SmallInt
+  jibun_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -785,6 +789,8 @@ model integrated_address_gyeonggi {
   is_basement         String  @db.VarChar(1)
   building_primary_number Int?  @db.SmallInt
   building_secondary_number Int? @db.SmallInt
+  jibun_primary_number Int? @db.SmallInt
+  jibun_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -800,6 +806,8 @@ model integrated_address_gangwon {
   is_basement         String  @db.VarChar(1)
   building_primary_number Int?  @db.SmallInt
   building_secondary_number Int? @db.SmallInt
+  jibun_primary_number Int? @db.SmallInt
+  jibun_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -815,6 +823,8 @@ model integrated_address_chungnam {
   is_basement         String  @db.VarChar(1)
   building_primary_number Int?  @db.SmallInt
   building_secondary_number Int? @db.SmallInt
+  jibun_primary_number Int? @db.SmallInt
+  jibun_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -830,6 +840,8 @@ model integrated_address_chungbuk {
   is_basement         String  @db.VarChar(1)
   building_primary_number Int?  @db.SmallInt
   building_secondary_number Int? @db.SmallInt
+  jibun_primary_number Int? @db.SmallInt
+  jibun_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -845,6 +857,8 @@ model integrated_address_daejeon {
   is_basement         String  @db.VarChar(1)
   building_primary_number Int?  @db.SmallInt
   building_secondary_number Int? @db.SmallInt
+  jibun_primary_number Int? @db.SmallInt
+  jibun_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -860,6 +874,8 @@ model integrated_address_jeonnam {
   is_basement         String  @db.VarChar(1)
   building_primary_number Int?  @db.SmallInt
   building_secondary_number Int? @db.SmallInt
+  jibun_primary_number Int? @db.SmallInt
+  jibun_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -875,6 +891,8 @@ model integrated_address_jeonbuk {
   is_basement         String  @db.VarChar(1)
   building_primary_number Int?  @db.SmallInt
   building_secondary_number Int? @db.SmallInt
+  jibun_primary_number Int? @db.SmallInt
+  jibun_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -890,6 +908,8 @@ model integrated_address_gwangju {
   is_basement         String  @db.VarChar(1)
   building_primary_number Int?  @db.SmallInt
   building_secondary_number Int? @db.SmallInt
+  jibun_primary_number Int? @db.SmallInt
+  jibun_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -905,6 +925,8 @@ model integrated_address_sejong {
   is_basement         String  @db.VarChar(1)
   building_primary_number Int?  @db.SmallInt
   building_secondary_number Int? @db.SmallInt
+  jibun_primary_number Int? @db.SmallInt
+  jibun_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -920,6 +942,8 @@ model integrated_address_gyeongnam {
   is_basement         String  @db.VarChar(1)
   building_primary_number Int?  @db.SmallInt
   building_secondary_number Int? @db.SmallInt
+  jibun_primary_number Int? @db.SmallInt
+  jibun_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -935,6 +959,8 @@ model integrated_address_gyeongbuk {
   is_basement         String  @db.VarChar(1)
   building_primary_number Int?  @db.SmallInt
   building_secondary_number Int? @db.SmallInt
+  jibun_primary_number Int? @db.SmallInt
+  jibun_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -950,6 +976,8 @@ model integrated_address_daegu {
   is_basement         String  @db.VarChar(1)
   building_primary_number Int?  @db.SmallInt
   building_secondary_number Int? @db.SmallInt
+  jibun_primary_number Int? @db.SmallInt
+  jibun_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -965,6 +993,8 @@ model integrated_address_busan {
   is_basement         String  @db.VarChar(1)
   building_primary_number Int?  @db.SmallInt
   building_secondary_number Int? @db.SmallInt
+  jibun_primary_number Int? @db.SmallInt
+  jibun_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -980,6 +1010,8 @@ model integrated_address_ulsan {
   is_basement         String  @db.VarChar(1)
   building_primary_number Int?  @db.SmallInt
   building_secondary_number Int? @db.SmallInt
+  jibun_primary_number Int? @db.SmallInt
+  jibun_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
 
@@ -995,5 +1027,7 @@ model integrated_address_jeju {
   is_basement         String  @db.VarChar(1)
   building_primary_number Int?  @db.SmallInt
   building_secondary_number Int? @db.SmallInt
+  jibun_primary_number Int? @db.SmallInt
+  jibun_secondary_number Int? @db.SmallInt
   bupjungdong_code    String  @db.VarChar(10)
 }
