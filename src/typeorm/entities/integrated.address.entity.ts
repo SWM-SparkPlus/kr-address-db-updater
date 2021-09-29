@@ -43,6 +43,12 @@ export function getIntegratedAddressTableEntity(tableName: TIntegratedAddressTab
     @Column({ type: 'smallint' })
     building_secondary_number!: string | null
 
+    @Column({ type: 'smallint' })
+    jibun_primary_number!: string | null
+
+    @Column({ type: 'smallint' })
+    jibun_secondary_number!: string | null
+
     @Column({ type: 'varchar' })
     bupjungdong_code!: string | null
   }

@@ -17,7 +17,7 @@ REPLACE INTO integrated_address_$sido \
 		        sub.building_primary_number, sub.building_secondary_number, sub.bupjungdong_code \
     FROM 	roadname_code code, \
 		    (SELECT juso.manage_number, juso.roadname_code, juso.is_basement, juso.building_primary_number, juso.building_secondary_number, juso.basic_state_number as zipcode, \
-		    		    jibun.bupjungdong_code, jibun.sido, jibun.sigungu, jibun.bupjungeupmyeondong as eupmyeondong, jibun.bupjungli, juso.eupmyeondong_serial_number \
+		    		    jibun.bupjungdong_code, jibun.sido, jibun.sigungu, jibun.bupjungeupmyeondong as eupmyeondong, jibun.bupjungli, jibun.jibun_primary_number, jibun.jibun_secondary_number, juso.eupmyeondong_serial_number \
 		    FROM roadname_address_$sido juso, jibun_address_$sido jibun \
 		    WHERE juso.manage_number = jibun.manage_number) sub \
 WHERE code.roadname_code = sub.roadname_code AND code.eupmyeondong_serial_number = sub.eupmyeondong_serial_number);

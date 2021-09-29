@@ -178,7 +178,9 @@ Spark+에서 주소검색, 우편번호 맵핑 등에 사용하기 위한 데이
 | 9    | 지하여부   | is_basement               | 1    | 문자 |     | 도로명주소 테이블. 도로명주소 생성용                                 |
 | 10   | 건물본번   | building_primary_number   | 5    | 숫자 |     | 도로명주소 테이블. 도로명주소 생성용                                 |
 | 11   | 건물부번   | building_secondary_number | 5    | 숫자 |     | 도로명주소 테이블. 도로명주소 생성용                                 |
-| 12   | 법정동코드 | bupjungdong_code          | 10   | 문자 |     | 지번주소 테이블. 도로명주소 생성용                                   |
+| 12   | 지번본번   | jibun_primary_number      | 5    | 숫자 |     | 도로명주소 테이블. 지번주소 생성용                                   |
+| 13   | 지번부번   | jibun_secondary_number    | 5    | 숫자 |     | 도로명주소 테이블. 지번주소 생성용                                   |
+| 14   | 법정동코드 | bupjungdong_code          | 10   | 문자 |     | 지번주소 테이블. 도로명주소 생성용                                   |
 
 ## LICENCE
 
