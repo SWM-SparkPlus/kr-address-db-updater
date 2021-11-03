@@ -182,6 +182,6 @@ Spark+에서 주소검색, 우편번호 맵핑 등에 사용하기 위한 데이
 | 13   | 지번부번   | jibun_secondary_number    | 5    | 숫자 |     | 도로명주소 테이블. 지번주소 생성용               |
 | 14   | 법정동코드 | bupjungdong_code          | 10   | 문자 |     | 지번주소 테이블. 도로명주소 생성용               |
 
-## LICENCE
+## LICENSE
 
 [MIT](https://github.com/SWM-SparkPlus/db-updater/blob/master/LICENSE)
