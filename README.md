@@ -1,8 +1,8 @@
-# db-updater
+# kr-address-db-updater
 
-`db-updater`는 혼재된 국내 주소체계 데이터를 안정적이고 효율적으로 제공하기 위해 **국내 주소체계 데이터베이스 구축 및 최신화를 자동화**하는 시스템을 `Node.js`로 구현하는 프로젝트입니다.
+`kr-address-db-updater`는 혼재된 국내 주소체계 데이터를 안정적이고 효율적으로 제공하기 위해 **국내 주소체계 데이터베이스 구축 및 최신화를 자동화**하는 시스템을 `Node.js`로 구현하는 프로젝트입니다.
 
-[🇱🇷 English Guide](<https://github.com/SWM-SparkPlus/db-updater/wiki/README(eng)>)
+[🇱🇷 English Guide](<https://github.com/SWM-SparkPlus/kr-address-db-updater/wiki/README(eng)>)
 
 ## 빠른 시작
 
@@ -19,8 +19,8 @@
 # 1. 레포지토리 클론
 ###
 
-$ git clone https://github.com/SWM-SparkPlus/db-updater.git
-$ cd db-updater
+$ git clone https://github.com/SWM-SparkPlus/kr-address-db-updater.git
+$ cd kr-address-db-updater
 
 ###
 # 2. 환경변수 설정
